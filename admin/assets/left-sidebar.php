@@ -28,11 +28,11 @@
 			<li class="nav-small-cap m-t-10">--- Main Menu</li>
 			<!---DNS Added Dashboard menu --->
 			<li> <a href="index.html" class="waves-effect active"><i class="ti-dashboard p-r-10"></i> <span class="hide-menu">Dashboard</span></a> </li>
-			
+
 			<!---DNS Added Staff menu --->
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-group p-r-10"></i> <span class="hide-menu"> Staffs <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
-					<li> <a href="add-staff.php">Add Staff</a> </li>                            
+					<li> <a href="add-staff.php">Add Staff</a> </li>
 					<li> <a href="view-staffs.php">View Staff</a> </li>
 				</ul>
 			</li>
@@ -40,14 +40,14 @@
 			<!---PNB Added Doctors menu --->
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-md p-r-10"></i> <span class="hide-menu"> Doctors <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
-					<li> <a href="add-doctor.php">Add Doctor</a> </li>                            
+					<li> <a href="add-doctor.php">Add Doctor</a> </li>
 					<li> <a href="view-doctors.php">View Doctors</a> </li>
 				</ul>
 			</li>
 			<!---PNB Added Patient menu --->
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-wheelchair p-r-10"></i> <span class="hide-menu"> Patients <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
-					<li> <a href="patients.html">View Patients</a> </li>
+					<li> <a href="view-patients.php">View Patients</a> </li>
 					<li> <a href="add-patient.php">Add Patient</a> </li>
 					<li> <a href="edit-patient.html">Edit Patient</a> </li>
 					<li> <a href="patient-profile.html">Patient Profile</a> </li>
@@ -57,7 +57,7 @@
 		  <!--DNS Added Admin menu-->
 		   <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user p-r-10"></i> <span class="hide-menu"> Admin <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
-					<li> <a href="add-admin.php">Add Admin</a> </li>                            
+					<li> <a href="add-admin.php">Add Admin</a> </li>
 					<li> <a href="view-admin.php">View Admins</a> </li>
 				</ul>
 			</li>
