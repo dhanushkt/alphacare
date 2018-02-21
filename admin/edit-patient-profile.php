@@ -4,23 +4,26 @@ require('connect.php');
 $ausername=$_SESSION['ausername'];
 $id = $_GET['id'];
 
-$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj FROM patient WHERE p_id='$id'";
+$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj FROM patients WHERE p_id='$id'";
 $result = mysqli_query($connection, $query);
 $row = mysqli_fetch_assoc($result);
 
+$fetchmediinfo="SELECT * FROM medical_info WHERE p_id='$id'";
+$fetchresult=mysqli_query($connection, $fetchmediinfo);
+$fetchrow = mysqli_fetch_assoc($fetchresult);
 //update profile
 if(isset($_POST['updateprofile']))
 {
 	$fname=mysqli_real_escape_string($connection,$_POST['fname']);
 	$lname=mysqli_real_escape_string($connection,$_POST['lname']);
-	$username= mysqli_real_escape_string($connection,$_POST['username']);
+	$dob= mysqli_real_escape_string($connection,$_POST['dob']);
 	$email=mysqli_real_escape_string($connection,$_POST['email']);
 	$gender=mysqli_real_escape_string($connection,$_POST['gender']);
-	$qualification=mysqli_real_escape_string($connection,$_POST['qualif']);
-	$specialist=mysqli_real_escape_string($connection,$_POST['special']);
+	$al1=mysqli_real_escape_string($connection,$_POST['al1']);
+	$al2=mysqli_real_escape_string($connection,$_POST['special']);
 	$phone=mysqli_real_escape_string($connection,$_POST['phone']);
 
-	$uquery="UPDATE doctors SET fname='$fname', lname='$lname', username='$username', email='$email', gender='$gender', qualification='$qualification', specialist='$specialist', phone='$phone' WHERE doc_id='$id'";
+	$uquery="UPDATE patients SET fname='$fname', lname='$lname', username='$username', email='$email', gender='$gender', al1='$al1', al2='$al2', phone='$phone' WHERE p_id='$id'";
 	$uresult = mysqli_query($connection, $uquery);
 	if($uresult)
 	{
@@ -115,7 +118,7 @@ if(isset($_POST['changepw']))
                 <div class="row bg-title">
                     <!-- .page title -->
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Edit Profile</h4>
+                        <h4 class="page-title">Patient Profile</h4>
                     </div>
                     <!-- /.page title -->
                     <!-- .breadcrumb -->
@@ -168,32 +171,61 @@ if(isset($_POST['changepw']))
                                 <div class="overlay-box">
                                     <div class="user-content">
                                         <a href="javascript:void(0)"><?php if($row["gender"]=='male') { ?> <img src="../plugins/images/users/doctor-male.jpg" class="thumb-lg img-circle" ><?php } else { ?> <img src="../plugins/images/users/doctor-female.jpg" class="thumb-lg img-circle" > <?php } ?> </a>
-                                        <h4 class="text-white"><?php echo $row["username"]; ?></h4>
-                                        <h5 class="text-white"><?php echo $row["email"]; ?></h5>
+                                        <!--<h4 class="text-white"><?php //echo $row["username"]; ?></h4>
+                                        <h5 class="text-white"><?php //echo $row["email"]; ?></h5>-->
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="user-btm-box">
-                                <div class="col-md-4 col-sm-4 text-center">
-                                    <p class="text-purple"><i class="ti-facebook"></i></p>
-                                    <h1>258</h1>
+							<div class="user-btm-box">
+                                <!-- .row -->
+                                <div class="row text-center m-t-10">
+                                    <div class="col-md-6 b-r"><strong>Name</strong>
+                                        <p><?php echo $row["fname"]." ".$row["lname"]; ?></p>
+                                    </div>
+                                    <div class="col-md-6"><strong>Age</strong>
+                                        <p><?php echo date_diff(date_create($row["dob"]), date_create('today'))->y; ?></p>
+                                    </div>
                                 </div>
+                                <!-- /.row -->
+                                <hr>
+                                <!-- .row -->
+                                <div class="row text-center m-t-10">
+                                    <div class="col-md-6 b-r"><strong>Email ID</strong>
+                                        <p><?php echo $row["email"]; ?> </p>
+                                    </div>
+                                    <div class="col-md-6"><strong>Phone</strong>
+                                        <p><?php echo $row["phone"]; ?></p>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                                <hr>
+                                <!-- .row -->
+                                <div class="row text-center m-t-10 ">
+                                    <div class="col-md-12"><strong>Address</strong>
+                                        <p><?php echo $row["al1"]." ".$row["al2"];  ?>
+                                            <br/> <?php echo $row["city"]." , ".$row["state"];  ?></p>
+                                    </div>
+                                </div>
+                                <!--<hr>-->
+                                <!-- /.row -->
+                                <!--<div class="col-md-4 col-sm-4 text-center">
+                                    <p class="text-purple"><i class="ti-facebook"></i></p>
+                                    <h1>258</h1> </div>
                                 <div class="col-md-4 col-sm-4 text-center">
                                     <p class="text-blue"><i class="ti-twitter"></i></p>
-                                    <h1>125</h1>
-                                </div>
+                                    <h1>125</h1> </div>
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <p class="text-danger"><i class="ti-dribbble"></i></p>
-                                    <h1>556</h1>
-                                </div>
-                            </div>-->
+                                    <p class="text-danger"><i class="ti-google"></i></p>
+                                    <h1>140</h1> </div>-->
+                            </div>
+                          
                         </div>
                     </div>
                     <div class="col-md-8 col-xs-12">
                         <div class="white-box">
                             <ul class="nav customtab nav-tabs" role="tablist">
                                 <!--<li role="presentation" class="nav-item"><a href="#home" class="nav-link " aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-home"></i></span><span class="hidden-xs"> Activity</span></a></li>-->
-                                <li role="presentation" class="nav-item"><a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-user"></i></span> <span class="hidden-xs">Profile</span></a></li>
+                                <li role="presentation" class="nav-item"><a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-user"></i></span> <span class="hidden-xs">Info</span></a></li>
                                 <li role="presentation" class="nav-item"><a href="#settings" class="nav-link" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Setting</span></a></li>
                                 <li role="presentation" class="nav-item"><a href="#changepassword" class="nav-link" aria-controls="changepassword" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Change Password</span></a></li>
                             </ul>
@@ -201,34 +233,26 @@ if(isset($_POST['changepw']))
                                 <div class="tab-pane active" id="profile">
                                     <div class="row">
                                         <div class="col-md-3 col-xs-6 b-r"> <strong>Full Name</strong>
-                                            <br>
-                                            <p class="text-muted"><?php echo $row["fname"]." ".$row["lname"]; ?></p>
-                                        </div>
-                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Mobile</strong>
-                                            <br>
-                                            <p class="text-muted"><?php echo $row["phone"]; ?></p>
-                                        </div>
-                                        <div class="col-md-6 col-xs-6 "> <strong>Email</strong>
-                                            <br>
-                                            <p class="text-muted"><?php echo $row["email"]; ?></p>
-                                        </div>
+										<br>
+										<p class="text-muted"><?php echo $row["fname"]." ".$row["lname"]; ?></p>
+									</div>
+									<div class="col-md-3 col-xs-6 b-r"> <strong>Disease</strong>
+										<br>
+										<p class="text-muted"><?php echo $fetchrow["disease"] ?></p>
+									</div>
+									<div class="col-md-3 col-xs-6 b-r"> <strong>Date of birth</strong>
+										<br>
+										<p class="text-muted"><?php $dateb=$row['dob'];
+											$myDateTime = DateTime::createFromFormat('Y-m-d', $dateb);
+											$dobc = $myDateTime->format('d-m-Y');  echo $dobc; ?></p>
+									</div>
+									<div class="col-md-3 col-xs-6"> <strong>Blood group</strong>
+										<br>
+										<p class="text-muted"><?php echo $fetchrow["bgroup"] ?></p>
+									</div>
                                         
                                     </div>
-                                    <hr class="m-t-10 m-b-10">
-                                    <div class="row">
-                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Specialist</strong>
-                                            <br>
-                                            <p class="text-muted"><?php echo $row["specialist"]; ?></p>
-                                        </div>
-                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Qualification</strong>
-                                            <br>
-                                            <p class="text-muted"><?php echo $row["qualification"]; ?></p>
-                                        </div>
-                                        <div class="col-md-3 col-xs-6"> <strong>Gender</strong>
-                                            <br>
-                                            <p class="text-muted"><?php echo $row["gender"]; ?></p>
-                                        </div>
-									</div>
+                                    
                                     
                                 </div>
                                 
