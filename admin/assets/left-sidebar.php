@@ -27,7 +27,7 @@
 			<!-- User profile-->
 			<li class="nav-small-cap m-t-10">--- Main Menu</li>
 			<!---DNS Added Dashboard menu --->
-			<li> <a href="index.html" class="waves-effect active"><i class="ti-dashboard p-r-10"></i> <span class="hide-menu">Dashboard</span></a> </li>
+			<li> <a href="index.php" class="waves-effect active"><i class="ti-dashboard p-r-10"></i> <span class="hide-menu">Dashboard</span></a> </li>
 
 			<!---DNS Added Staff menu --->
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-group p-r-10"></i> <span class="hide-menu"> Staffs <span class="fa arrow"></span></span></a>
