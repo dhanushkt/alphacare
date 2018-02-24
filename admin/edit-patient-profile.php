@@ -75,6 +75,12 @@ if(isset($_POST['changepw']))
     <!--csslink.php includes fevicon and title-->
     <?php include 'assets/csslink.php'; ?>
       
+	<link href="../plugins/bower_components/jqueryui/jquery-ui.min.css" rel="stylesheet">
+	<link href="../plugins/bower_components/lobipanel/dist/css/lobipanel.min.css" rel="stylesheet">
+	
+	<!-- Date picker plugins css -->
+    <link href="../plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+	
       <!-- username check js start -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
 <script type="text/javascript">
@@ -226,8 +232,10 @@ if(isset($_POST['changepw']))
                             <ul class="nav customtab nav-tabs" role="tablist">
                                 <!--<li role="presentation" class="nav-item"><a href="#home" class="nav-link " aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-home"></i></span><span class="hidden-xs"> Activity</span></a></li>-->
                                 <li role="presentation" class="nav-item"><a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-user"></i></span> <span class="hidden-xs">Info</span></a></li>
-                                <li role="presentation" class="nav-item"><a href="#settings" class="nav-link" aria-controls="settings" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Setting</span></a></li>
-                                <li role="presentation" class="nav-item"><a href="#changepassword" class="nav-link" aria-controls="changepassword" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Change Password</span></a></li>
+                                <li role="presentation" class="nav-item"><a href="#medrep" class="nav-link" aria-controls="medrep" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Medical Report</span></a></li>
+                                <li role="presentation" class="nav-item"><a href="#updatemedicinfo" class="nav-link" aria-controls="updatemedicinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Update Medical Info</span></a></li>
+								<li role="presentation" class="nav-item"><a href="#updatemedicinfo" class="nav-link" aria-controls="updatemedicinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Edit Patient Info</span></a></li>
+								<li role="presentation" class="nav-item"><a href="#updatemedicinfo" class="nav-link" aria-controls="updatemedicinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Remove</span></a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="profile">
@@ -257,118 +265,160 @@ if(isset($_POST['changepw']))
                                 </div>
                                 
                                
-                            <div class="tab-pane" id="settings">
-                             <form data-toggle="validator" method="post">
-                              
-                              
-                         		<div class="row">
-                                	<div class="col-md-6">
-                                       <div class="form-group">
-                                        	 <label class="control-label">First Name</label>
-											<div class="col-sm-12 p-l-0">
-												<div class="input-group">
-													<div class="input-group-addon">Dr.</div>
-													<input type="text" name="fname" class="form-control" id="fname" placeholder="Enter your first name" value="<?php echo $row["fname"]; ?>" required>
-													<!--onKeyUp="copyTextValue();"-->
-												</div>
-											</div>
-                                         </div>
-                                    </div>
-                                    <!--/span-->
-									 <div class="col-md-6">
-										  <div class="form-group">
-											   <label class="control-label">Last Name</label>
-											   <input type="text" name="lname" id="lastName" class="form-control" placeholder="Enter your last name" value="<?php echo $row["lname"]; ?>" required>
-											   <!--<span class="help-block"> This field has error. </span>-->
-										   </div>
-									 </div>
-                                    <!--/span-->
-                                 </div>
-                               
-                                <div class="form-group">
-                                    <label for="inputName1" class="control-label">Username</label>
-                                    <input type="text" class="form-control" autocomplete="off" id="username" name="username" placeholder="Username is used to login" value="<?php echo $row["username"]; ?>" required>
-                                    <!-- username check start -->
-										<div>
-										<span id="usernameLoading"><img src="../plugins/images/busy.gif" alt="Ajax Indicator" height="15" width="15" /></span>
-										<span id="usernameResult" style="color: #E40003"></span>
-										</div>
-				                     <!-- username check end -->
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail" class="control-label">Email</label>
-                                    <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" value="<?php echo $row["email"]; ?>" data-error="This email address is invalid" required>
-                                    <div class="help-block with-errors"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-12 p-l-0">Gender</label>
-                                    <div class="col-sm-12 p-l-0">
-                                        <select class="form-control" name="gender" required>
-                                            <option <?php if($row["gender"]=='male'){echo 'selected';}?> value="male">Male</option>
-                                            <option <?php if($row["gender"]=='female'){echo 'selected';}?> value="female">Female</option>
-                                        </select>
-                                    </div>
+                            <div class="tab-pane" id="medrep">
+                             <div class="row">
+								 <div class="col-md-12">
+								<div class="panel1 panel panel-info">
+									<div class="panel-heading">Medical Information (sorted by date)
+                           			 </div>
+									<div class="panel-body">
+										<table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>BP (mm Hg) </th>
+                                            <th>Sugar (mg/dl)</th>
+                                            <th>Temprature (°F)</th>
+											<th>Date</th>
+                                        </tr>
+                                    </thead>
+									<tbody>
+                              <?php
+								 $medinfo="SELECT * FROM medical_info WHERE p_id='$id' ORDER BY date";
+								 $medinfores = mysqli_query($connection, $medinfo);
+								//$medinforow = mysqli_fetch_assoc($medinfores);
+								foreach($medinfores as $key=>$medinfores)
+								{
+                              ?>
+										<tr>
+                                            <th scope="row"><?php echo $key+1; ?></th>
+                                            <td><?php echo $medinfores["bp"]; ?></td>
+                                            <td><?php echo $medinfores["sugar"]; ?></td>
+                                            <td><?php echo $medinfores["temp"]; ?></td>
+											<td><?php $date=$medinfores["date"];
+											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
+											$datec = $myDateTime->format('d-m-Y');  echo $datec; ?></td>
+                                        </tr> 
+                         		
+                                	
+									<?php } ?>
+											</tbody>
+										</table>
+									</div>
+								
+								 </div>
+								</div>
+								</div>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label  for="special">Speciality</span>
-                                    </label>
-                                    
-                                        <input type="text" id="special" name="special" class="form-control" placeholder="e.g. Dentist" value="<?php echo $row["specialist"]; ?>" required>
-                          
-                                </div>
-                                <div class="form-group">
-                                    <label>Qualification</label>
-                                    
-                                        <input type="text" id="qualif" name="qualif" class="form-control" placeholder="e.g. MBBS" value="<?php echo $row["qualification"]; ?>" >
-                                    
-                                </div>
-                                <div class="form-group">
-                                    <label for="example-phone">Phone</span>
-                                    </label>
-                                    
-                                        <input type="text" required id="example-phone" name="phone" class="form-control" placeholder="enter your phone number" data-mask="(999) 999-9999" value="<?php echo $row["phone"]; ?>">
-                                    
-                                </div>
-                                        <div class="form-group">
-                                            <div class="col-sm-12">
-                                                <button class="btn btn-success" name="updateprofile">Update Profile</button>
+                  <div class="tab-pane" id="updatemedicinfo">
+									<div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Update Medical Info</div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    <form method="post" data-toggle="validator">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Disease</label>
+                                                        <input type="text" name="disease" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Blood Group</label>
+                                                        <select class="form-control" name="bg">
+															<option>Select Blood group</option>
+															<option value="A +'ve">A +'ve</option>
+															<option value="A -'ve">A -'ve</option>
+															<option value="B +'ve">B +'ve</option>
+															<option value="B -'ve">B -'ve</option>
+															<option value="AB +'ve">AB +'ve</option>
+															<option value="AB -'ve">AB -'ve</option>
+															<option value="O +'ve">O +'ve</option>
+															<option value="O -'ve">O -'ve</option>
+														</select>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Blood Preasure</label>
+                                                        <input name="bp" type="text" class="form-control" data-mask="999/99">
+                                                        <span class="font-13 text-muted">in mm Hg</span>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Sugar</label>
+                                                        <input type="text" name="sugar" class="form-control">
+                                                        <span class="font-13 text-muted">in mg/dl</span>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Height</label>
+                                                        <input type="text" name="height" class="form-control">
+                                                         <span class="font-13 text-muted">in cm</span>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Weight</label>
+                                                        <input type="number" name="weight" class="form-control">
+                                                        <span class="font-13 text-muted">in kg</span>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Temperature</label>
+                                                        <input type="text" name="temp" class="form-control">
+                                                        <span class="font-13 text-muted">in °F</span>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label></label>
+                                                        <label>Date of entry</label>
+                                                        <div class="input-group">
+															<div class="input-group-addon"><i class="icon-calender"></i></div>
+															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy" required>
+														</div>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="submit" name="psubmit" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+                                            
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                                 
-                                <div class="tab-pane" id="changepassword"> 
-                                
-                                <form data-toggle="validator" method="post">
-                                <div class="form-group">
-                                    <label for="inputPassword" class="control-label">Change Password</label>
-                                    <div calss="row">
-                                    <div class="form-group col-sm-12 p-l-0 p-t-10">
-                                    <input type="password" name="oldpassword" data-toggle="validator" data-minlength="6" class="form-control" id="oldPassword" placeholder="Old Password" required>
-                                     </div>
-									</div>
-                                    
-                                    <div class="row">
-                                        <div class="form-group col-sm-6">
-                                            <input type="password" name="newpassword" data-toggle="validator" data-minlength="6" class="form-control" id="inputPassword" placeholder="New Password" required>
-                                            <span class="help-block">Minimum of 6 characters</span> </div>
-                                        <div class="form-group col-sm-6">
-                                            <input type="password" name="retypepassword" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Passwords don't match" placeholder="Confirm New Password" required>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group p-t-0">
-                                    
-                                        <button class="btn btn-success" name="changepw">Change Password</button>
-                                     
-                                </div>
-                                
-								</form>
-                                
-                                
-								</div>
+			</div> <!--update medic info tab end-->
+										
                                
                             </div>
                         </div>
@@ -400,6 +450,34 @@ if(isset($_POST['changepw']))
     <!-- /#wrapper -->
     <!--jslink has all the JQuery links-->
     <?php include'assets/jslink.php'; ?>
+	<script src="../plugins/bower_components/jqueryui/jquery-ui.min.js"></script>
+	<!-- Draggable-panel -->
+	<script src="../plugins/bootstrap/dist/js/bootstrap-3.3.7.min.js"></script>
+	<script src="../plugins/bower_components/lobipanel/dist/js/lobipanel.min.js"></script>
+    <script>
+    $(function() {
+        $('.panel1').lobiPanel({
+            sortable: true,
+            reload: false,
+            editTitle: false,
+			close: false,
+			minimize: false,
+			
+        });
+    });
+    </script>
+	
+	<!-- Date Picker Plugin JavaScript -->
+    <script src="../plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="../plugins/js/mask.js"></script>
+    <script>
+		jQuery('.mydatepicker, #datepicker').datepicker();
+    jQuery('#datepicker-autoclose').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+	</script>
+    
 </body>
 
 </html>
