@@ -786,7 +786,11 @@ $(function() {
 
 <script>
 $('.menu a').on('click', function(){
-         $(".menu").css('display','none');
+  if (window.matchMedia('(max-width: 1007px)').matches) {
+		$(".menu").css('display','none');
+    $('body').css('overflow','visible');
+		}
+        //
     });
 </script>
     <script type="text/javascript">
