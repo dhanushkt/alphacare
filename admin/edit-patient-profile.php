@@ -8,9 +8,32 @@ $query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, p
 $result = mysqli_query($connection, $query);
 $row = mysqli_fetch_assoc($result);
 
-$fetchmediinfo="SELECT * FROM medical_info WHERE p_id='$id'";
+$fetchmediinfo="SELECT * FROM medical_info WHERE p_id='$id' ORDER BY date DESC";
 $fetchresult=mysqli_query($connection, $fetchmediinfo);
 $fetchrow = mysqli_fetch_assoc($fetchresult);
+
+//calculate temprature percentage min:97F max:105F
+if($fetchrow['temp']<='97')
+{
+	$tempper="10%";
+}
+elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='105')
+{
+	$tempper=(($fetchrow['temp']-97)/(105-97))*100;
+}
+elseif($fetchrow['temp']> '105')
+{
+	$tempper="100%";
+}
+
+//calculate sugar percentage min:72 max:140
+$sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
+
+
+$bpraw=$fetchrow['bp'];
+$bpval = ucfirst(str_replace( array("/"), array(""),$bpraw));
+$bpper=(($bpval-8050)/(170100-8050))*1000;
+
 //update patient profile
 if(isset($_POST['updateprofile']))
 {
@@ -256,7 +279,7 @@ if(isset($_POST['updatemedic']))
 									</div>
 									<div class="col-md-3 col-xs-6 b-r"> <strong>Disease</strong>
 										<br>
-										<p class="text-muted"><?php echo $fetchrow["disease"] ?></p>
+										<p class="text-muted"><?php echo $fetchrow["disease"]; echo $fetchrow['bp']; echo $bpval;  ?></p>
 									</div>
 									<div class="col-md-3 col-xs-6 b-r"> <strong>Date of birth</strong>
 										<br>
@@ -268,11 +291,40 @@ if(isset($_POST['updatemedic']))
 										<br>
 										<p class="text-muted"><?php echo $fetchrow["bgroup"] ?></p>
 									</div>
-                                        
+										
                                     </div>
-                                    
-                                    
-                                </div>
+										<hr>
+										<h4 class="m-t-30">General Report</h4>
+										<hr>
+										<h5>Heart Beat <span class="pull-right">80</span></h5>
+										<div class="progress">
+											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%;"> <span class="sr-only">50% Complete</span> </div>
+										</div>
+										<h5>Blood Pressure<span class="pull-right"><?php echo $fetchrow["bp"]; ?></span></h5>
+										<div class="progress">
+											<div class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $bpper ?>%;"> <span class="sr-only">50% Complete</span> </div>
+										</div>
+										<h5>Sugar<span class="pull-right"><?php echo $fetchrow["sugar"]; ?></span></h5>
+										<div class="progress">
+											<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="<?php echo $fetchrow["sugar"]; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $sugarper ?>%;"> <span class="sr-only">50% Complete</span> </div>
+										</div>
+										<h5>Temprature<span class="pull-right"><?php echo $fetchrow["temp"]." °F"; ?></span></h5>
+										<div class="progress">
+											<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="102" aria-valuemin="97" aria-valuemax="105" style="width:<?php echo $tempper ?>%;"> <span class="sr-only">50% Complete</span> </div>
+										</div>
+										<h4 class="m-t-30">ECG Report</h4>
+										<hr>
+										<div class="stats-row">
+											<div class="stat-item">
+												<h6>Pulse</h6> <b>85</b></div>
+											<div class="stat-item">
+												<h6>BP</h6> <b><?php echo $fetchrow["bp"]; ?></b></div>
+										</div>
+												<!--remove this for mobile-->
+										<div style="height: 280px;">
+											<div id="placeholder" class="demo-placeholder"></div>
+										</div>
+                            </div>
                                 
                                
                             <div class="tab-pane" id="medrep">
@@ -674,6 +726,105 @@ $(document).ready(function() {
 });
 	
 </script>
+	
+	<!-- Flot Charts JavaScript -->
+    <script src="../plugins/bower_components/flot/jquery.flot.js"></script>
+    <script src="../plugins/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+	
+	<script type="text/javascript">
+    // Real Time chart
+
+
+    var data = [],
+        totalPoints = 200;
+
+    function getRandomData() {
+
+        if (data.length > 0)
+            data = data.slice(1);
+
+        // Do a random walk
+
+        while (data.length < totalPoints) {
+
+            var prev = data.length > 0 ? data[data.length - 1] : 50,
+                y = prev + Math.random() * 10 - 5;
+
+            if (y < 0) {
+                y = 0;
+            } else if (y > 100) {
+                y = 100;
+            }
+
+            data.push(y);
+        }
+
+        // Zip the generated y values with the x values
+
+        var res = [];
+        for (var i = 0; i < data.length; ++i) {
+            res.push([i, data[i]])
+        }
+
+        return res;
+    }
+
+    // Set up the control widget
+
+    var updateInterval = 20;
+    $("#updateInterval").val(updateInterval).change(function() {
+        var v = $(this).val();
+        if (v && !isNaN(+v)) {
+            updateInterval = +v;
+            if (updateInterval < 1) {
+                updateInterval = 1;
+            } else if (updateInterval > 2000) {
+                updateInterval = 2000;
+            }
+            $(this).val("" + updateInterval);
+        }
+    });
+
+    var plot = $.plot("#placeholder", [getRandomData()], {
+        series: {
+            shadowSize: 0 // Drawing is faster without shadows
+        },
+        yaxis: {
+            min: 0,
+            max: 200
+        },
+        xaxis: {
+            show: false
+        },
+        colors: ["#01c0c8"],
+        grid: {
+            color: "#AFAFAF",
+            hoverable: true,
+            borderWidth: 0,
+            backgroundColor: '#FFF'
+        },
+        tooltip: true,
+        resize: true,
+        tooltipOpts: {
+            content: "Y: %y",
+            defaultTheme: false
+        }
+
+
+    });
+
+    function update() {
+
+        plot.setData([getRandomData()]);
+
+        // Since the axes don't change, we don't need to call plot.setupGrid()
+
+        plot.draw();
+        setTimeout(update, updateInterval);
+    }
+
+    update();
+    </script>
     
 </body>
 
