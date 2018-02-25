@@ -283,6 +283,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <div class="form-group">
                                                         <label>State</label>
                                                         <select class="form-control" name="state" required>
+														<option value="" selected disabled hidden>Select State</option>
                                                         <?php include 'assets/states.php'; ?>
 														</select>
                                                     </div>
