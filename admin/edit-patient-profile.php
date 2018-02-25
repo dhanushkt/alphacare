@@ -29,10 +29,14 @@ elseif($fetchrow['temp']> '105')
 //calculate sugar percentage min:72 max:140
 $sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
 
-
+//calculate bloodpreasure percentage min:70/40 max: 180/100 (has bugs!)
 $bpraw=$fetchrow['bp'];
-$bpval = ucfirst(str_replace( array("/"), array(""),$bpraw));
-$bpper=(($bpval-8050)/(170100-8050))*1000;
+$bpval1=substr($bpraw,4,2);
+$bpper1=(($bpval1-40)/(100-40))*100;
+$bpval2=substr($bpraw,0,3);
+$bpvalfilter=ucfirst(str_replace( array("/"), array(""),$bpval2));
+$bpper2=(($bpvalfilter-70)/(180-70))*100;
+$avgbpval=($bpper1+$bpper2)/2;
 
 //update patient profile
 if(isset($_POST['updateprofile']))
@@ -264,11 +268,11 @@ if(isset($_POST['updatemedic']))
                         <div class="white-box">
                             <ul class="nav customtab nav-tabs" role="tablist">
                                 <!--<li role="presentation" class="nav-item"><a href="#home" class="nav-link " aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-home"></i></span><span class="hidden-xs"> Activity</span></a></li>-->
-                                <li role="presentation" class="nav-item"><a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-user"></i></span> <span class="hidden-xs">Info</span></a></li>
-                                <li role="presentation" class="nav-item"><a href="#medrep" class="nav-link" aria-controls="medrep" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">Medical Report</span></a></li>
-                                <li role="presentation" class="nav-item"><a href="#updatemedicinfo" class="nav-link" aria-controls="updatemedicinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Update Medical Info</span></a></li>
-								<li role="presentation" class="nav-item"><a href="#editpatientinfo" class="nav-link" aria-controls="editpatientinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Edit Patient Info</span></a></li>
-								<li role="presentation" class="nav-item"><a href="#removepatient" class="nav-link" aria-controls="removepatient" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-key"></i></span> <span class="hidden-xs">Remove</span></a></li>
+                                <li role="presentation" class="nav-item"><a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-wheelchair"></i></span> <span class="hidden-xs">Info</span></a></li>
+                                <li role="presentation" class="nav-item"><a href="#medrep" class="nav-link" aria-controls="medrep" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-stethoscope"></i></span> <span class="hidden-xs">Medical Report</span></a></li>
+                                <li role="presentation" class="nav-item"><a href="#updatemedicinfo" class="nav-link" aria-controls="updatemedicinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-refresh"></i></span> <span class="hidden-xs">Update Medical Info</span></a></li>
+								<li role="presentation" class="nav-item"><a href="#editpatientinfo" class="nav-link" aria-controls="editpatientinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-pencil"></i></span> <span class="hidden-xs">Edit Patient Info</span></a></li>
+								<li role="presentation" class="nav-item"><a href="#removepatient" class="nav-link" aria-controls="removepatient" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-trash"></i></span> <span class="hidden-xs">Remove</span></a></li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="profile">
@@ -279,7 +283,7 @@ if(isset($_POST['updatemedic']))
 									</div>
 									<div class="col-md-3 col-xs-6 b-r"> <strong>Disease</strong>
 										<br>
-										<p class="text-muted"><?php echo $fetchrow["disease"]; echo $fetchrow['bp']; echo $bpval;  ?></p>
+										<p class="text-muted"><?php echo $fetchrow["disease"];?></p>
 									</div>
 									<div class="col-md-3 col-xs-6 b-r"> <strong>Date of birth</strong>
 										<br>
@@ -296,21 +300,17 @@ if(isset($_POST['updatemedic']))
 										<hr>
 										<h4 class="m-t-30">General Report</h4>
 										<hr>
-										<h5>Heart Beat <span class="pull-right">80</span></h5>
-										<div class="progress">
-											<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%;"> <span class="sr-only">50% Complete</span> </div>
-										</div>
 										<h5>Blood Pressure<span class="pull-right"><?php echo $fetchrow["bp"]; ?></span></h5>
 										<div class="progress">
-											<div class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $bpper ?>%;"> <span class="sr-only">50% Complete</span> </div>
+											<div class="progress-bar progress-bar-custom wow animated progress-animated" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $avgbpval ?>%;"> <span class="sr-only">50% Complete</span> </div>
 										</div>
 										<h5>Sugar<span class="pull-right"><?php echo $fetchrow["sugar"]; ?></span></h5>
 										<div class="progress">
-											<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="<?php echo $fetchrow["sugar"]; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $sugarper ?>%;"> <span class="sr-only">50% Complete</span> </div>
+											<div class="progress-bar progress-bar-primary wow animated progress-animated" role="progressbar" aria-valuenow="<?php echo $fetchrow["sugar"]; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $sugarper ?>%;"> <span class="sr-only">50% Complete</span> </div>
 										</div>
 										<h5>Temprature<span class="pull-right"><?php echo $fetchrow["temp"]." °F"; ?></span></h5>
 										<div class="progress">
-											<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="102" aria-valuemin="97" aria-valuemax="105" style="width:<?php echo $tempper ?>%;"> <span class="sr-only">50% Complete</span> </div>
+											<div class="progress-bar progress-bar-danger wow animated progress-animated" role="progressbar" aria-valuenow="102" aria-valuemin="97" aria-valuemax="105" style="width:<?php echo $tempper ?>%;"> <span class="sr-only">50% Complete</span> </div>
 										</div>
 										<h4 class="m-t-30">ECG Report</h4>
 										<hr>
