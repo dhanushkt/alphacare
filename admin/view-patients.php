@@ -37,7 +37,7 @@ $ausername=$_SESSION['ausername'];
                 <div class="row bg-title">
                     <!-- .page title -->
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Doctors</h4>
+                        <h4 class="page-title">Patients</h4>
                     </div>
                     <!-- /.page title -->
                     <!-- .breadcrumb -->
@@ -48,32 +48,10 @@ $ausername=$_SESSION['ausername'];
                     <!-- /.breadcrumb -->
                 </div>
                 <!--DNS added Dashboard content-->
-
-                 <!--DNS Added Model-->
-                <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title">EDIT Instructions</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                       	 To Edit Admin information or to delete Admin account you need to login to that admin account.
-										</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                            <a href="logout.php" class="btn btn-danger waves-effect waves-light">Proceed for login</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                         <!--DNS model END-->
-
-
-                <!--row -->
+               <!--row -->
                 <div class="row">
                 <?php
-					$query = "SELECT 	doc_id,username, email, qualification, gender, phone FROM doctors";
+					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj FROM patients";
 					$result = mysqli_query($connection, $query);
 					foreach($result as $key=>$result)
 				{ ?>
@@ -84,13 +62,16 @@ $ausername=$_SESSION['ausername'];
                                     <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" class="img-circle img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Dr. <?php echo $result["username"]; ?></h3> <small><?php echo $result["qualification"]; ?></small>
+                                    <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>
                                     <p>
-										<a href="mailto:<?php echo $result["email"]; ?>"> <?php echo $result["email"]; ?> </a> <br>
-										<i class="fa fa-phone"></i><?php echo $result["phone"]; ?>
+										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><?php echo $result["email"]; ?> </a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
+										<i class="fa fa-phone"></i><?php echo " ".$result["phone"]; ?> <br>
+										<i class="fa fa-hospital-o"></i><?php $date=$result['doj'];
+											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
+											$dojc = $myDateTime->format('d-m-Y');  echo " ".$dojc; ?>
 										<div class="p-t-5">
-											<a href="edit-docprofile.php?id=<?php echo $result["doc_id"]; ?>" class="fcbtn btn btn-info">Edit</a>
-											<a href="#" class="fcbtn btn btn-danger model_img deleteDoctor" data-id="<?php echo $result["doc_id"]; ?>" id="deleteDoc">Delete</a>
+											<a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>" class="fcbtn btn btn-info">More Info</a>
+											<!--<a href="#" class="fcbtn btn btn-danger model_img deleteDoctor" data-id="<?php // echo $result["doc_id"]; ?>" id="deleteDoc">Delete</a>-->
 									    </div>
                                     </p>
                                 </div>
