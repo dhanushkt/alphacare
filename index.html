@@ -53,57 +53,84 @@
 </head>
 <body>
     <!-- Start Header Section -->
-    <header id="header-1">
-        <div class="layer-stretch hdr">
-            <div class="tbl animated fadeInDown">
-                <div class="tbl-row">
-                    <!-- Start Header Logo Section -->
-                    <div class="tbl-cell hdr-logo">
-                        <a href="index.html"><img src="landerpage/images/logo.png" alt=""><h2 style="color:aliceblue;"></h2></a>
-                    </div><!-- End Header Logo Section -->
-                    <div class="tbl-cell hdr-menu">
-                        <!-- Start Menu Section -->
-                        <ul class="menu">
+    <header id="header-3">
+        <div class="layer-stretch hdr-center">
+            <div class="row align-items-center">
+                <div class="col-md-5 hidden-xs">
+                    <div class="hdr-center-account text-left p-0">
+                        <a class="font-14 mr-4"><i class="fa fa-sign-in"></i>Login</a>
+                        <a class="font-14"><i class="fa fa-user-o"></i>Register</a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="hdr-center-logo text-center">
+                        <a href="index.html" class="d-inline-block"><img src="images/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-md-5 hidden-xs">
+                    <div class="pull-right">
+                        <ul class="social-list social-list-bordered">
                             <li>
-                                <a id="menu-home" href="#slider">Home </a>
-
-                            </li>
-                            <li class="menu-megamenu-li">
-                                <a id="service" href="#service1">Services</a>
-
-                            </li>
-                            <li>
-                                <a id="menu-service" href="#about">About Us</a>
-
-                            </li>
-                            <li class="menu-megamenu-li">
-                                <a id="menu-doctor" href="#contact">Contact Us</a>
-
+                                <a href="#" id="hdr-facebook" class="fa fa-facebook rounded"></a>
+                                <span class="mdl-tooltip mdl-tooltip--bottom" data-mdl-for="hdr-facebook">Facebook</span>
                             </li>
                             <li>
-                                <a id="menu-blog" href="#locate" >Locate Us
-                                </a>
-
+                                <a href="#" id="hdr-twitter" class="fa fa-twitter rounded"></a>
+                                <span class="mdl-tooltip mdl-tooltip--bottom" data-mdl-for="hdr-twitter">Twitter</span>
                             </li>
-                            <li class="menu-megamenu-li">
-                                <a id="service2" href="login/" >Login</a>
-
+                            <li>
+                                <a href="#" id="hdr-google" class="fa fa-google rounded"></a>
+                                <span class="mdl-tooltip mdl-tooltip--bottom" data-mdl-for="hdr-google">Google</span>
                             </li>
-                            <li><div class="col-md-auto pl-3 d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect hdr-apointment"><i class="fa fa-calendar m-0 color-white"></i> Make An Appointment</button>
-                        </div></li>
-
-                            <li class="mobile-menu-close"><i class="fa fa-times"></i></li>
-                        </ul><!-- End Menu Section -->
-                      <div id="menu-bar"><a><i class="fa fa-bars"></i></a></div>
+                            <li>
+                                <a href="#" id="hdr-instagram" class="fa fa-instagram rounded"></a>
+                                <span class="mdl-tooltip mdl-tooltip--bottom" data-mdl-for="hdr-instagram">Instagram</span>
+                            </li>
+                            <li>
+                                <a href="#" id="hdr-youtube" class="fa fa-youtube rounded"></a>
+                                <span class="mdl-tooltip mdl-tooltip--bottom" data-mdl-for="hdr-youtube">Youtube</span>
+                            </li>
+                            <li>
+                                <a href="#" id="hdr-linkedin" class="fa fa-linkedin rounded"></a>
+                                <span class="mdl-tooltip mdl-tooltip--bottom" data-mdl-for="hdr-linkedin">Linkedin</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </header><!-- End Header Section -->
+        <div class="hdr-center-menu">
+            <div class="hdr layer-stretch">
+                <div class="row align-items-center justify-content-end">
+                    <!-- Start Menu Section -->
+                    <ul class="col menu text-left">
+                        <li>
+                            <a id="slider" class="mdl-button mdl-js-button mdl-js-ripple-effect">Home <i class="fa fa-chevron-down"></i></a>
+                        </li>
+                        
+                        <li>
+                            <a id="menu-service" class="mdl-button mdl-js-button mdl-js-ripple-effect">Service <i class="fa fa-chevron-down"></i></a>  </li>                      
+                        <li class="mobile-menu-close"><i class="fa fa-times"></i></li>
+                    </ul><!-- End Menu Section -->
+                    <div class="col col-md-auto d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                        <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect hdr-apointment"><i class="fa fa-calendar m-0 color-white"></i> Make An Appointment</button>
+                    </div>
+                    <div class="col-2 col-md-auto col-lg-auto">
+                        <div class="mdl-button mdl-js-button mdl-button--fab hdr-search">
+                            <i class="fa fa-search fa-2x color-white"></i>
+                        </div>
+                    </div>
+                    <div id="menu-bar" class="col-2 col-md-auto"><a><i class="fa fa-bars color-white"></i></a></div>
+                </div>
+                <div class="search-banner animated fadeInUp">
+                    <input type="text" placeholder="Search your Query ...">
+                </div>
+            </div>
+        </div>
+    </header><!-- End Header -->
     <!-- Start Slider Section -->
 
-    <div id="slider" class="slider-1">
+    <div id="slider1" class="slider-1">
         <div class="flexslider slider-wrapper">
             <ul class="slides">
                 <li>
