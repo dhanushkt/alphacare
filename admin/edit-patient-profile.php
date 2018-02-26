@@ -338,10 +338,10 @@ if(isset($_POST['updatemedic']))
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>BP (mm Hg) </th>
-                                            <th>Sugar (mg/dl)</th>
-                                            <th>Temprature (°F)</th>
-											<th>Date</th>
+                                            <th nowrap>BP (mm Hg)</th>
+                                            <th nowrap>Sugar (mg/dl)</th>
+                                            <th nowrap>Temprature (°F)</th>
+											<th nowrap>Date</th>
                                         </tr>
                                     </thead>
 									<tbody>
@@ -357,7 +357,7 @@ if(isset($_POST['updatemedic']))
                                             <td><?php echo $medinfores["bp"]; ?></td>
                                             <td><?php echo $medinfores["sugar"]; ?></td>
                                             <td><?php echo $medinfores["temp"]; ?></td>
-											<td><?php $date=$medinfores["date"];
+											<td nowrap><?php $date=$medinfores["date"];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
 											$datec = $myDateTime->format('d-m-Y');  echo $datec; ?></td>
                                         </tr> 
