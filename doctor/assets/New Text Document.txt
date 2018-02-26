@@ -1,6 +1,0 @@
-csslink.php
-jslink.php
-header.php
-sidebar.php
-breadcrumbs.php
-footer.php
