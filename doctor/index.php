@@ -1,5 +1,6 @@
 <?php
 include '../login/accesscontroldoc.php';
+require('connect.php');
 if(isset($_SESSION['dusername']))
 {
 	$ausername=$_SESSION['dusername'];
@@ -8,7 +9,9 @@ else if(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
+
 ?>
+
 <!DOCTYPE html>
 <!--
    This is a starter template page. Use this page to start your new project from

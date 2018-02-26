@@ -38,7 +38,12 @@
                     <!-- /.Task dropdown -->
                     <!-- .user dropdown -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="../plugins/images/users/user(2).png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $ausername; ?></b> </a>
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
+							<?php
+							$queryimg="SELECT gender FROM doctors WHERE username='$ausername'";
+							$resultimg = mysqli_query($connection, $queryimg);
+							$rowimg = mysqli_fetch_assoc($resultimg);
+							if($rowimg["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" width="36" class="img-circle"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" width="36" class="img-circle"> <?php } ?><b class="hidden-xs"><?php echo $ausername; ?></b> </a>
                         <ul class="dropdown-menu dropdown-user scale-up">
                             <li><a href="my-profile.php"><i class="ti-user"></i> My Profile</a></li>
                             <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>

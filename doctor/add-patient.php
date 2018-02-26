@@ -283,6 +283,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <div class="form-group">
                                                         <label>State</label>
                                                         <select class="form-control" name="state" required>
+														<option value="" selected disabled hidden>Select State</option>
                                                         <?php include 'assets/states.php'; ?>
 														</select>
                                                     </div>
@@ -328,7 +329,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>disease</label>
+                                                        <label>Disease</label>
                                                         <input type="text" name="disease" class="form-control">
                                                     </div>
                                                 </div>
@@ -336,7 +337,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Blood Group</label>
-                                                        <input name="bg" type="text" class="form-control">
+                                                        <select class="form-control" name="bg">
+															<option>Select Blood group</option>
+															<option value="A +'ve">A +'ve</option>
+															<option value="A -'ve">A -'ve</option>
+															<option value="B +'ve">B +'ve</option>
+															<option value="B -'ve">B -'ve</option>
+															<option value="AB +'ve">AB +'ve</option>
+															<option value="AB -'ve">AB -'ve</option>
+															<option value="O +'ve">O +'ve</option>
+															<option value="O -'ve">O -'ve</option>
+														</select>
+                                                        
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -345,7 +357,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Blood Preasure</label>
-                                                        <input name="bp" type="text" class="form-control">
+                                                        <input name="bp" type="text" class="form-control" data-mask="999/99">
+                                                        <span class="font-13 text-muted">in mm Hg</span>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -353,6 +366,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <div class="form-group">
                                                         <label>Sugar</label>
                                                         <input type="text" name="sugar" class="form-control">
+                                                        <span class="font-13 text-muted">in mg/dl</span>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -362,13 +376,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <div class="form-group">
                                                         <label>Height</label>
                                                         <input type="text" name="height" class="form-control">
+                                                         <span class="font-13 text-muted">in cm</span>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Weight</label>
-                                                        <input type="text" name="weight" class="form-control">
+                                                        <input type="number" name="weight" class="form-control">
+                                                        <span class="font-13 text-muted">in kg</span>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -378,6 +394,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                     <div class="form-group">
                                                         <label>Temperature</label>
                                                         <input type="text" name="temp" class="form-control">
+                                                        <span class="font-13 text-muted">in °F</span>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -387,7 +404,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <label>Date of entry</label>
                                                         <div class="input-group">
 															<div class="input-group-addon"><i class="icon-calender"></i></div>
-															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker" name="doe" placeholder="dd-mm-yyyy">
+															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy">
 														</div>
                                                     </div>
                                                 </div>
