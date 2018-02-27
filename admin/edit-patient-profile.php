@@ -29,14 +29,12 @@ elseif($fetchrow['temp']> '105')
 //calculate sugar percentage min:72 max:140
 $sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
 
-//calculate bloodpreasure percentage min:70/40 max: 180/100 (has bugs!)
-$bpraw=$fetchrow['bp'];
-$bpval1=substr($bpraw,4,2);
-$bpper1=(($bpval1-40)/(100-40))*100;
-$bpval2=substr($bpraw,0,3);
-$bpvalfilter=ucfirst(str_replace( array("/"), array(""),$bpval2));
-$bpper2=(($bpvalfilter-70)/(180-70))*100;
-$avgbpval=($bpper1+$bpper2)/2;
+//calculate bloodpreasure percentage min:70/40 max: 180/100
+$bp_value = $fetchrow['bp'];
+$bp = explode("/",$bp_value);
+
+$upper_bp = $bp[0];
+$lower_bp = $bp[1];
 
 //update patient profile
 if(isset($_POST['updateprofile']))
@@ -54,7 +52,7 @@ if(isset($_POST['updateprofile']))
 		$city=mysqli_real_escape_string($connection,$_POST['city']);
 		$pc=mysqli_real_escape_string($connection,$_POST['pc']);
 		$phone=mysqli_real_escape_string($connection,$_POST['phone']);
-		
+
 		$updatequery="UPDATE patients SET fname='$fname', lname='$lname', dob='$dob', gender='$gender', phone='$phone', email='$email', al1='$al1', al2='$al2', state='$state', city='$city', pc='$pc' WHERE p_id='$id'";
 		$updatequeryresult=mysqli_query($connection, $updatequery);
 		if($updatequeryresult)
@@ -63,9 +61,9 @@ if(isset($_POST['updateprofile']))
 			$resultupdate = mysqli_query($connection, $queryupdate);
 			$row = mysqli_fetch_assoc($resultupdate);
 			$smsg="PATIENT INFORMATION UPDATED";
-			
+
 		}
-	
+
 }
 //update medical info
 if(isset($_POST['updatemedic']))
@@ -82,7 +80,7 @@ if(isset($_POST['updatemedic']))
 	$doe = $myDateTime2->format('Y-m-d');
 
 	$insertmed="INSERT INTO `medical_info`(p_id, disease, bgroup, bp, sugar, temp, height, weight, date) VALUES ('$id','$disease','$bg','$bp','$sugar','$temp','$height','$weight','$doe')";
-	$result2 = mysqli_query($connection, $insertmed); 
+	$result2 = mysqli_query($connection, $insertmed);
 	if($result2)
 	{
 		$smsg="MEDICAL INFORMATION UPDATED";
@@ -111,13 +109,13 @@ if(isset($_POST['updatemedic']))
     <meta name="author" content="Dhanush KT, Nishanth Bhat">
     <!--csslink.php includes fevicon and title-->
     <?php include 'assets/csslink.php'; ?>
-      
+
 	<link href="../plugins/bower_components/jqueryui/jquery-ui.min.css" rel="stylesheet">
 	<link href="../plugins/bower_components/lobipanel/dist/css/lobipanel.min.css" rel="stylesheet">
-	
+
 	<!-- Date picker plugins css -->
     <link href="../plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
-	
+
       <!-- username check js start -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
 <script type="text/javascript">
@@ -142,9 +140,9 @@ if(isset($_POST['updatemedic']))
 	} //finishAjax
 </script>
 <!-- username check js end -->
-      
-      
-      
+
+
+
 </head>
 
 <body class="fix-sidebar">
@@ -172,7 +170,7 @@ if(isset($_POST['updatemedic']))
                     <!-- /.breadcrumb -->
                 </div>
                 <!--DNS added Dashboard content-->
-                
+
                  <!--DNS Added Model-->
                 <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog">
@@ -192,20 +190,20 @@ if(isset($_POST['updatemedic']))
                                 </div>
                             </div>
                          <!--DNS model END-->
-               
-                
+
+
                 <!--row -->
                 <?php if(isset($fmsg)) { ?>
 									<div class="alert alert-danger alert-dismissable">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										 <?php echo $fmsg; ?>
-									</div> 
-					            <?php }?> 
+									</div>
+					            <?php }?>
 							<?php if(isset($smsg)) { ?>
 									<div class="alert alert-success alert-dismissable">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										 <?php echo $smsg; ?>
-									</div> 
+									</div>
 				<?php }?>
                 <div class="row">
                     <div class="col-md-4 col-xs-12">
@@ -261,7 +259,7 @@ if(isset($_POST['updatemedic']))
                                     <p class="text-danger"><i class="ti-google"></i></p>
                                     <h1>140</h1> </div>-->
                             </div>
-                          
+
                         </div>
                     </div>
                     <div class="col-md-8 col-xs-12">
@@ -295,7 +293,7 @@ if(isset($_POST['updatemedic']))
 										<br>
 										<p class="text-muted"><?php echo $fetchrow["bgroup"] ?></p>
 									</div>
-										
+
                                     </div>
 										<hr>
 										<h4 class="m-t-30">General Report</h4>
@@ -325,8 +323,8 @@ if(isset($_POST['updatemedic']))
 											<div id="placeholder" class="demo-placeholder"></div>
 										</div>
                             </div>
-                                
-                               
+
+
                             <div class="tab-pane" id="medrep">
                              <div class="row">
 								 <div class="col-md-12">
@@ -360,18 +358,18 @@ if(isset($_POST['updatemedic']))
 											<td nowrap><?php $date=$medinfores["date"];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
 											$datec = $myDateTime->format('d-m-Y');  echo $datec; ?></td>
-                                        </tr> 
-                       
+                                        </tr>
+
 									<?php } ?>
 											</tbody>
 										</table>
 									</div>
-								
+
 								 </div>
 								</div>
 								</div>
                                 </div>
-                                
+
                   <div class="tab-pane" id="updatemedicinfo">
 					<div class="row">
                     <div class="col-md-12">
@@ -393,7 +391,7 @@ if(isset($_POST['updatemedic']))
                                                     <div class="form-group">
                                                         <label>Blood Group</label>
                                                         <select class="form-control" name="bg">
-															
+
 															<option <?php if($fetchrow["bgroup"]=="A +'ve"){echo 'selected';}?> value="A +'ve">A +'ve</option>
 															<option <?php if($fetchrow["bgroup"]=="A -'ve"){echo 'selected';}?> value="A -'ve">A -'ve</option>
 															<option <?php if($fetchrow["bgroup"]=="B +'ve"){echo 'selected';}?> value="B +'ve">B +'ve</option>
@@ -403,7 +401,7 @@ if(isset($_POST['updatemedic']))
 															<option <?php if($fetchrow["bgroup"]=="O +'ve"){echo 'selected';}?> value="O +'ve">O +'ve</option>
 															<option <?php if($fetchrow["bgroup"]=="O -'ve"){echo 'selected';}?> value="O -'ve">O -'ve</option>
 														</select>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -465,11 +463,11 @@ if(isset($_POST['updatemedic']))
                                                 </div>
                                                 <!--/span-->
                                             </div>
-                                            
+
                                         </div>
                                         <div class="form-actions">
                                             <button type="submit" name="updatemedic" class="btn btn-success"> <i class="fa fa-check"></i> UPDATE</button>
-                                            
+
                                         </div>
                                     </form>
                                 </div>
@@ -477,9 +475,9 @@ if(isset($_POST['updatemedic']))
                         </div>
                     </div>
                 </div>
-                                
+
 			</div> <!--update medic info tab end-->
-								
+
 			<div class="tab-pane" id="editpatientinfo"><!--edit patient profile tab starts-->
 			<div class="row">
                     <div class="col-md-12">
@@ -560,7 +558,7 @@ if(isset($_POST['updatemedic']))
                                                         <input type="email" name="email" id="lastName" class="form-control" placeholder="Enter email address" data-error="email address is invalid" value="<?php echo $row['email']; ?>">
                                                         <div class="help-block with-errors"></div>
                                                          </div>
-                                                         
+
                                                 </div>
                                                 <!--/span-->
                                             </div>
@@ -584,7 +582,7 @@ if(isset($_POST['updatemedic']))
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                
+
                                                 <!--/span-->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -609,11 +607,11 @@ if(isset($_POST['updatemedic']))
                                                     <div class="form-group">
                                                         <label>Zip Code</label>
                                                         <input name="pc" required data-minlength="6" data-error="Invalid zip code" type="number" class="form-control" value="<?php echo $row['pc']; ?>">
-                                                        <div class="help-block with-errors"></div> 
+                                                        <div class="help-block with-errors"></div>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
-                                                
+
                                                 <!--/span-->
                                             </div>
                                         </div>
@@ -625,23 +623,23 @@ if(isset($_POST['updatemedic']))
                             </div>
                         </div>
                     </div>
-                </div>	
-										
-			</div> <!--edit patient profile tab ends-->   
-			<div class="tab-pane" id="removepatient"> <!--edit patient profile tab ends--> 
+                </div>
+
+			</div> <!--edit patient profile tab ends-->
+			<div class="tab-pane" id="removepatient"> <!--edit patient profile tab ends-->
 				<div class="text-center">
 				<a href="#" class="fcbtn btn btn-danger model_img deleteAdmin" data-id="<?php echo $id ?>" id="deleteDoc">Remove Patient Record</a>
 				</div>
-				
-				
-			</div>					
+
+
+			</div>
                             </div>
                         </div>
                     </div>
                 </div>
-              
+
                 <!--/row -->
-                
+
                 <!--DNS End-->
                 <!-- .row -->
                 <!--<div class="row">
@@ -677,11 +675,11 @@ if(isset($_POST['updatemedic']))
             editTitle: false,
 			close: false,
 			minimize: false,
-			
+
         });
     });
     </script>
-	
+
 	<!-- Date Picker Plugin JavaScript -->
     <script src="../plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="../plugins/js/mask.js"></script>
@@ -706,7 +704,7 @@ $(document).ready(function() {
           closeOnConfirm: false,
 		  closeOnCancel: false
       },function(isConfirm)
-		 {   
+		 {
            if (isConfirm) {
 			   $.ajax({
 			  url: 'deletepatient.php?id='+id,
@@ -716,21 +714,21 @@ $(document).ready(function() {
 				swal("Deleted!", "Data has been deleted.", "success");
 				window.location.replace("view-patients.php");
           }
-        });   
-            } else {     
-                swal("Cancelled", "Patient information is safe :)", "error");   
+        });
+            } else {
+                swal("Cancelled", "Patient information is safe :)", "error");
             }
       });
   });
 
 });
-	
+
 </script>
-	
+
 	<!-- Flot Charts JavaScript -->
     <script src="../plugins/bower_components/flot/jquery.flot.js"></script>
     <script src="../plugins/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
-	
+
 	<script type="text/javascript">
     // Real Time chart
 
@@ -825,7 +823,7 @@ $(document).ready(function() {
 
     update();
     </script>
-    
+
 </body>
 
 </html>
