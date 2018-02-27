@@ -36,6 +36,10 @@ $bp = explode("/",$bp_value);
 $upper_bp = $bp[0];
 $lower_bp = $bp[1];
 
+$bpper_upper=(($upper_bp-70)/(180-70))*100;
+$bpper_lower=(($lower_bp-40)/(100-40))*100;
+$avgbpval=($bpper_upper+$bpper_lower)/2;
+
 //update patient profile
 if(isset($_POST['updateprofile']))
 {
