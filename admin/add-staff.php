@@ -16,9 +16,9 @@ if (isset($_POST['staffsubmit']))
 		$repassword= md5($_POST['retypepassword']);
 		//sqll query
 		//double quotes outside so we can use single quotes inside
-		if($password == $repassword) 
+		if($password == $repassword)
 		{
-			
+
 			$usersql="SELECT * FROM `staffs` WHERE username='$username'";
 			$checkuser=mysqli_query($connection, $usersql);
 			$countu=mysqli_num_rows($checkuser);
@@ -31,10 +31,10 @@ if (isset($_POST['staffsubmit']))
 			}
 			else
 			{
-			
+
 				$query="INSERT INTO `staffs`(fname, lname, username, email, gender, phone, floor, password) VALUES ('$fname','$lname','$username','$email','$gender','$phone','$floor','$password')";
-				$result = mysqli_query($connection, $query); 
-				//takes two arguments 
+				$result = mysqli_query($connection, $query);
+				//takes two arguments
 				if($result)
 				{
 					$smsg = "User Created Successfully.";
@@ -47,7 +47,7 @@ if (isset($_POST['staffsubmit']))
 		}
 		else
 		{
-			$fmsg="Password Doesn't Match"; 
+			$fmsg="Password Doesn't Match";
 		}
 	}
 
@@ -115,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
-				
+
 				<!--- imported add-doctors---->
 				<!--Script to copy the input from fname to username-->
 				<script>
@@ -124,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					document.getElementById("username").value = text1;
 					}
 				</script>
-				
+
 				<div class="row">
 				<div class="col-sm-12">
                         <div class="white-box">
@@ -134,15 +134,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<div class="alert alert-danger alert-dismissable">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										 <?php echo $fmsg; ?>
-									</div> 
-					            <?php }?> 
+									</div>
+					            <?php }?>
 							<?php if(isset($smsg)) { ?>
 									<div class="alert alert-success alert-dismissable">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										 <?php echo $smsg; ?>
-									</div> 
+									</div>
 							<?php }?>
-                              
+
                          		<div class="row">
                                 	<div class="col-md-6">
                                        <div class="form-group">
@@ -166,7 +166,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									 </div>
                                     <!--/span-->
                                  </div>
-                               
+
                                 <div class="form-group">
                                     <label for="inputName1" class="control-label">Username</label>
                                     <input type="text" class="form-control" autocomplete="off" id="username" name="username" placeholder="Username is used to login" required>
@@ -192,7 +192,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label class="col-sm-12 p-l-0">Floor</label>
                                     <div class="col-sm-12 p-l-0">
@@ -200,18 +200,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <option>Select Floor</option>
                                             <option value="G">Ground floor</option>
                                             <option value="1">1st floor</option>
-                                            <option value="1">2nd floor</option>
-                                            <option value="1">3rd floor</option>
+                                            <option value="2">2nd floor</option>
+                                            <option value="3">3rd floor</option>
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="example-phone">Phone</span>
                                     </label>
-                                    
+
                                         <input type="text" required id="example-phone" name="phone" class="form-control" placeholder="enter your phone number">
-                                    
+
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPassword" class="control-label">Password</label>
