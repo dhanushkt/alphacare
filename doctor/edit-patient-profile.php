@@ -1,7 +1,14 @@
 <?php
-include '../login/accesscontroladmin.php';
+include '../login/accesscontroldoc.php';
 require('connect.php');
-$ausername=$_SESSION['ausername'];
+if(isset($_SESSION['dusername']))
+{
+	$ausername=$_SESSION['dusername'];
+}
+elseif(isset($_SESSION['ausername']))
+{
+	$ausername=$_SESSION['ausername'];
+}
 $id = $_GET['id'];
 
 $query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj FROM patients WHERE p_id='$id'";
