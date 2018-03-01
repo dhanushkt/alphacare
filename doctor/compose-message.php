@@ -14,11 +14,12 @@ if(isset($_POST['msgsubmit']))
 {
 	$from=$ausername;
 	$to=mysqli_real_escape_string($connection,$_POST['to_uname']);
+	$subject=mysqli_real_escape_string($connection,$_POST['subject']);
 	$msg=mysqli_real_escape_string($connection,$_POST['msg']);
 	$user_read="0";
 	//$timestamp= time();
 	//$timeconverted=date('Y-m-d H:i:s',$timestamp);
-	$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_body, timestamp) VALUES ('$from','$to','$msg', now())";
+	$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_subject, msg_body, timestamp) VALUES ('$from','$to','$subject','$msg', now())";
 	$inputresult=mysqli_query($connection,$inputmsg);
 	if($inputresult)
 	{
@@ -95,7 +96,7 @@ if(isset($_POST['msgsubmit']))
                                 <div class="col-lg-2 col-md-3  col-sm-4 col-xs-12 inbox-panel">
                                     <div> <a href="compose-message.php" class="btn btn-custom btn-block waves-effect waves-light">Compose</a>
                                         <div class="list-group mail-list m-t-20">
-											<a href="inbox.html" class="list-group-item">Inbox <span class="label label-rouded label-success pull-right">5</span></a>
+											<a href="inbox.php" class="list-group-item">Inbox <span class="label label-rouded label-success pull-right">5</span></a>
 										
 											<a href="#" class="list-group-item">Sent Mail</a> 
 										</div>
@@ -154,9 +155,9 @@ if(isset($_POST['msgsubmit']))
 
                                         <!--<input class="form-control" placeholder="To:">-->
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <input class="form-control" placeholder="Subject:">
-                                    </div> -->
+                                     <div class="form-group">
+                                        <input name="subject" class="form-control" placeholder="Subject:">
+                                    </div> 
                                     <div class="form-group">
                                         <textarea class="textarea_editor form-control" rows="15" placeholder="Enter text ..." name="msg"></textarea>
                                     </div>
