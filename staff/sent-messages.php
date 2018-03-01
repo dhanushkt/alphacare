@@ -1,9 +1,9 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
+if(isset($_SESSION['susername']))
 {
-	$ausername=$_SESSION['dusername'];
+	$ausername=$_SESSION['susername'];
 }
 else if(isset($_SESSION['ausername']))
 {
@@ -93,9 +93,9 @@ if(isset($_POST['msgsubmit']))
                                 <div class="col-lg-2 col-md-3  col-sm-12 col-xs-12 inbox-panel">
                                     <div> <a href="compose-message.php" class="btn btn-custom btn-block waves-effect waves-light">Compose</a>
                                         <div class="list-group mail-list m-t-20">
-											<a href="inbox.php" class="list-group-item active">Inbox <span class="label label-rouded label-success pull-right"><?php echo $countunread; ?></span></a>
+											<a href="inbox.php" class="list-group-item">Inbox <span class="label label-rouded label-success pull-right"><?php echo $countunread; ?></span></a>
 										
-											<a href="sent-messages.php" class="list-group-item">Sent Messages</a> 
+											<a href="sent-messages.php" class="list-group-item active">Sent Messages</a> 
 										</div>
                                         
                                     </div>
@@ -139,12 +139,12 @@ if(isset($_POST['msgsubmit']))
 											
                                             <tbody>
 												<?php 
-											$fetchmsg="SELECT * FROM messages WHERE to_name='$ausername'";
+											$fetchmsg="SELECT * FROM messages WHERE from_name='$ausername'";
 											$fetchresult=mysqli_query($connection, $fetchmsg);
 											while($fetchrow=mysqli_fetch_assoc($fetchresult))
 											{
 											?>
-                                                <tr class="<?php if($fetchrow['user_read']==0){ echo 'unread'; } ?>">
+                                                <tr>
                                                     <td>
                                                         <div class="checkbox m-t-0 m-b-0">
                                                             <input type="checkbox">
@@ -152,13 +152,13 @@ if(isset($_POST['msgsubmit']))
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
-													<td class="hidden-xs"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><?php echo $fetchrow["from_name"]; ?></a></td>
-                                                    <td class="max-texts"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
-                                                    <td class="hidden-xs"><i class="fa <?php if($fetchrow['user_read']==0){ echo 'fa-envelope';} else { echo 'fa-envelope-o'; } ?>"></i></td>
+													<td class="hidden-xs"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><?php echo 'Dr. '.$fetchrow["to_name"]; ?></a></td>
+                                                    <td style="overflow: hidden" class="max-texts"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
+                                                    <td class="hidden-xs"><i class="fa fa-paper-plane"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>
                                                 </tr>
 												<?php } ?>
-                                                
+         
                                             </tbody>
                                         </table>
                                     </div>

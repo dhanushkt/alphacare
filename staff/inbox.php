@@ -1,9 +1,9 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
+if(isset($_SESSION['susername']))
 {
-	$ausername=$_SESSION['dusername'];
+	$ausername=$_SESSION['susername'];
 }
 else if(isset($_SESSION['ausername']))
 {
@@ -13,6 +13,8 @@ else if(isset($_SESSION['ausername']))
 $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0')";
 $getunreadresult=mysqli_query($connection,$getunread);
 $countunread=mysqli_num_rows($getunreadresult);
+
+
 
 if(isset($_POST['msgsubmit']))
 {
@@ -84,6 +86,7 @@ if(isset($_POST['msgsubmit']))
                 </div>
                 <!--DNS added Dashboard content-->
                 <!--row -->
+
                 <div class="row">
                     <!-- Left sidebar -->
                     <div class="col-md-12">
@@ -115,7 +118,7 @@ if(isset($_POST['msgsubmit']))
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light m-r-5" data-toggle="dropdown" aria-expanded="false"> Filter <b class="caret"></b> </button>
                                                             <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="#fakelink">Read</a></li>
+                                                                <li><a href="#">Read</a></li>
                                                                 <li><a href="#fakelink">Unread</a></li>
                                                                 <li class="divider"></li>
                                                                 <li><a href="#fakelink">Separated link</a></li>
@@ -152,11 +155,12 @@ if(isset($_POST['msgsubmit']))
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
-													<td class="hidden-xs"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><?php echo $fetchrow["from_name"]; ?></a></td>
+													<td class="hidden-xs"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><?php echo 'Dr. '.$fetchrow["from_name"]; ?></a></td>
                                                     <td class="max-texts"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
                                                     <td class="hidden-xs"><i class="fa <?php if($fetchrow['user_read']==0){ echo 'fa-envelope';} else { echo 'fa-envelope-o'; } ?>"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>
                                                 </tr>
+												
 												<?php } ?>
                                                 
                                             </tbody>

@@ -1,9 +1,9 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
+if(isset($_SESSION['susername']))
 {
-	$ausername=$_SESSION['dusername'];
+	$ausername=$_SESSION['susername'];
 }
 else if(isset($_SESSION['ausername']))
 {
@@ -13,7 +13,6 @@ else if(isset($_SESSION['ausername']))
 $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0')";
 $getunreadresult=mysqli_query($connection,$getunread);
 $countunread=mysqli_num_rows($getunreadresult);
-
 
 if(isset($_POST['msgsubmit']))
 {
@@ -111,14 +110,8 @@ if(isset($_POST['msgsubmit']))
                                 <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 mail_listing">
                                     <h3 class="box-title">Compose New Message</h3>
 									<?php
-											$selectfloorG="SELECT username,fname,lname FROM staffs WHERE floor='G'";
-											$selectfloor1="SELECT username,fname,lname FROM staffs WHERE floor='1'";
-											$selectfloor2="SELECT username,fname,lname FROM staffs WHERE floor='2'";
-											$selectfloor3="SELECT username,fname,lname FROM staffs WHERE floor='3'";
-											$resultssG = mysqli_query($connection, $selectfloorG);
-											$resultss1 = mysqli_query($connection, $selectfloor1);
-											$resultss2 = mysqli_query($connection, $selectfloor2);
-											$resultss3 = mysqli_query($connection, $selectfloor3);
+											$selectdocs="SELECT username,fname,lname,specialist FROM doctors";
+											$resultdocs = mysqli_query($connection, $selectdocs);
 											
 									?>
 									<form method="post" data-toggle="validator">
@@ -126,35 +119,14 @@ if(isset($_POST['msgsubmit']))
 										<label class="col-sm-12 p-l-2">To:</label>
 										<div class="col-sm-13 p-l-0">
 											
-											<select required class="form-control selectpicker" data-style="form-control" name="to_uname">
+											<select required class="form-control" name="to_uname">
 												
-												<option value="" disabled hidden selected>Select Staff</option>
+												<option value="" disabled hidden selected>Select Doctor</option>
 												
-												<optgroup label="Ground Floor">
-													<?php while($rowg = mysqli_fetch_assoc($resultssG)) { ?>
-												 <option value="<?php echo $rowg["username"] ?>"> <?php echo $rowg["fname"].' '.$rowg["lname"] ?> </option>
+													<?php while($rowdocs = mysqli_fetch_assoc($resultdocs)) { ?>
+												<option value="<?php echo $rowdocs["username"] ?>"> <?php echo $rowdocs["fname"].' '.$rowdocs["lname"].' , '.$rowdocs["specialist"]; ?></option>
 												<?php } ?>
-						
-												</optgroup>
-												<optgroup label="1st floor">
-													
-												<?php while($row1 = mysqli_fetch_assoc($resultss1)) { ?>
-												 <option value="<?php echo $row1["username"] ?>"> <?php echo $row1["fname"].' '.$row1["lname"] ?> </option>
-												<?php } ?>
-												
-												</optgroup>
-												<optgroup label="2nd floor">
-													<?php while($row2 = mysqli_fetch_assoc($resultss2)) { ?>
-												 <option value="<?php echo $row2["username"] ?>"> <?php echo $row2["fname"].' '.$row2["lname"] ?> </option>
-												<?php } ?>
-												
-												</optgroup>
-												<optgroup label="3rd floor">
-													<?php while($row3 = mysqli_fetch_assoc($resultss3)) { ?>
-												 <option value="<?php echo $row3["username"] ?>"> <?php echo $row3["fname"].' '.$row3["lname"] ?> </option>
-												<?php } ?>
-												
-												</optgroup>
+
 											</select>
 										</div>
 
