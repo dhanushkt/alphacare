@@ -14,28 +14,6 @@ $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='
 $getunreadresult=mysqli_query($connection,$getunread);
 $countunread=mysqli_num_rows($getunreadresult);
 
-
-
-if(isset($_POST['msgsubmit']))
-{
-	$from=$ausername;
-	$to=mysqli_real_escape_string($connection,$_POST['to_uname']);
-	$msg=mysqli_real_escape_string($connection,$_POST['msg']);
-	$user_read="0";
-	//$timestamp= time();
-	//$timeconverted=date('Y-m-d H:i:s',$timestamp);
-	$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_body, timestamp) VALUES ('$from','$to','$msg', now())";
-	$inputresult=mysqli_query($connection,$inputmsg);
-	if($inputresult)
-	{
-		$smsg="Message sent successfully";
-	}
-	
-}
-
-
-
-
 ?>
 <!DOCTYPE html>
 <!--
@@ -58,6 +36,7 @@ if(isset($_POST['msgsubmit']))
 	<!-- wysihtml5 CSS -->
     <link rel="stylesheet" href="../plugins/bower_components/html5-editor/bootstrap-wysihtml5.css" />
 	<link href="../plugins/bower_components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+	
 </head>
 
 <body class="fix-sidebar">
@@ -86,7 +65,6 @@ if(isset($_POST['msgsubmit']))
                 </div>
                 <!--DNS added Dashboard content-->
                 <!--row -->
-
                 <div class="row">
                     <!-- Left sidebar -->
                     <div class="col-md-12">
@@ -118,7 +96,7 @@ if(isset($_POST['msgsubmit']))
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light m-r-5" data-toggle="dropdown" aria-expanded="false"> Filter <b class="caret"></b> </button>
                                                             <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="#">Read</a></li>
+                                                                <li><a href="#fakelink">Read</a></li>
                                                                 <li><a href="#fakelink">Unread</a></li>
                                                                 <li class="divider"></li>
                                                                 <li><a href="#fakelink">Separated link</a></li>
@@ -147,7 +125,14 @@ if(isset($_POST['msgsubmit']))
 											while($fetchrow=mysqli_fetch_assoc($fetchresult))
 											{
 											?>
-                                                <tr class="<?php if($fetchrow['user_read']==0){ echo 'unread'; } ?>">
+                                                <tr class="<?php if($fetchrow['user_read']==0){ echo 'unread'; } ?> " onclick="window.location='view-message.php?id=<?php echo $fetchrow["msg_id"] ?>';">
+													
+												<?php
+												$fetchdocusername=$fetchrow['from_name'];
+												$docfullname="SELECT fname,lname from doctors WHERE username='$fetchdocusername'";
+												$docfullnameresult=mysqli_query($connection,$docfullname);
+												$getdocfullname=mysqli_fetch_assoc($docfullnameresult);
+												?>
                                                     <td>
                                                         <div class="checkbox m-t-0 m-b-0">
                                                             <input type="checkbox">
@@ -155,12 +140,11 @@ if(isset($_POST['msgsubmit']))
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
-													<td class="hidden-xs"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><?php echo 'Dr. '.$fetchrow["from_name"]; ?></a></td>
-                                                    <td class="max-texts"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
+													<td class="hidden-xs"><a href="#">Dr. <?php echo $getdocfullname['fname'].' '.$getdocfullname['lname']; ?></a></td>
+                                                    <td class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
                                                     <td class="hidden-xs"><i class="fa <?php if($fetchrow['user_read']==0){ echo 'fa-envelope';} else { echo 'fa-envelope-o'; } ?>"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>
                                                 </tr>
-												
 												<?php } ?>
                                                 
                                             </tbody>
