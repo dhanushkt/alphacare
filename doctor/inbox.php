@@ -14,26 +14,6 @@ $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='
 $getunreadresult=mysqli_query($connection,$getunread);
 $countunread=mysqli_num_rows($getunreadresult);
 
-if(isset($_POST['msgsubmit']))
-{
-	$from=$ausername;
-	$to=mysqli_real_escape_string($connection,$_POST['to_uname']);
-	$msg=mysqli_real_escape_string($connection,$_POST['msg']);
-	$user_read="0";
-	//$timestamp= time();
-	//$timeconverted=date('Y-m-d H:i:s',$timestamp);
-	$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_body, timestamp) VALUES ('$from','$to','$msg', now())";
-	$inputresult=mysqli_query($connection,$inputmsg);
-	if($inputresult)
-	{
-		$smsg="Message sent successfully";
-	}
-	
-}
-
-
-
-
 ?>
 <!DOCTYPE html>
 <!--
@@ -56,6 +36,7 @@ if(isset($_POST['msgsubmit']))
 	<!-- wysihtml5 CSS -->
     <link rel="stylesheet" href="../plugins/bower_components/html5-editor/bootstrap-wysihtml5.css" />
 	<link href="../plugins/bower_components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+	
 </head>
 
 <body class="fix-sidebar">
@@ -144,7 +125,14 @@ if(isset($_POST['msgsubmit']))
 											while($fetchrow=mysqli_fetch_assoc($fetchresult))
 											{
 											?>
-                                                <tr class="<?php if($fetchrow['user_read']==0){ echo 'unread'; } ?>">
+                                                <tr class="<?php if($fetchrow['user_read']==0){ echo 'unread'; } ?> " onclick="window.location='view-message.php?id=<?php echo $fetchrow["msg_id"] ?>';">
+													
+												<?php
+												$fetchstaffusername=$fetchrow['from_name'];
+												$stafffullname="SELECT fname,lname from staffs WHERE username='$fetchstaffusername'";
+												$stafffullnameresult=mysqli_query($connection,$stafffullname);
+												$getstafffullname=mysqli_fetch_assoc($stafffullnameresult);
+												?>
                                                     <td>
                                                         <div class="checkbox m-t-0 m-b-0">
                                                             <input type="checkbox">
@@ -152,8 +140,8 @@ if(isset($_POST['msgsubmit']))
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
-													<td class="hidden-xs"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><?php echo $fetchrow["from_name"]; ?></a></td>
-                                                    <td class="max-texts"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
+													<td class="hidden-xs"><a href="#"><?php echo $getstafffullname['fname'].' '.$getstafffullname['lname']; ?></a></td>
+                                                    <td class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
                                                     <td class="hidden-xs"><i class="fa <?php if($fetchrow['user_read']==0){ echo 'fa-envelope';} else { echo 'fa-envelope-o'; } ?>"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>
                                                 </tr>

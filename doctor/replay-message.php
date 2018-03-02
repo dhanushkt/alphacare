@@ -10,6 +10,11 @@ else if(isset($_SESSION['ausername']))
 	$ausername=$_SESSION['ausername'];
 }
 
+$gettoname=$_GET["name"];
+$getfullname="SELECT fname,lname FROM staffs WHERE username='$gettoname'";
+$resultgetfulname=mysqli_query($connection,$getfullname);
+$fullnamerow=mysqli_fetch_assoc($resultgetfulname);
+
 $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0')";
 $getunreadresult=mysqli_query($connection,$getunread);
 $countunread=mysqli_num_rows($getunreadresult);
@@ -40,10 +45,7 @@ if(isset($_POST['msgsubmit']))
 	}
 	
 }
-
-
-
-
+	
 ?>
 <!DOCTYPE html>
 <!--
@@ -66,6 +68,7 @@ if(isset($_POST['msgsubmit']))
 	<!-- wysihtml5 CSS -->
     <link rel="stylesheet" href="../plugins/bower_components/html5-editor/bootstrap-wysihtml5.css" />
 	<link href="../plugins/bower_components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+
 </head>
 
 <body class="fix-sidebar">
@@ -142,7 +145,7 @@ if(isset($_POST['msgsubmit']))
 											
 											<select required class="form-control selectpicker" data-style="form-control" name="to_uname">
 												
-												<option value="" disabled hidden selected>Select Staff</option>
+												<option value="<?php echo $gettoname ?>" selected><?php echo $fullnamerow['fname'].' '.$fullnamerow['lname']; ?></option>
 												
 												<optgroup label="Ground Floor">
 													<?php while($rowg = mysqli_fetch_assoc($resultssG)) { ?>
@@ -175,10 +178,10 @@ if(isset($_POST['msgsubmit']))
                                         <!--<input class="form-control" placeholder="To:">-->
                                     </div>
                                      <div class="form-group">
-                                        <input required name="subject" class="form-control" placeholder="Subject:">
+                                        <input name="subject" required class="form-control" placeholder="Subject:">
                                     </div> 
                                     <div class="form-group">
-                                        <textarea required class="textarea_editor form-control" rows="15" placeholder="Enter text ..." name="msg"></textarea>
+                                        <textarea id="textarea" required class="textarea_editor form-control" rows="15" placeholder="Enter text ..." name="msg"></textarea>
                                     </div>
 									
                                     <!--<h4><i class="ti-link"></i> Attachment</h4>
@@ -188,7 +191,7 @@ if(isset($_POST['msgsubmit']))
                                         </div>
                                     </form>-->
                                     <hr>
-                                    <button type="submit" name="msgsubmit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
+                                    <button type="submit" name="msgsubmit" class="btn btn-primary" onClick="val()"><i class="fa fa-envelope-o"></i> Send</button>
                                     <button class="btn btn-default" type="reset"><i class="fa fa-times"></i> Clear</button>
 									</form>
                                 </div>

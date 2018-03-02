@@ -1,7 +1,15 @@
 <?php
-include '../login/accesscontroladmin.php';
-$ausername=$_SESSION['ausername'];
+include '../login/accesscontroldoc.php';
 require('connect.php');
+if(isset($_SESSION['dusername']))
+{
+	$ausername=$_SESSION['dusername'];
+}
+elseif(isset($_SESSION['ausername']))
+{
+	$ausername=$_SESSION['ausername'];
+}
+
 if (isset($_POST['psubmit']))
 	{
 		 //real eacape sting is used to prevent sql injection hacking

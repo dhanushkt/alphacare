@@ -14,26 +14,6 @@ $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='
 $getunreadresult=mysqli_query($connection,$getunread);
 $countunread=mysqli_num_rows($getunreadresult);
 
-if(isset($_POST['msgsubmit']))
-{
-	$from=$ausername;
-	$to=mysqli_real_escape_string($connection,$_POST['to_uname']);
-	$msg=mysqli_real_escape_string($connection,$_POST['msg']);
-	$user_read="0";
-	//$timestamp= time();
-	//$timeconverted=date('Y-m-d H:i:s',$timestamp);
-	$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_body, timestamp) VALUES ('$from','$to','$msg', now())";
-	$inputresult=mysqli_query($connection,$inputmsg);
-	if($inputresult)
-	{
-		$smsg="Message sent successfully";
-	}
-	
-}
-
-
-
-
 ?>
 <!DOCTYPE html>
 <!--
@@ -144,7 +124,15 @@ if(isset($_POST['msgsubmit']))
 											while($fetchrow=mysqli_fetch_assoc($fetchresult))
 											{
 											?>
-                                                <tr>
+                                                <tr onClick="window.location='view-sent-message.php?id=<?php echo $fetchrow["msg_id"] ?>';">
+													
+													<?php
+												$fetchstaffusername=$fetchrow['to_name'];
+												$stafffullname="SELECT fname,lname from staffs WHERE username='$fetchstaffusername'";
+												$stafffullnameresult=mysqli_query($connection,$stafffullname);
+												$getstafffullname=mysqli_fetch_assoc($stafffullnameresult);
+												?>
+													
                                                     <td>
                                                         <div class="checkbox m-t-0 m-b-0">
                                                             <input type="checkbox">
@@ -152,13 +140,13 @@ if(isset($_POST['msgsubmit']))
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
-													<td class="hidden-xs"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><?php echo $fetchrow["to_name"]; ?></a></td>
-                                                    <td style="overflow: hidden" class="max-texts"><a href="message-detail.php?id=<?php echo $fetchrow["msg_id"] ?>"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
+													<td class="hidden-xs"><a href="#"><span class="label label-info m-r-10">To :</span> <?php echo $getstafffullname['fname'].' '.$getstafffullname['lname']; ?></a></td>
+                                                    <td style="overflow: hidden" class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
                                                     <td class="hidden-xs"><i class="fa fa-paper-plane"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>
                                                 </tr>
 												<?php } ?>
-         
+       
                                             </tbody>
                                         </table>
                                     </div>

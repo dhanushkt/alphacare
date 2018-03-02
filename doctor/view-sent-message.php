@@ -10,39 +10,25 @@ else if(isset($_SESSION['ausername']))
 	$ausername=$_SESSION['ausername'];
 }
 
+if(isset($_GET['id']))
+{
+$msgid=$_GET['id'];
+$updatequery="UPDATE messages SET user_read='1' WHERE msg_id='$msgid'";
+$updateresult=mysqli_query($connection,$updatequery);
+
+$getmsg="SELECT * FROM messages WHERE msg_id='$msgid'";
+$resultmsg=mysqli_query($connection,$getmsg);
+$fetchmsg=mysqli_fetch_assoc($resultmsg);
+	
+$staffuname=$fetchmsg['to_name'];
+$getstaffinfo="SELECT fname,lname,email,gender FROM staffs WHERE username='$staffuname'";
+$resultstaffinfo=mysqli_query($connection,$getstaffinfo);
+$fetchstaffinfo=mysqli_fetch_assoc($resultstaffinfo);
+}
+
 $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0')";
 $getunreadresult=mysqli_query($connection,$getunread);
 $countunread=mysqli_num_rows($getunreadresult);
-
-
-if(isset($_POST['msgsubmit']))
-{
-	$msg=mysqli_real_escape_string($connection,$_POST['msg']);
-	if(!$msg=="")
-	{
-		$from=$ausername;
-		$to=mysqli_real_escape_string($connection,$_POST['to_uname']);
-		$subject=mysqli_real_escape_string($connection,$_POST['subject']);
-		
-		$user_read="0";
-		//$timestamp= time();
-		//$timeconverted=date('Y-m-d H:i:s',$timestamp);
-		$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_subject, msg_body, timestamp) VALUES ('$from','$to','$subject','$msg', now())";
-		$inputresult=mysqli_query($connection,$inputmsg);
-		if($inputresult)
-		{
-			$smsg="Message sent successfully";
-		}
-	}
-	else
-	{
-		$fmsg="Message is empty!";
-	}
-	
-}
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -104,12 +90,6 @@ if(isset($_POST['msgsubmit']))
 										 <?php echo $smsg; ?>
 									</div> 
 							<?php } ?>
-						<?php if(isset($fmsg)) { ?>
-									<div class="alert alert-danger alert-dismissable text-uppercase font-bold">
-										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-										 <?php echo $fmsg; ?>
-									</div> 
-							<?php } ?>
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-lg-2 col-md-3  col-sm-4 col-xs-12 inbox-panel">
@@ -123,74 +103,17 @@ if(isset($_POST['msgsubmit']))
                                     </div>
                                 </div>
                                 <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 mail_listing">
-                                    <h3 class="box-title">Compose New Message</h3>
-									<?php
-											$selectfloorG="SELECT username,fname,lname FROM staffs WHERE floor='G'";
-											$selectfloor1="SELECT username,fname,lname FROM staffs WHERE floor='1'";
-											$selectfloor2="SELECT username,fname,lname FROM staffs WHERE floor='2'";
-											$selectfloor3="SELECT username,fname,lname FROM staffs WHERE floor='3'";
-											$resultssG = mysqli_query($connection, $selectfloorG);
-											$resultss1 = mysqli_query($connection, $selectfloor1);
-											$resultss2 = mysqli_query($connection, $selectfloor2);
-											$resultss3 = mysqli_query($connection, $selectfloor3);
-											
-									?>
-									<form method="post" data-toggle="validator">
-                                    <div class="form-group">
-										<label class="col-sm-12 p-l-2">To:</label>
-										<div class="col-sm-13 p-l-0">
-											
-											<select required class="form-control selectpicker" data-style="form-control" name="to_uname">
-												
-												<option value="" disabled hidden selected>Select Staff</option>
-												
-												<optgroup label="Ground Floor">
-													<?php while($rowg = mysqli_fetch_assoc($resultssG)) { ?>
-												 <option value="<?php echo $rowg["username"] ?>"> <?php echo $rowg["fname"].' '.$rowg["lname"] ?> </option>
-												<?php } ?>
-						
-												</optgroup>
-												<optgroup label="1st floor">
-													
-												<?php while($row1 = mysqli_fetch_assoc($resultss1)) { ?>
-												 <option value="<?php echo $row1["username"] ?>"> <?php echo $row1["fname"].' '.$row1["lname"] ?> </option>
-												<?php } ?>
-												
-												</optgroup>
-												<optgroup label="2nd floor">
-													<?php while($row2 = mysqli_fetch_assoc($resultss2)) { ?>
-												 <option value="<?php echo $row2["username"] ?>"> <?php echo $row2["fname"].' '.$row2["lname"] ?> </option>
-												<?php } ?>
-												
-												</optgroup>
-												<optgroup label="3rd floor">
-													<?php while($row3 = mysqli_fetch_assoc($resultss3)) { ?>
-												 <option value="<?php echo $row3["username"] ?>"> <?php echo $row3["fname"].' '.$row3["lname"] ?> </option>
-												<?php } ?>
-												
-												</optgroup>
-											</select>
-										</div>
-
-                                        <!--<input class="form-control" placeholder="To:">-->
+                                    <div class="media m-b-30 p-t-20">
+										<h4 class="font-bold m-t-0"><span class="label label-rouded label-info pull-right">Subject</span><?php echo $fetchmsg['msg_subject'] ?></h4>
+                                        <hr>
+                                        <a class="pull-left" href="#"> <?php if($fetchstaffinfo["gender"]=='male') { ?> <img class="media-object thumb-sm img-circle" src="../plugins/images/users/staff-male.png" alt=""><?php } else { ?> <img class="media-object thumb-sm img-circle" src="../plugins/images/users/staff-female.png" alt="">  <?php } ?></a>
+                                        <div class="media-body"> <span class="media-meta pull-right"><?php $date=$fetchmsg['timestamp']; echo date('h:i a M d', strtotime($date)); ?></span>
+                                            <h4 class="text-danger m-0"><?php echo $fetchstaffinfo['fname'].' '.$fetchstaffinfo['lname']; ?></h4>
+                                            <small class="text-muted">To: <?php echo $fetchstaffinfo['email']; ?></small> </div>
                                     </div>
-                                     <div class="form-group">
-                                        <input required name="subject" class="form-control" placeholder="Subject:">
-                                    </div> 
-                                    <div class="form-group">
-                                        <textarea required class="textarea_editor form-control" rows="15" placeholder="Enter text ..." name="msg"></textarea>
-                                    </div>
-									
-                                    <!--<h4><i class="ti-link"></i> Attachment</h4>
-                                    <form action="#" class="dropzone">
-                                        <div class="fallback">
-                                            <input name="file" type="file" multiple />
-                                        </div>
-                                    </form>-->
+									<p><blockquote> <?php echo $fetchmsg['msg_body']; ?> </blockquote></p>
                                     <hr>
-                                    <button type="submit" name="msgsubmit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Send</button>
-                                    <button class="btn btn-default" type="reset"><i class="fa fa-times"></i> Clear</button>
-									</form>
+                                    
                                 </div>
                             </div>
                         </div>
