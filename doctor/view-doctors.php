@@ -5,7 +5,7 @@ if(isset($_SESSION['dusername']))
 {
 	$ausername=$_SESSION['dusername'];
 }
-else if(isset($_SESSION['ausername']))
+elseif(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }

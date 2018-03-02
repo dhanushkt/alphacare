@@ -54,6 +54,12 @@
 					<li> <a href="view-staffs.php">View Staff</a> </li>
 				</ul>
 			</li>
+			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-envelope p-r-10"></i> <span class="hide-menu"> Messages <span class="fa arrow"></span></span></a>
+				<ul class="nav nav-second-level">
+					<li> <a href="inbox.php">Inbox</a> </li>
+					<li> <a href="compose-message.php">Compose</a> </li>
+				</ul>
+			</li>
 		   <!---PNB Added logout menu --->
 			<li><a href="logout.php" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
 
