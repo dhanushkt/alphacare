@@ -19,6 +19,7 @@
                         <span class="hidden-xs"><img src="../plugins/images/eliteadmin-text.png" alt="home" /></span>
                     </a>
                 </div>
+				
                 <!-- /Logo -->
                 <!-- Search input and Toggle icon -->
                 <ul class="nav navbar-top-links navbar-left hidden-xs">
@@ -32,6 +33,15 @@
                 </ul>
                 <!-- This is the message dropdown -->
                 <ul class="nav navbar-top-links navbar-right pull-right">
+					<?php $countmsgquery="SELECT * FROM messages WHERE (user_read='0') AND (to_name='$ausername')";
+					$resultcountmsg=mysqli_query($connection,$countmsgquery);
+					$numbercountmsg=mysqli_fetch_assoc($resultcountmsg);
+					if($numbercountmsg>=1)
+					{ ?>
+				   <li>	<a class="waves-effect waves-light" href="inbox.php"><i class="icon-envelope"></i>
+          			<div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+					</a> </li> <?php } ?>
+				
                     <!---PNB --->
                     <!-- .Task dropdown -->
                     

@@ -120,7 +120,7 @@ $countunread=mysqli_num_rows($getunreadresult);
 											
                                             <tbody>
 												<?php 
-											$fetchmsg="SELECT * FROM messages WHERE to_name='$ausername'";
+											$fetchmsg="SELECT * FROM messages WHERE to_name='$ausername' ORDER BY msg_id DESC";
 											$fetchresult=mysqli_query($connection, $fetchmsg);
 											while($fetchrow=mysqli_fetch_assoc($fetchresult))
 											{
@@ -140,7 +140,7 @@ $countunread=mysqli_num_rows($getunreadresult);
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
-													<td class="hidden-xs"><a href="#">Dr. <?php echo $getdocfullname['fname'].' '.$getdocfullname['lname']; ?></a></td>
+													<td><a href="#">Dr. <?php echo $getdocfullname['fname'].' '.$getdocfullname['lname']; ?></a></td>
                                                     <td class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
                                                     <td class="hidden-xs"><i class="fa <?php if($fetchrow['user_read']==0){ echo 'fa-envelope';} else { echo 'fa-envelope-o'; } ?>"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>

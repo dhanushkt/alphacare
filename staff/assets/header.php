@@ -32,6 +32,14 @@
                 </ul>
                 <!-- This is the message dropdown -->
                 <ul class="nav navbar-top-links navbar-right pull-right">
+					<?php $countmsgquery="SELECT * FROM messages WHERE (user_read='0') AND (to_name='$ausername')";
+					$resultcountmsg=mysqli_query($connection,$countmsgquery);
+					$numbercountmsg=mysqli_fetch_assoc($resultcountmsg);
+					if($numbercountmsg>=1)
+					{ ?>
+				   <li>	<a class="waves-effect waves-light" href="inbox.php"><i class="icon-envelope"></i>
+          			<div class="notify"><span class="heartbit"></span><span class="point"></span></div>
+					</a> </li> <?php } ?>
                     <!---PNB --->
                     <!-- .Task dropdown -->
                     
@@ -40,10 +48,10 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
 							<?php
-							$queryimg="SELECT gender FROM doctors WHERE username='$ausername'";
+							$queryimg="SELECT gender FROM staffs WHERE username='$ausername'";
 							$resultimg = mysqli_query($connection, $queryimg);
 							$rowimg = mysqli_fetch_assoc($resultimg);
-							if($rowimg["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" width="36" class="img-circle"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" width="36" class="img-circle"> <?php } ?><b class="hidden-xs"><?php echo $ausername; ?></b> </a>
+							if($rowimg["gender"]=='male'){ ?> <img src="../plugins/images/users/staff-male.png" width="36" class="img-circle"><?php } else { ?><img src="../plugins/images/users/staff-female.png" width="36" class="img-circle"> <?php } ?><b class="hidden-xs"><?php echo $ausername; ?></b> </a>
                         <ul class="dropdown-menu dropdown-user scale-up">
                             <li><a href="my-profile.php"><i class="ti-user"></i> My Profile</a></li>
                             <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
