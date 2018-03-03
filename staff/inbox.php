@@ -82,7 +82,7 @@ $countunread=mysqli_num_rows($getunreadresult);
                                     </div>
                                 </div>
                                 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 mail_listing">
-                                    <div class="inbox-center">
+                                    <div class="inbox-center table-responsive">
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
