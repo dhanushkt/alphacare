@@ -404,7 +404,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <label>Date of entry</label>
                                                         <div class="input-group">
 															<div class="input-group-addon"><i class="icon-calender"></i></div>
-															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy">
+															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" onFocus="(this.type='date')" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy">
 														</div>
                                                     </div>
                                                 </div>
