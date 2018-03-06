@@ -144,7 +144,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <h4 class="page-title">Add Patient</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <a href="../index.html" target="_blank" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Home</a>
+                        <a href="../index.php" target="_blank" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Home</a>
                         <?php echo breadcrumbs(); ?>
                     </div>
                     <!-- /.col-lg-12 -->

@@ -242,7 +242,7 @@ function edit_row(no)
                     <!-- /.page title -->
                     <!-- .breadcrumb -->
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                       <a href="../index.html" target="_blank" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Home</a>
+                       <a href="../index.php" target="_blank" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Home</a>
                         <?php echo breadcrumbs(); ?>
                     </div>
                     <!-- /.breadcrumb -->
@@ -410,7 +410,8 @@ function edit_row(no)
 								foreach($mediceneresult as $key=>$mediceneresult)
 								{
                               ?>
-										<tr>
+										
+										<tr onclick="window.location='edit-medicine.php?id=';">
                                             <th scope="row"><?php echo $key+1; ?></th>
                                             <td id="name_row<?php echo $key; ?>"><?php echo $mediceneresult["name"]; ?></td>
                                             <td><?php echo $mediceneresult["brand"]; ?></td>
@@ -421,6 +422,7 @@ function edit_row(no)
 											<!--<td><a data-original-title="Edit" id="edit_button<?php // echo $key ?>" onClick="edit_row('<?php // echo $key ?>')"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
 											</td>-->
                                         </tr>
+										
 
 									<?php } ?>
 											</tbody>

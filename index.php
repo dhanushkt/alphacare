@@ -1,3 +1,129 @@
+<?php 
+require('login/connect.php');
+
+$getdocinfo="SELECT doc_id,fname,lname,specialist FROM doctors";
+$getdocinforesult=mysqli_query($connection,$getdocinfo);
+
+if(isset($_POST['apointsubmit']))
+{
+	$apname=mysqli_real_escape_string($connection,$_POST['apointname']);
+	$apemail=mysqli_real_escape_string($connection,$_POST['apointemail']);
+	if($apname=="" && $apemail=="")
+	{
+		$fmsg='Please fill out all the fields to submit appointment';
+	}
+	else
+	{	
+		$gettokenid="SELECT ap_token FROM appointments";
+		$gettokenidresult=mysqli_query($connection,$gettokenid);
+		$gettokenidfetch=mysqli_fetch_assoc($gettokenidresult);
+		do{
+			$generatetoken=random_int(105687,996523);
+		}
+		while($gettokenidfetch['ap_token']==$generatetoken);
+
+		$aptoken=$generatetoken;
+
+		$apsex=mysqli_real_escape_string($connection,$_POST['apointsex']);
+		$appno=mysqli_real_escape_string($connection,$_POST['apointpno']);
+		$getdob=$_POST['apointdob'];
+		//$myDateTime = DateTime::createFromFormat('d-m-Y', $getdob);
+		//$apdob = $myDateTime->format('Y-m-d');
+		$getdoa=$_POST['apointdoa'];
+		//$myDateTimea = DateTime::createFromFormat('d-m-Y', $getdoa);
+		//$apdoa = $myDateTimea->format('Y-m-d');
+		$apdoc=mysqli_real_escape_string($connection,$_POST['apointdoc']);
+		$apstatus='Appointment Submitted';
+
+		$apinputquery="INSERT INTO `appointments` (ap_token,name,sex,email,phno,dob,doa,doc_id,status) VALUES ('$aptoken','$apname','$apsex','$apemail','$appno','$getdob','$getdoa','$apdoc','$apstatus')";
+		$apinputresult=mysqli_query($connection,$apinputquery);
+		if($apinputresult)
+		{
+			$smsg="Appointment created, please check your email for token number";
+			//mailing function starts
+			$link="http://localhost/ohms/check-appointment.php?id=$aptoken";
+				
+			$to_Email       = $apemail; // Replace with recipient email address
+			$subject        = 'Appointment Token'; //Subject line for emails
+
+			$host           = "smtp.gmail.com"; // Your SMTP server. For example, smtp.mail.yahoo.com
+			$username       = "alphacare.ohms@gmail.com"; //For example, your.email@yahoo.com
+			$password       = "dnspnb@78"; // Your password
+			$SMTPSecure     = "tls"; // For example, ssl
+			$port           = 587; // For example, 465
+
+			//proceed with PHP email.
+			include("login/php/PHPMailerAutoload.php"); //you have to upload class files "class.phpmailer.php" and "class.smtp.php"
+
+			$mail = new PHPMailer();
+
+			$mail->IsSMTP();
+			$mail->SMTPAuth = true;
+
+			$mail->Host = $host;
+			$mail->Username = $username;
+			$mail->Password = $password;
+			$mail->SMTPSecure = $SMTPSecure;
+			$mail->Port = $port;
+
+
+			$mail->setFrom($username);
+			$mail->addReplyTo($apemail);
+
+			$mail->AddAddress($to_Email);
+			$mail->Subject = $subject;
+
+			$mail->Body = '<div width="100%" style="background: #f8f8f8; padding: 0px 0px; font-family:arial; line-height:28px; height:100%;  width: 100%; color: #514d6a;">
+		  <div style="max-width: 700px; padding:50px 0;  margin: 0px auto; font-size: 14px">
+			<table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 20px">
+			  <tbody>
+				<tr>
+				  <td style="vertical-align: top; padding-bottom:30px;" align="center"><a href="http://infinityx.000webhostapp.com/login/" target="_blank"><img src="https://i.imgur.com/zKKdcP7.png" alt="AlphaCare" style="border:none"><br/>
+					<img src="https://i.imgur.com/ZA1Wwui.png" style="border:none"></a> </td>
+				</tr>
+			  </tbody>
+			</table>
+			<div style="padding: 40px; background: #fff;">
+			  <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+				<tbody>
+				  <tr>
+					<td style="border-bottom:1px solid #f6f6f6;"><h1 style="font-size:14px; font-family:arial; margin:0px; font-weight:bold;">Dear Sir/Madam,</h1>
+					  <p style="margin-top:0px; color:#bbbbbb;">Here are your password reset instructions.</p></td>
+				  </tr>
+				  <tr>
+					<td style="padding:10px 0 30px 0;"><p>A request to reset your Account password has been made. If you did not make this request, simply ignore this email. If you did make this request, please reset your password:</p>
+					  <center>
+						<a href="'.$link.'" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #00c0c8; border-radius: 60px; text-decoration:none;">Reset Password</a>
+					  </center>
+					  <b>- Thanks (AlphaCare team)</b> </td>
+				  </tr>
+				  <tr>
+					<td  style="border-top:1px solid #f6f6f6; padding-top:20px; color:#777">If the button above does not work, try copying and pasting the URL into your browser. If you continue to have problems, please feel free to contact us at alphacare.ohms@gmail.com</td>
+				  </tr>
+				</tbody>
+			  </table>
+			</div>
+			<div style="text-align: center; font-size: 12px; color: #b2b2b5; margin-top: 20px">
+			  <p> AlphaCare Online Hospital Management System © 2018 <br>
+			  </p>
+			</div>
+		  </div>
+		</div>';
+
+			$mail->WordWrap = 200;
+			$mail->IsHTML(true);
+
+			if(!$mail->send()) 
+			{
+				$fmsg="E-mail not sent";
+			} else 
+			{
+				$smsg.="e-mail sent successfully";
+			}
+		}
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,10 +176,17 @@
     width:100%;
     position:absolute;
 }</style>
+	
+	
 </head>
 <body>
     <!-- Start Header Section -->
     <header id="header-3">
+					<?php if(isset($smsg)) { ?>
+		<div class="theme-quote theme-quote-colored theme-quote-success" role="alert"><strong> <?php echo $smsg; ?> </strong> <!--<button type="button" calss="close" data-dismiss="alert" aria-hidden="true" > × </button> --> </div> <?php } ?>
+		<?php if(isset($fmsg)) { ?>
+		<div class="theme-quote theme-quote-colored theme-quote-danger" role="alert"><strong> <?php echo $fmsg; ?> </strong> <!--<button type="button" calss="close" data-dismiss="alert" aria-hidden="true" > × </button> --> </div> <?php } ?>
+						
         <div class="layer-stretch hdr-center">
             <div class="row align-items-center">
                 <div class="col-md-5 hidden-xs">
@@ -64,7 +197,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="hdr-center-logo text-center">
-                        <a href="index.html" class="d-inline-block"><img src="landerpage/images/ac.png" alt=""></a>
+                        <a href="index.php" class="d-inline-block"><img src="landerpage/images/ac.png" alt=""></a>
                     </div>
                 </div>
 				 <div class="col-md-5 hidden-xs">
@@ -101,7 +234,7 @@
 					</div>
                     <ul class="col menu text-left">
                          
-						<li>
+							<li >
                                 <a id="menu-home" href="#slider1">Home </a>
 
                             </li>
@@ -123,8 +256,11 @@
 
                             </li>
                             <li class="menu-megamenu-li">
-                                <a id="service2" href="login/" >Login</a>
-
+                                <a id="service2" href="check-appointment.php" >Check Appointment</a>
+                            </li>
+							<li>
+                                <a id="menu-login" href="login/" >Login
+                                </a>
                             </li>
                         <li class="mobile-menu-close"><i class="fa fa-times"></i></li>
                     </ul><!-- End Menu Section -->
@@ -164,7 +300,7 @@
       <!--  End Slider Section-->
 
 <!-- Start Service Section -->
-        <section id="service1">
+   <section id="service1">
     <div id="hm-service" class="layer-stretch">
         <div class="layer-wrapper">
             <div class="layer-ttl">
@@ -353,36 +489,6 @@
     <section id="locate">
 		<div class="map-responsive">
     <p><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.55156092947!2d74.84058681442266!3d12.872215090921188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba35a4ef3933627%3A0x4d9551c24243bd80!2sJayashree+Nursing+Home!5e0!3m2!1sen!2sin!4v1518450988670" width="1340" height="600" frameborder="0" style="border:0" allowfullscreen></iframe></p></div></section>
-   <!-- <h3>My Google Maps Demo</h3>
-<div id="map"></div>
-<!-- Replace the value of the key parameter with your own API key.
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwK6Zcaxs3M_ID4NUe_bdTMY31tl-eySg&callback=initMap">
-</script>-->
-
-<!-- Replace the value of the key parameter with your own API key. -->
-
-<!--<script async defer
-<iframe src="//www.google.com/maps/embed/v1/place?q=Harrods,Brompton%20Rd,%20UK
-      &zoom=17
-      &key=AIzaSyCwK6Zcaxs3M_ID4NUe_bdTMY31tl-eySg">
-  </iframe>
-<div id="map"></div>
-    <div>
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwK6Zcaxs3M_ID4NUe_bdTMY31tl-eySg&callback=initMap">
-</script>
-    <div id="map">
-        <div class="map-wrapper">
-           <div class="map-wrapper">
-           <!-- <div id="map-container" style="position: relative; overflow: hidden;"><div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);"><div class="gm-style" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px;"><div tabindex="0" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; cursor: pointer;"><div style="z-index: 1; position: absolute; top: 0px; left: 0px; width: 100%; transform-origin: 192px 200px 0px; transform: matrix(1, 0, 0, 1, -123, 204);"><div style="position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"><div style="width: 256px; height: 256px; position: absolute; left: 229px; top: 102px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 229px; top: -154px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -27px; top: 102px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -27px; top: -154px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 229px; top: -410px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 485px; top: -154px;"></div><div style="width: 256px; height: 256px; position: absolute; left: -27px; top: -410px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 485px; top: -410px;"></div><div style="width: 256px; height: 256px; position: absolute; left: 485px; top: 102px;"></div></div></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: -1;"><div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 229px; top: 102px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 229px; top: -154px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -27px; top: 102px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -27px; top: -154px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 229px; top: -410px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 485px; top: -154px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: -27px; top: -410px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 485px; top: -410px;"></div><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 485px; top: 102px;"><canvas draggable="false" height="512" width="512" style="user-select: none; position: absolute; left: 0px; top: 0px; height: 256px; width: 256px;"></canvas></div></div></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div aria-hidden="true" style="position: absolute; left: 0px; top: 0px; z-index: 1; visibility: inherit;"><div style="position: absolute; left: 229px; top: -154px; transition: opacity 200ms ease-out;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11554!3i7330!4i256!2m3!1e0!2sm!3i410108805!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=126539" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -27px; top: 102px; transition: opacity 200ms ease-out;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11553!3i7331!4i256!2m3!1e0!2sm!3i410108853!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=48699" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 229px; top: 102px; transition: opacity 200ms ease-out;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11554!3i7331!4i256!2m3!1e0!2sm!3i410108853!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=126227" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -27px; top: -154px; transition: opacity 200ms ease-out;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11553!3i7330!4i256!2m3!1e0!2sm!3i410108842!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=123770" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 485px; top: -154px;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11555!3i7330!4i256!2m3!1e0!2sm!3i410108853!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=36663" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 485px; top: 102px;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11555!3i7331!4i256!2m3!1e0!2sm!3i410108853!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=72684" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 229px; top: -410px; transition: opacity 200ms ease-out;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11554!3i7329!4i256!2m3!1e0!2sm!3i410108805!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=35931" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: -27px; top: -410px; transition: opacity 200ms ease-out;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11553!3i7329!4i256!2m3!1e0!2sm!3i410108842!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=33162" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><div style="position: absolute; left: 485px; top: -410px; transition: opacity 200ms ease-out;"><img draggable="false" alt="" src="https://maps.googleapis.com/maps/vt?pb=!1m5!1m4!1i14!2i11555!3i7329!4i256!2m3!1e0!2sm!3i410108842!3m9!2sen-GB!3sUS!5e18!12m1!1e68!12m3!1e37!2m1!1ssmartmaps!4e0&amp;token=57147" style="width: 256px; height: 256px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div></div></div></div><div class="gm-style-pbc" style="z-index: 2; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; opacity: 0; transition-duration: 0.2s;"><p class="gm-style-pbt"></p></div><div style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px;"><div style="z-index: 1; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px;"></div></div><div style="z-index: 4; position: absolute; top: 0px; left: 0px; width: 100%; transform-origin: 192px 200px 0px; transform: matrix(1, 0, 0, 1, -123, 204);"><div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"></div></div></div><div style="margin-left: 5px; margin-right: 5px; z-index: 1000000; position: absolute; left: 0px; bottom: 0px;"><a target="_blank" href="https://maps.google.com/maps?ll=12.8722203,74.8405868&amp;z=14&amp;t=m&amp;hl=en-GB&amp;gl=US&amp;mapclient=apiv3" title="Click to see this area on Google Maps" style="position: static; overflow: visible; float: none; display: inline;"><div style="width: 66px; height: 26px; cursor: pointer;"><img alt="" src="https://maps.gstatic.com/mapfiles/api-3/images/google4.png" draggable="false" style="position: absolute; left: 0px; top: 0px; width: 66px; height: 26px; user-select: none; border: 0px; padding: 0px; margin: 0px;"></div></a></div><div style="background-color: white; padding: 15px 21px; border: 1px solid rgb(171, 171, 171); font-family: Roboto, Arial, sans-serif; color: rgb(34, 34, 34); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; z-index: 10000002; display: none; width: 256px; height: 148px; position: absolute; left: 42px; top: 110px;"><div style="padding: 0px 0px 10px; font-size: 16px;">Map Data</div><div style="font-size: 13px;">Map data ©2018 Google</div><div style="width: 13px; height: 13px; overflow: hidden; position: absolute; opacity: 0.7; right: 12px; top: 12px; z-index: 10000;"><img alt="" src="https://maps.gstatic.com/mapfiles/api-3/images/mapcnt6.png" draggable="false" style="position: absolute; left: -2px; top: -336px; width: 59px; height: 492px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"></div><img alt="" src="https://maps.gstatic.com/mapfiles/transparent.png" draggable="false" style="width: 37px; height: 37px; user-select: none; border: 0px; padding: 0px; margin: 0px; position: absolute; right: 0px; top: 0px; z-index: 10001; cursor: pointer;"></div>
-        </div>
-            <div id="map-container"></div>
-        </div>
-        <div class="map-address">
-            <div class="map-icon"><i class="fa fa-map-marker"></i></div>
-            <div class="map-address-ttl">Our Location</div>
-            <div class="paragraph-medium paragraph-black">Street name, City, Country</div>
-        </div>-->
    <!-- End Google Map Section -->
     </section>
     <!-- Start Emergency Section -->
@@ -410,20 +516,35 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwK6Zcaxs3M_ID4NUe_bdTMY3
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div class="appointment-error"></div>
+					<form method="post">
+						
                     <div class="row">
+						
                         <div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-user-o"></i>
-                                <input class="mdl-textfield__input" type="text" pattern="[A-Z,a-z, ]*" id="appointment-name">
+                                <input class="mdl-textfield__input" type="text" pattern="[A-Z,a-z, ]*" id="appointment-name" name="apointname">
                                 <label class="mdl-textfield__label" for="appointment-name">Name</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Name!</span>
+                            </div>
+                        </div>
+						<div class="col-md-6">
+                            <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label form-input-icon">
+                                <i class="fa fa-user-o"></i>
+                                <select class="mdl-selectfield__select" name="apointsex" id="appointment-sex">
+                                    <option value="" hidden>&nbsp;</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                   
+                                </select>
+                                <label class="mdl-selectfield__label" for="appointment-sex">Choose Sex</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-envelope-o"></i>
-                                <input class="mdl-textfield__input" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="appointment-email">
+                                <input name="apointemail" class="mdl-textfield__input" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="appointment-email">
                                 <label class="mdl-textfield__label" for="appointment-email">Email</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Email!</span>
                             </div>
@@ -431,51 +552,51 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwK6Zcaxs3M_ID4NUe_bdTMY3
                         <div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-phone"></i>
-                                <input class="mdl-textfield__input" type="text" pattern="[0-9]*" id="appointment-mobile">
+                                <input name="apointpno" class="mdl-textfield__input" type="text" pattern="[0-9]*" id="appointment-mobile">
                                 <label class="mdl-textfield__label" for="appointment-mobile">Mobile Number</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Mobile Number!</span>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label form-input-icon">
-                                <i class="fa fa-hospital-o"></i>
-                                <select class="mdl-selectfield__select" id="appointment-department">
-                                    <option value="">&nbsp;</option>
-                                    <option value="1">Gynaecology</option>
-                                    <option value="2">Orthology</option>
-                                    <option value="3">Dermatologist</option>
-                                    <option value="4">Anaesthesia</option>
-                                    <option value="5">Ayurvedic</option>
-                                </select>
-                                <label class="mdl-selectfield__label" for="appointment-department">Choose Department</label>
+						<div class="col-md-6">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                                <i class="fa fa-calendar-o"></i>
+                                <input name="apointdob" class="mdl-textfield__input" type="text" id="appointment-dob" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <label class="mdl-textfield__label" for="appointment-dob">Date of birth</label>
+                                <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
                             </div>
                         </div>
+                        
+                        
                         <div class="col-md-6">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                                <i class="fa fa-calendar-o"></i>
+                                <input name="apointdoa" class="mdl-textfield__input" type="text" id="appointment-date" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <label class="mdl-textfield__label" for="appointment-date">Date of appointment</label>
+                                <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
+                            </div>
+                        </div>
+						<div class="col-md-12">
                             <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label form-input-icon">
                                 <i class="fa fa-user-md"></i>
-                                <select class="mdl-selectfield__select" id="appointment-doctor">
-                                    <option value="">&nbsp;</option>
-                                    <option value="1">Dr. Daniel Barnes</option>
-                                    <option value="2">Dr. Steve Soeren</option>
-                                    <option value="3">Dr. Barbara Baker</option>
-                                    <option value="4">Dr. Melissa Bates</option>
-                                    <option value="5">Dr. Linda Adams</option>
+                                <select name="apointdoc" class="mdl-selectfield__select" id="appointment-doctor">
+                                    <option value="" hidden>&nbsp;</option>
+									<?php 
+									while($getdocfetch=mysqli_fetch_assoc($getdocinforesult))
+									{
+									?>
+                                    <option value="<?php echo $getdocfetch['doc_id'] ?>"><?php echo $getdocfetch['fname'].' '.$getdocfetch['lname'].' , '.$getdocfetch['specialist']; ?></option>
+                                    <?php } ?>
                                 </select>
                                 <label class="mdl-selectfield__label" for="appointment-doctor">Choose Doctor</label>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
-                                <i class="fa fa-calendar-o"></i>
-                                <input class="mdl-textfield__input" type="text" id="appointment-date" onfocus="(this.type='date')" onblur="(this.type='text')">
-                                <label class="mdl-textfield__label" for="appointment-date">Date</label>
-                                <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
-                            </div>
-                        </div>
+						
                     </div>
-                    <div class="text-center pt-4">
-                        <button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg make-appointment">Submit</button>
+					<div class="text-center pt-4 form-submit">
+						 <button name="apointsubmit" type="submit" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg ">Submit</button> </a>
                     </div>
+				</form>
+                    
                 </div>
             </div>
         </div>
@@ -836,6 +957,9 @@ $('.menu a').on('click', function(){
         //
     });
 </script>
+	
+	
+	
     <script type="text/javascript">
 
         // Running the code when the document is ready
