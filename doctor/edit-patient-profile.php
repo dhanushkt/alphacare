@@ -198,7 +198,27 @@ $(window).load(function() {
         }
     });
 });
-	</script>
+</script>
+
+<script>
+function edit_row(no)
+{
+ document.getElementById("edit_button"+no).style.display="none";
+ document.getElementById("save_button"+no).style.display="block";
+	
+ var name=document.getElementById("name_row"+no);
+ //var country=document.getElementById("country_row"+no);
+ //var age=document.getElementById("age_row"+no);
+	
+ var name_data=name.innerHTML;
+// var country_data=country.innerHTML;
+// var age_data=age.innerHTML;
+	
+ name.innerHTML="<input type='text' id='name_text"+no+"' value='"+name_data+"'>";
+ //country.innerHTML="<input type='text' id='country_text"+no+"' value='"+country_data+"'>";
+// age.innerHTML="<input type='text' id='age_text"+no+"' value='"+age_data+"'>";
+}
+</script>
 
 
 </head>
@@ -368,35 +388,38 @@ $(window).load(function() {
 									<div class="panel-heading p-t-10">Medicines
                            			 </div>
 									<div class="panel-body">
-										<table class="table table-striped">
+										<table class="table table-striped color-bordered-table info-bordered-table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th nowrap>Name</th>
                                             <th nowrap>Brand</th>
                                             <th nowrap>Description</th>
-											<th>Dose(M-A-N)</th>
+											<th class="text-nowrap">Dose<br>(M-A-N)</th>
 											<th nowrap>Status</th>
-											<th>Prescribed by</th>
+											<th nowrap>Prescribed by</th>
+											<!--<th>Actions</th>-->
                                         </tr>
                                     </thead>
 									<tbody>
                               <?php
-								 $mediceneinfo="SELECT name,brand,description,dose,status,docid.fname FROM medicines  JOIN doctors docid on medicines.doc_id = docid.doc_id WHERE p_id='$id' ORDER BY med_id DESC";
+								 $mediceneinfo="SELECT name,brand,description,dose,status,doctors.fname,doctors.lname FROM medicines INNER JOIN doctors ON medicines.doc_id = doctors.doc_id WHERE p_id='$id' ORDER BY med_id DESC";
 								 $mediceneresult = mysqli_query($connection, $mediceneinfo);
-								$getdocinfoarray=mysqli_fetch_array($mediceneresult);
+								 $getdocinfoarray=mysqli_fetch_array($mediceneresult);
 								//$medinforow = mysqli_fetch_assoc($medinfores);
 								foreach($mediceneresult as $key=>$mediceneresult)
 								{
                               ?>
 										<tr>
                                             <th scope="row"><?php echo $key+1; ?></th>
-                                            <td><?php echo $mediceneresult["name"]; ?></td>
+                                            <td id="name_row<?php echo $key; ?>"><?php echo $mediceneresult["name"]; ?></td>
                                             <td><?php echo $mediceneresult["brand"]; ?></td>
                                             <td><?php echo $mediceneresult["description"]; ?></td>
 											<td nowrap><?php echo $mediceneresult["dose"]; ?></td>
-											<td><?php echo $mediceneresult["status"]; ?></td>
-											<td><?php echo $mediceneresult['docid']['fname']; ?></td>
+											<td><?php if($mediceneresult["status"]=='ongoing') { ?><div class="label label-table label-success"><?php echo $mediceneresult["status"]; ?></div><?php } else { ?><div class="label label-table label-danger"><?php echo $mediceneresult["status"]; ?></div><?php } ?></td>
+											<td><?php echo 'Dr. '.$mediceneresult['fname'].' '.$mediceneresult['lname']; ?></td>
+											<!--<td><a data-original-title="Edit" id="edit_button<?php // echo $key ?>" onClick="edit_row('<?php // echo $key ?>')"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+											</td>-->
                                         </tr>
 
 									<?php } ?>
@@ -460,7 +483,7 @@ $(window).load(function() {
 									</div>
                                 </fieldset>
                             </form>
-	
+							
 										<h4 class="m-t-30">General Report</h4>
 										<hr>
 										<h5>Blood Pressure<span class="pull-right"><?php echo $fetchrow["bp"]; ?></span></h5>
