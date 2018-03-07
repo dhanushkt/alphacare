@@ -309,13 +309,14 @@ function edit_row(no)
                                 <hr>
                                 <!-- .row -->
                                 <div class="row text-center m-t-10">
-                                    <div class="col-md-6 b-r"><strong>Email ID</strong>
+                                    <div class="col-md-12 b-r"><strong>Email ID</strong>
                                         <p><?php echo $row["email"]; ?> </p>
                                     </div>
-                                    <div class="col-md-6"><strong>Phone</strong>
-                                        <p><?php echo $row["phone"]; ?></p>
-                                    </div>
+                                    
                                 </div>
+								<div class="row text-center m-t-10"><div class="col-md-12"><strong>Phone</strong>
+                                        <p><?php echo $row["phone"]; ?></p>
+                                    </div></div>
                                 <!-- /.row -->
                                 <hr>
                                 <!-- .row -->
