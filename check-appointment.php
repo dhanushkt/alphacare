@@ -137,7 +137,7 @@ if(isset($_GET['id']))
     <div class="page-ttl">
         <div class="layer-stretch">
             <div class="page-ttl-container">
-                <h1>CHECK APPOINTMENTS</h1>
+                <h1>CHECK APPOINTMENT STATUS</h1>
                 <p>Enter your token number to check your appointment status</p>
             </div>
         </div>
@@ -234,18 +234,18 @@ if(isset($_GET['id']))
                                 <span class="mdl-textfield__error">Please Enter Valid Mobile Number!</span>
                             </div>
                         </div>
-					   <div class="col-md-6">
+					   <!-- <div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-calendar-o"></i>
-                                <input value="<?php $dateb=$selectapointfetch['dob'];
-								$myDateTime = DateTime::createFromFormat('Y-m-d', $dateb);
-								$dobc = $myDateTime->format('d-m-Y');  echo $dobc; ?>" readonly class="mdl-textfield__input" type="text" id="appointment-date">
+                                <input value="<?php// $dateb=$selectapointfetch['dob'];
+								// $myDateTime = DateTime::createFromFormat('Y-m-d', $dateb);
+								// $dobc = $myDateTime->format('d-m-Y');  echo $dobc; ?>" readonly class="mdl-textfield__input" type="text" id="appointment-date">
                                 <label class="mdl-textfield__label" for="appointment-date">Date Of Birth</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                        </div> -->
+                        <div class="col-md-12">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon theme-quote">
                                 <i class="fa fa-calendar-o"></i>
                                 <input value="<?php $datea=$selectapointfetch['doa'];
 								$myDateTime = DateTime::createFromFormat('Y-m-d', $datea);
@@ -256,7 +256,7 @@ if(isset($_GET['id']))
                         </div>
                         
                         <div class="col-md-12">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon theme-quote" >
                                 <i class="fa fa-user-md"></i>
                                 <input value="<?php echo 'Dr '.$selectapointfetch['fname'].' '.$selectapointfetch['lname'].' , '.$selectapointfetch['specialist']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
                                 <label class="mdl-textfield__label" for="appointment-email">Doctor</label>
@@ -264,11 +264,11 @@ if(isset($_GET['id']))
                             </div>
                         </div>
 						<div class="col-md-6">
-							<div class="card text-black bg-light mb-0">
+							<div class="card text-black bg-light mb-1">
 							 <div class="card-header font-16">Appointment status</div>
 								<div class="card-body">
 									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
-										<i class="fa fa-user-md"></i>
+										<i class="fa fa-info"></i>
 										<input value="<?php echo $selectapointfetch['status']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
 										<label class="mdl-textfield__label" for="appointment-email">Status of appointment</label>
 									</div>
@@ -277,12 +277,12 @@ if(isset($_GET['id']))
 							
                         </div>
 					 <div class="col-md-6">
-						 <div class="card text-black bg-light mb-0">
+						 <div class="card text-black bg-light mb-1">
 							 <div class="card-header font-16">Time of appointment</div>
 							 <div class="card-body">
 								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
 									<i class="fa fa-clock-o"></i>
-									<input value="<?php echo 'null'; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
+									<input value="<?php if($selectapointfetch['time']=='') { echo 'Not Scheduled'; } else { $gettime=$selectapointfetch['time']; echo ' '.date('h:i a', strtotime($gettime)); } ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
 									<label class="mdl-textfield__label" for="appointment-email">Time of appointment</label>
 								</div>
 							 </div>
