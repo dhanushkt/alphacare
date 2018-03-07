@@ -33,7 +33,7 @@ if(isset($_POST['apointsubmit']))
 		//$myDateTimea = DateTime::createFromFormat('d-m-Y', $getdoa);
 		//$apdoa = $myDateTimea->format('Y-m-d');
 		$apdoc=mysqli_real_escape_string($connection,$_POST['apointdoc']);
-		$apstatus='Appointment Submitted';
+		$apstatus='In Process';
 
 		$apinputquery="INSERT INTO `appointments` (ap_token,name,sex,email,phno,dob,doa,doc_id,status) VALUES ('$aptoken','$apname','$apsex','$apemail','$appno','$getdob','$getdoa','$apdoc','$apstatus')";
 		$apinputresult=mysqli_query($connection,$apinputquery);
@@ -92,7 +92,7 @@ if(isset($_POST['apointsubmit']))
 					  <p style="margin-top:0px; color:#bbbbbb;">We have recived your appointment request.</p></td>
 				  </tr>
 				  <tr>
-					<td style="padding:10px 0 30px 0;"><p>Your appointment confirmation is in process. Your token number is: '.$aptoken.' . </p> <p>We will update your appointment timing as soon as possible, To check the status of your appointment click: </p>
+					<td style="padding:10px 0 30px 0;"><p>Your appointment confirmation is in process. Your token number is: <b>'.$aptoken.'</b> . </p> <p>We will update your appointment timing as soon as possible, To check the status of your appointment click: </p>
 					  <center>
 						<a href="'.$link.'" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #00c0c8; border-radius: 60px; text-decoration:none;">Check Appointment Status</a>
 					  </center>
