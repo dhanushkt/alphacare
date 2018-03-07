@@ -39,12 +39,13 @@ if(isset($_POST['apointsubmit']))
 		$apinputresult=mysqli_query($connection,$apinputquery);
 		if($apinputresult)
 		{
-			$smsg="Appointment created, please check your email for token number";
+			$smsg="Appointment created, ";
 			//mailing function starts
 			$link="http://localhost/ohms/check-appointment.php?id=$aptoken";
+			$link2="http://localhost/ohms/check-appointment.php";
 				
 			$to_Email       = $apemail; // Replace with recipient email address
-			$subject        = 'Appointment Token'; //Subject line for emails
+			$subject        = 'Your Appointment'; //Subject line for emails
 
 			$host           = "smtp.gmail.com"; // Your SMTP server. For example, smtp.mail.yahoo.com
 			$username       = "alphacare.ohms@gmail.com"; //For example, your.email@yahoo.com
@@ -88,17 +89,17 @@ if(isset($_POST['apointsubmit']))
 				<tbody>
 				  <tr>
 					<td style="border-bottom:1px solid #f6f6f6;"><h1 style="font-size:14px; font-family:arial; margin:0px; font-weight:bold;">Dear Sir/Madam,</h1>
-					  <p style="margin-top:0px; color:#bbbbbb;">Here are your password reset instructions.</p></td>
+					  <p style="margin-top:0px; color:#bbbbbb;">We have recived your appointment request.</p></td>
 				  </tr>
 				  <tr>
-					<td style="padding:10px 0 30px 0;"><p>A request to reset your Account password has been made. If you did not make this request, simply ignore this email. If you did make this request, please reset your password:</p>
+					<td style="padding:10px 0 30px 0;"><p>Your appointment confirmation is in process. Your token number is: '.$aptoken.' . </p> <p>We will update your appointment timing as soon as possible, To check the status of your appointment click: </p>
 					  <center>
-						<a href="'.$link.'" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #00c0c8; border-radius: 60px; text-decoration:none;">Reset Password</a>
+						<a href="'.$link.'" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #00c0c8; border-radius: 60px; text-decoration:none;">Check Appointment Status</a>
 					  </center>
-					  <b>- Thanks (AlphaCare team)</b> </td>
+					  <b>- Thank You (AlphaCare team)</b> </td>
 				  </tr>
 				  <tr>
-					<td  style="border-top:1px solid #f6f6f6; padding-top:20px; color:#777">If the button above does not work, try copying and pasting the URL into your browser. If you continue to have problems, please feel free to contact us at alphacare.ohms@gmail.com</td>
+					<td  style="border-top:1px solid #f6f6f6; padding-top:20px; color:#777">If the button above does not work, click <a href="'.$link2.'">here</a> and enter your token number. If you continue to have problems or for any enquiries, please feel free to contact us at 0824-2429729 </td>
 				  </tr>
 				</tbody>
 			  </table>
@@ -118,7 +119,7 @@ if(isset($_POST['apointsubmit']))
 				$fmsg="E-mail not sent";
 			} else 
 			{
-				$smsg.="e-mail sent successfully";
+				$smsg.="please check your Email for token number";
 			}
 		}
 	}
@@ -135,9 +136,10 @@ if(isset($_POST['apointsubmit']))
     <!-- Site Title -->
     <title>AlphaCare</title>
     <!-- Meta Description Tag -->
-    <meta name="Description" content="Klinik is a HTML5 & CSS3 responsive template">
+    <meta name="description" content="AlphaCare Online Hospital Management System">
+    <meta name="author" content="Dhanush KT, Nishanth Bhat">
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/x-icon" href="landerpage/images/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="plugins/images/favicon.png" />
     <!-- Font Awesoeme Stylesheet CSS -->
     <link rel="stylesheet" href="landerpage/font-awesome/css/font-awesome.min.css" />
     <!-- Google web Font -->
@@ -182,10 +184,10 @@ if(isset($_POST['apointsubmit']))
 <body>
     <!-- Start Header Section -->
     <header id="header-3">
-					<?php if(isset($smsg)) { ?>
-		<div class="theme-quote theme-quote-colored theme-quote-success" role="alert"><strong> <?php echo $smsg; ?> </strong> <!--<button type="button" calss="close" data-dismiss="alert" aria-hidden="true" > × </button> --> </div> <?php } ?>
+		<?php if(isset($smsg)) { ?>
+		<div class="theme-quote theme-quote-colored theme-quote-success alert" role="alert"><strong> <?php echo $smsg; ?> </strong> <button type="button" calss="close" data-dismiss="alert" style="float: right" >X</button> </div>  <?php } ?>
 		<?php if(isset($fmsg)) { ?>
-		<div class="theme-quote theme-quote-colored theme-quote-danger" role="alert"><strong> <?php echo $fmsg; ?> </strong> <!--<button type="button" calss="close" data-dismiss="alert" aria-hidden="true" > × </button> --> </div> <?php } ?>
+		<div class="theme-quote theme-quote-colored theme-quote-danger alert" role="alert"><strong> <?php echo $fmsg; ?> </strong> <button type="button" calss="close" data-dismiss="alert" style="float: right" >X</button> </div> <?php } ?>
 						
         <div class="layer-stretch hdr-center">
             <div class="row align-items-center">
@@ -230,7 +232,7 @@ if(isset($_POST['apointsubmit']))
                 <div class="row align-items-center justify-content-end">
                     <!-- Start Menu Section -->
 					<div class="image">
-							<img src="plugins/images/eliteadmin-logo.png" alt="image">
+							<img src="landerpage/images/logo-bwhite1.png" alt="image" style="width:60px; height:60px">
 					</div>
                     <ul class="col menu text-left">
                          
@@ -894,9 +896,9 @@ if(isset($_POST['apointsubmit']))
         <!-- Start Copyright Section -->
         <div id="copyright">
             <div class="layer-stretch">
-                <div class="paragraph-medium paragraph-white">&copy;  Alphacare  2018</div>
+                <div class="paragraph-medium paragraph-white">2018 &copy; AlphaCare - Online Hospital Management System</div>
             </div>
-            <div><h6 style="color:aliceblue;"><center>alphacare.ohms@gmail.com</center></h6></div>
+            
         </div><!-- End of Copyright Section -->
     </footer><!-- End of Footer Section -->
 

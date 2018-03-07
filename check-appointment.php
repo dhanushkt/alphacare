@@ -2,11 +2,10 @@
 require('login/connect.php');
 
 $showinfo=0;
-
 if(isset($_GET['id']))
 {
 	$tokenno=$_GET['id'];
-	$selectapoint="SELECT * FROM appointments WHERE ap_token='$tokenno'";
+	$selectapoint="SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE ap_token='$tokenno'";
 	$selectapointresult=mysqli_query($connection,$selectapoint);
 	$selectapointcount=mysqli_num_rows($selectapointresult);
 	if($selectapointcount==1)
@@ -30,9 +29,10 @@ if(isset($_GET['id']))
     <!-- Site Title -->
     <title>AlphaCare OHMS</title>
     <!-- Meta Description Tag -->
-    <meta name="Description" content="Klinik is a HTML5 & CSS3 responsive template">
+    <meta name="description" content="AlphaCare Online Hospital Management System">
+    <meta name="author" content="Dhanush KT, Nishanth Bhat">
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/x-icon" href="landerpage/images/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="plugins/images/favicon.png" />
     <!-- Font Awesoeme Stylesheet CSS -->
     <link rel="stylesheet" href="landerpage/font-awesome/css/font-awesome.min.css" />
     <!-- Google web Font -->
@@ -67,13 +67,13 @@ if(isset($_GET['id']))
                 <div class="hdr-top-block hidden-xs">
                     <div id="hdr-social">
                         <ul class="social-list social-list-sm">
-                            <li><a class="width-auto font-13"><img src="landerpage/images/eliteadmin-text-dark.png" alt=""></a></li>
-                            <li><a href="#" target="_blank" id="hdr-facebook" ></a></li>
-							<li><a href="#" target="_blank" id="hdr-twitter" ></a></li>
-							<li><a href="#" target="_blank" id="hdr-google" ></a></li>
-                            <li><a href="#" target="_blank" id="hdr-instagram" ></a></li>
-                            <li><a href="#" target="_blank" id="hdr-youtube" ></a></li>
-                            <li><a href="#" target="_blank" id="hdr-rss" ></a></li>
+                            <li><a class="width-auto font-13"><img src="plugins/images/eliteadmin-text-dark.png" alt=""></a></li>
+                            <li><a href="#"  id="hdr-facebook" ></a></li>
+							<li><a href="#"  id="hdr-twitter" ></a></li>
+							<li><a href="#"  id="hdr-google" ></a></li>
+                            <li><a href="#"  id="hdr-instagram" ></a></li>
+                            <li><a href="#"  id="hdr-youtube" ></a></li>
+                            <li><a href="#"  id="hdr-rss" ></a></li>
                         </ul>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ if(isset($_GET['id']))
 	{
 		//modify this there are some other ways
 		$tokenno=mysqli_real_escape_string($connection,$_POST['tokenno']);
-		$selectapoint="SELECT * FROM appointments WHERE ap_token='$tokenno'";
+		$selectapoint="SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE ap_token='$tokenno'";
 		$selectapointresult=mysqli_query($connection,$selectapoint);
 		$selectapointcount=mysqli_num_rows($selectapointresult);
 		if($selectapointcount==1)
@@ -158,7 +158,6 @@ if(isset($_GET['id']))
 		}
 		else
 		{
-			$tokenno="";
 			$fmsg="Incorrect appointment token number ! ";
 		}
 		
@@ -188,16 +187,17 @@ if(isset($_GET['id']))
                         </div>  
                     </div>
                 </div>                
-				<br><div class="form-submit">
-                    <button name="tokensubmit" class="mdl-button mdl-js-button mdl-js-ripple-effect button button-primary">CHECK</button>
+				<br><div>
+					<button name="tokensubmit" class="mdl-button mdl-js-button mdl-js-ripple-effect button button-primary">CHECK</button>
                 </div>
 				</form>
             </div>  
         </div>
     </div><!-- End My Profile Section -->
     <!-- Start Emergency Section -->
+	
 	<?php if($showinfo==1) { ?>
-	<div id="profile-page" class="layer-stretch pt-0">
+	<div id="profile-page1" class="layer-stretch pt-0">
 		<div class="layer-wrapper pt-0">
 			<div class="theme-material-card text-center">
 				<form method="post">
@@ -213,7 +213,7 @@ if(isset($_GET['id']))
 						  <div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-user-o"></i>
-                                <input class="mdl-textfield__input" type="text" name="sex" pattern="[A-Z,a-z, ]*" id="appointment-sex">
+                                <input value="<?php echo $selectapointfetch['sex'] ?>" readonly class="mdl-textfield__input" type="text" name="sex" pattern="[A-Z,a-z, ]*" id="appointment-sex">
                                 <label class="mdl-textfield__label" for="appointment-name">Sex</label>
                                 <span class="mdl-textfield__error">Please Enter Sex</span>
                             </div>
@@ -221,7 +221,7 @@ if(isset($_GET['id']))
 						<div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-envelope-o"></i>
-                                <input class="mdl-textfield__input" type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="appointment-email">
+                                <input value="<?php echo $selectapointfetch['email'] ?>" readonly class="mdl-textfield__input" type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" id="appointment-email">
                                 <label class="mdl-textfield__label" for="appointment-email">Email</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Email!</span>
                             </div>
@@ -229,7 +229,7 @@ if(isset($_GET['id']))
 						<div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-phone"></i>
-                                <input class="mdl-textfield__input" type="text" name="phno" pattern="[0-9]*" id="appointment-mobile">
+                                <input value="<?php echo $selectapointfetch['phno'] ?>" readonly class="mdl-textfield__input" type="text" name="phno" pattern="[0-9]*" id="appointment-mobile">
                                 <label class="mdl-textfield__label" for="appointment-mobile">Mobile Number</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Mobile Number!</span>
                             </div>
@@ -237,7 +237,9 @@ if(isset($_GET['id']))
 					   <div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-calendar-o"></i>
-                                <input class="mdl-textfield__input" type="text" id="appointment-date" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <input value="<?php $dateb=$selectapointfetch['dob'];
+								$myDateTime = DateTime::createFromFormat('Y-m-d', $dateb);
+								$dobc = $myDateTime->format('d-m-Y');  echo $dobc; ?>" readonly class="mdl-textfield__input" type="text" id="appointment-date">
                                 <label class="mdl-textfield__label" for="appointment-date">Date Of Birth</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
                             </div>
@@ -245,38 +247,59 @@ if(isset($_GET['id']))
                         <div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-calendar-o"></i>
-                                <input class="mdl-textfield__input" type="text" id="appointment-date1" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <input value="<?php $datea=$selectapointfetch['doa'];
+								$myDateTime = DateTime::createFromFormat('Y-m-d', $datea);
+								$doac = $myDateTime->format('d-m-Y');  echo $doac; ?>" readonly class="mdl-textfield__input" type="text" id="appointment-date1">
                                 <label class="mdl-textfield__label" for="appointment-date">Date Of Appointment</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
                             </div>
                         </div>
                         
-                        
                         <div class="col-md-12">
-                            <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label form-input-icon">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-user-md"></i>
-                                <select class="mdl-selectfield__select" id="appointment-doctor">
-                                    <option value="">&nbsp;</option>
-                                    <option value="1">Dr. Daniel Barnes</option>
-                                    <option value="2">Dr. Steve Soeren</option>
-                                    <option value="3">Dr. Barbara Baker</option>
-                                    <option value="4">Dr. Melissa Bates</option>
-                                    <option value="5">Dr. Linda Adams</option>
-                                </select>
-                                <label class="mdl-selectfield__label" for="appointment-doctor">Doctor</label>
+                                <input value="<?php echo 'Dr '.$selectapointfetch['fname'].' '.$selectapointfetch['lname'].' , '.$selectapointfetch['specialist']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
+                                <label class="mdl-textfield__label" for="appointment-email">Doctor</label>
+                                
                             </div>
                         </div>
+						<div class="col-md-6">
+							<div class="card text-black bg-light mb-0">
+							 <div class="card-header font-16">Appointment status</div>
+								<div class="card-body">
+									<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+										<i class="fa fa-user-md"></i>
+										<input value="<?php echo $selectapointfetch['status']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
+										<label class="mdl-textfield__label" for="appointment-email">Status of appointment</label>
+									</div>
+								</div>
+							</div>
+							
+                        </div>
+					 <div class="col-md-6">
+						 <div class="card text-black bg-light mb-0">
+							 <div class="card-header font-16">Time of appointment</div>
+							 <div class="card-body">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+									<i class="fa fa-clock-o"></i>
+									<input value="<?php echo 'null'; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
+									<label class="mdl-textfield__label" for="appointment-email">Time of appointment</label>
+								</div>
+							 </div>
+						 </div>
+                      </div>
 					
 						
 				</div>
 				<div class="text-center pt-4">
-					<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-danger button-lg make-appointment">Cancel Appointment</button>
+					<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-danger button-md " name="cancelapoint">Cancel Appointment</button>
 				</div>
 				</form>
 			</div>
 		</div><br>
 	</div>
 	<?php } ?>
+	
 	<!-- End Emergency Section -->
     <!-- Start Make an Appointment Modal -->
     <!--<div id="appointment" class="modal fade" role="dialog">
@@ -482,7 +505,7 @@ if(isset($_GET['id']))
         <!-- Start Copyright Section -->
         <div id="copyright">
             <div class="layer-stretch">
-                <div class="paragraph-medium paragraph-white">&copy;  ALPHACARE OHMS</div>
+                <div class="paragraph-medium paragraph-white">2018 &copy; AlphaCare - Online Hospital Management System</div>
             </div>
         </div><!-- End of Copyright Section -->
     </footer><!-- End of Footer Section -->
