@@ -258,7 +258,7 @@ if(isset($_GET['id']))
                         <div class="col-md-12">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon theme-quote" >
                                 <i class="fa fa-user-md"></i>
-                                <input value="<?php echo 'Dr '.$selectapointfetch['fname'].' '.$selectapointfetch['lname'].' , '.$selectapointfetch['specialist']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
+                                <input value="<?php echo 'Dr. '.$selectapointfetch['fname'].' '.$selectapointfetch['lname'].' , '.$selectapointfetch['specialist']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
                                 <label class="mdl-textfield__label" for="appointment-email">Doctor</label>
                                 
                             </div>

@@ -31,7 +31,7 @@
 			<!-- User profile-->
 			<li class="nav-small-cap m-t-10">--- Main Menu</li>
 			<!---DNS Added Dashboard menu --->
-			<li> <a href="index.php" class="waves-effect active"><i class="ti-dashboard p-r-10"></i> <span class="hide-menu">Dashboard</span></a> </li>
+			<li> <a href="index.php" class="waves-effect"><i class="ti-dashboard p-r-10"></i> <span class="hide-menu">Dashboard</span></a> </li>
 			
 			<!---PNB Added Patient menu --->
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-wheelchair p-r-10"></i> <span class="hide-menu"> Patients <span class="fa arrow"></span></span></a>
@@ -39,6 +39,9 @@
 					<li> <a href="view-patients.php">View Patients</a> </li>
 					<li> <a href="add-patient.php">Add Patient</a> </li>
 				</ul>
+			</li>
+			<li> <a href="view-appointments.php" class="waves-effect"><i class="fa fa-calendar-o p-r-10"></i> <span class="hide-menu"> Appointments <span class="fa arrow"></span></span></a>
+				
 			</li>
 
 			<!---PNB Added Doctors menu --->
