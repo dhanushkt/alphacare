@@ -381,7 +381,7 @@ function edit_row(no)
 									<a class="popup-with-form btn btn-success text-white addmidclass"  href="#test-form" >Prescribe new medicine</a>
                                     <div class="m-t-15 collapseblebox dn">
                                        <div class="well">
-											
+											To update medicine info click on that particular row
 										<div class="row">
 							<div class="table-responsive">
 								<div class="panel1 panel panel-info">
@@ -403,15 +403,17 @@ function edit_row(no)
                                     </thead>
 									<tbody>
                               <?php
-								 $mediceneinfo="SELECT name,brand,description,dose,status,doctors.fname,doctors.lname FROM medicines INNER JOIN doctors ON medicines.doc_id = doctors.doc_id WHERE p_id='$id' ORDER BY med_id DESC";
+								 $mediceneinfo="SELECT med_id,name,brand,description,dose,status,doctors.fname,doctors.lname FROM medicines INNER JOIN doctors ON medicines.doc_id = doctors.doc_id WHERE p_id='$id' ORDER BY med_id DESC";
 								 $mediceneresult = mysqli_query($connection, $mediceneinfo);
-								 $getdocinfoarray=mysqli_fetch_array($mediceneresult);
-								//$medinforow = mysqli_fetch_assoc($medinfores);
+								 //$getdocinfoarray=mysqli_fetch_array($mediceneresult);
+								//$medinforow = mysqli_fetch_assoc($mediceneresult);
 								foreach($mediceneresult as $key=>$mediceneresult)
 								{
+									
+									$getmedid=$mediceneresult['med_id'];
                               ?>
 										
-										<tr onclick="window.location='edit-medicine.php?id=';">
+										<tr onclick="window.location='edit-medicine.php?id=<?php echo $getmedid; ?>'">
                                             <th scope="row"><?php echo $key+1; ?></th>
                                             <td id="name_row<?php echo $key; ?>"><?php echo $mediceneresult["name"]; ?></td>
                                             <td><?php echo $mediceneresult["brand"]; ?></td>
