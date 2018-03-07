@@ -138,7 +138,7 @@ if (isset($_POST['username']) && isset($_POST['password']))
 										</div> 
 								<?php }?>
                                 <div class="form-group">
-                                    <label for="inputName1" class="control-label">Userame</label>
+                                    <label for="inputName1" class="control-label">Username</label>
                                     <input type="text" autocomplete="off" name="username" class="form-control" id="username" placeholder="Enter your username" required >
                                     <!--value="<?php // if(isset($username) & !empty($username)){ echo $username; }?>"-->
                                     <!-- username check start -->
