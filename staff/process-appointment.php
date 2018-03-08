@@ -1,9 +1,9 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
+if(isset($_SESSION['susername']))
 {
-	$ausername=$_SESSION['dusername'];
+	$ausername=$_SESSION['susername'];
 }
 elseif(isset($_SESSION['ausername']))
 {
@@ -16,7 +16,6 @@ $apointrow = mysqli_fetch_assoc($getapointresult);
 
 if (isset($_POST['apupdate']))
 	{
-		 //real eacape sting is used to prevent sql injection hacking
 		$apointstatus=mysqli_real_escape_string($connection,$_POST['apstatus']);
 		if($apointstatus=='Scheduled')
 		{
@@ -48,7 +47,6 @@ if (isset($_POST['apupdate']))
 			}
 			
 		}
-		
 	}
 
 ?>
