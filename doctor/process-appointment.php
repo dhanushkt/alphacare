@@ -210,8 +210,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 														</label>
 														<label class="radio-inline">
 															<div class="radio radio-info">
-																<input type="radio" name="apstatus" id="radio2" value="Canceled, Doctor unavailable">
-																<label for="radio2">Canceled</label>
+																<input type="radio" name="apstatus" id="radio2" value="Cancelled, Doctor unavailable">
+																<label for="radio2">Cancelled</label>
 															</div>
 														</label>
 													</div>

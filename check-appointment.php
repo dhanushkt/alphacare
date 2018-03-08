@@ -19,6 +19,17 @@ if(isset($_GET['id']))
 	}
 }
 
+if(isset($_POST['CancelAp']))
+{
+	//removed time=NULL simce we need to know at what times apoint has been cancelled
+	$updateapointquery="UPDATE appointments SET status='Cancelled by patient' WHERE ap_token='$tokenno'";
+	$updateapointqueryresult=mysqli_query($connection,$updateapointquery);
+	if($updateapointqueryresult)
+	{
+		$fmsg="Appointment Cancelled !";
+	}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -200,7 +211,7 @@ if(isset($_GET['id']))
 	<div id="profile-page1" class="layer-stretch pt-0">
 		<div class="layer-wrapper pt-0">
 			<div class="theme-material-card text-center">
-				<form method="post">
+				<form method="post" onsubmit="return confirm('Do you really want to cancel the appointment ?');">
 				<div class="row">
 					<div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
@@ -245,23 +256,26 @@ if(isset($_GET['id']))
                             </div>
                         </div> -->
                         <div class="col-md-12">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon theme-quote">
-                                <i class="fa fa-calendar-o"></i>
-                                <input value="<?php $datea=$selectapointfetch['doa'];
-								$myDateTime = DateTime::createFromFormat('Y-m-d', $datea);
-								$doac = $myDateTime->format('d-m-Y');  echo $doac; ?>" readonly class="mdl-textfield__input" type="text" id="appointment-date1">
-                                <label class="mdl-textfield__label" for="appointment-date">Date Of Appointment</label>
-                                <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
-                            </div>
+							<div class="pl-3 pt-0 pb-0 theme-quote">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+									<i class="fa fa-calendar-o"></i>
+									<input value="<?php $datea=$selectapointfetch['doa'];
+									$myDateTime = DateTime::createFromFormat('Y-m-d', $datea);
+									$doac = $myDateTime->format('d-m-Y');  echo $doac; ?>" readonly class="mdl-textfield__input" type="text" id="appointment-date1">
+									<label class="mdl-textfield__label" for="appointment-date">Date Of Appointment</label>
+									<span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
+								</div>
+							</div>
                         </div>
                         
                         <div class="col-md-12">
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon theme-quote" >
-                                <i class="fa fa-user-md"></i>
-                                <input value="<?php echo 'Dr. '.$selectapointfetch['fname'].' '.$selectapointfetch['lname'].' , '.$selectapointfetch['specialist']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
-                                <label class="mdl-textfield__label" for="appointment-email">Doctor</label>
-                                
-                            </div>
+							<div class="pl-3 pt-0 pb-0 theme-quote">
+								<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon" >
+									<i class="fa fa-user-md"></i>
+									<input value="<?php echo 'Dr. '.$selectapointfetch['fname'].' '.$selectapointfetch['lname'].' , '.$selectapointfetch['specialist']; ?>" readonly class="mdl-textfield__input" type="text" name="email" id="appointment-doctor">
+									<label class="mdl-textfield__label" for="appointment-email">Doctor</label>
+								</div>
+							</div>
                         </div>
 						<div class="col-md-6">
 							<div class="card text-black bg-light mb-1">
@@ -288,11 +302,9 @@ if(isset($_GET['id']))
 							 </div>
 						 </div>
                       </div>
-					
-						
 				</div>
 				<div class="text-center pt-4">
-					<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-danger button-md " name="cancelapoint">Cancel Appointment</button>
+					<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-danger button-md" name="CancelAp">Cancel Appointment</button>
 				</div>
 				</form>
 			</div>

@@ -1585,14 +1585,14 @@ blockquote {
 /* [ 2.19 THEME QUOTE CSS START ] */
 .theme-quote {
   font-size: 15px;
-  color: #555;
+  color: #000000;
   padding: 20px;
   letter-spacing: .5px;
   margin: 0 0 10px 0;
   text-align: left;
   font-style: italic;
   background: #f4f4f4;
-  border-left: 4px solid #AAA;
+  border-left: 2px solid #AAA;
   border-radius: 2px; }
   .theme-quote .fa {
     color: #32C1CE; }

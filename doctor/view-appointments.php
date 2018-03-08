@@ -105,7 +105,7 @@ if(isset($_POST['AttendedBtn']))
                                             <li><a href="#section-bar-1" class="sticon ti-reload"><span>In Process</span></a></li>
                                             <li><a href="#section-bar-2" class="sticon ti-time"><span>Scheduled</span></a></li>
                                             <li><a href="#section-bar-3" class="sticon ti-check-box"><span>Attended</span></a></li>
-                                            <li><a href="#section-bar-4" class="sticon ti-na"><span>Canceled</span></a></li>
+                                            <li><a href="#section-bar-4" class="sticon ti-na"><span>Cancelled</span></a></li>
                                             
                                         </ul>
                                     </nav>
@@ -179,7 +179,8 @@ if(isset($_POST['AttendedBtn']))
 										<i class="fa fa-phone"></i><?php echo ' '.$getapointresult["phno"]; ?> <br>
 		
                                     </p>
-									<form method="post" class="m-b-0">
+									<!--change the confirmation message-->
+									<form method="post" onsubmit="return confirm('Do you really want to submit?');" class="m-b-0">
 										<input type="hidden" name="CancelAptVal" value="<?php echo $getapointresult['ap_token']; ?>">
 										<button type="submit" name="AttendedBtn" class="fcbtn btn btn-info" >Attended</button>
 										<button type="submit" name="CancelApt" class="fcbtn btn btn-danger"><i class="fa fa-times"></i> </button> 
@@ -241,11 +242,11 @@ if(isset($_POST['AttendedBtn']))
 									</section>
 										
                                         <section id="section-bar-4">
-                                            <h2 class="visible-xs">Canceled</h2> 
+                                            <h2 class="visible-xs">Cancelled</h2> 
 										
 										<div class="row p-0">
 								<?php
-									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE status IN ('Canceled','Canceled, Doctor unavailable') ORDER BY doa ASC ";
+									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE status IN ('Cancelled','Cancelled, Doctor unavailable','Cancelled by patient') ORDER BY doa ASC ";
 									$getapointresult = mysqli_query($connection, $getapointquery2);
 									foreach($getapointresult as $key=>$getapointresult)
 								{ ?>
@@ -254,7 +255,7 @@ if(isset($_POST['AttendedBtn']))
                             <div class="row">
                                 <!-- <div class="col-md-4 col-sm-4 text-center">
                                     <a href="contact-detail.html"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
-                                </div> --> 
+                                </div> -->  
                                 <div class="col-md-8 col-sm-8">
 									<h5 class="box-title m-b-0"># <?php echo $getapointresult["ap_token"]; ?> </h5>
                                     <h3 class="box-title m-b-0"><?php echo $getapointresult["name"]; ?></h3> <!--<small><?php // echo $getapointresult["gender"]; ?></small>-->
@@ -265,8 +266,8 @@ if(isset($_POST['AttendedBtn']))
 										$doac = $myDateTime->format('d-m-Y');  echo ' '.$doac.' '; ?> <i class="fa fa-clock-o"></i><?php $gettime=$getapointresult['time']; echo ' '.date('h:i a', strtotime($gettime)); ?> <br>
 										<i class="fa fa-user-md"></i><?php echo ' Dr. '.$getapointresult["fname"].' '.$getapointresult["lname"]; ?> <br>
 										<i class="fa fa-phone"></i><?php echo ' '.$getapointresult["phno"]; ?> <br>
-									 	<?php $status_value = $getapointresult['status']; 
-								 		$statusvalue = str_replace('Canceled,', '', $status_value); echo $statusvalue;  ?> 
+									 	<b><?php $status_value = $getapointresult['status']; 
+										 $statusvalue = str_replace('Cancelled,', '', $status_value); echo $statusvalue;  ?>  </b>
                                     </p>
                                 </div>
                             </div>
