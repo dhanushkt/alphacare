@@ -21,6 +21,10 @@ if(isset($_GET['id']))
 
 if(isset($_POST['CancelAp']))
 {
+	if(empty($tokenno))
+	{
+		$tokenno=$_POST['hiddentokenno'];
+	}
 	//removed time=NULL simce we need to know at what times apoint has been cancelled
 	$updateapointquery="UPDATE appointments SET status='Cancelled by patient' WHERE ap_token='$tokenno'";
 	$updateapointqueryresult=mysqli_query($connection,$updateapointquery);
@@ -304,6 +308,7 @@ if(isset($_POST['CancelAp']))
                       </div>
 				</div>
 				<div class="text-center pt-4">
+					<input type="hidden" value="<?php echo $selectapointfetch['ap_token']; ?>" name="hiddentokenno">
 					<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-danger button-md" name="CancelAp">Cancel Appointment</button>
 				</div>
 				</form>
