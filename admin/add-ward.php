@@ -152,7 +152,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 													<option onClick="document.getElementById('bednumber').disabled = true;" value="TV">TV</option>
 													<option onClick="document.getElementById('bednumber').disabled = true;" value="AC">AC</option>
 													<option onClick="document.getElementById('bednumber').disabled = false;" value="Semi">Semi</option>
-													<option onClick="document.getElementById('bednumber').disabled = false;" value="General">General</option>
+													<option onSelect="document.getElementById('bednumber').disabled = false;" value="General">General</option>
 												</select>
 											</div>
                                 		</div>
