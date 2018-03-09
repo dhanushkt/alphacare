@@ -103,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										 <?php echo $smsg; ?>
 									</div>
-							<?php }?>
+							<?php } ?>
 
                         <div class="white-box">
                             <h3 class="box-title m-b-0">Ward Information</h3>
