@@ -7,33 +7,36 @@
 	<!-- Site Title -->
 	<title>Klinik - Invoice page</title>
 	<!-- Favicon Icon -->
-	<link rel="icon" type="image/x-icon" href="images/favicon.png" />
+	<link rel="icon" type="image/x-icon" href="../landerpage/images/fevicon1.png" />
 	<!-- Font Awesoeme Stylesheet CSS -->
-	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="../landerpage/font-awesome/css/font-awesome.min.css" />
 	<!-- Google web Font -->
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400">
 	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="../landerpage/css/bootstrap.min.css">
 	<!-- Material Design Lite Stylesheet CSS -->
-	<link rel="stylesheet" href="css/material.min.css" />
+	<link rel="stylesheet" href="../landerpage/css/material.min.css" />
 	<!-- Custom Main Stylesheet CSS -->
-	<link rel="stylesheet" href="css/invoice.css">
+	<link rel="stylesheet" href="../landerpage/css/invoice.css">
 </head>
 <body>
 	<div class="container">
-		<table class="invoice-hdr">
-			<tr>
+		
+		<table class="invoice-hdr">	
+			
 				<td>
-					<p>Street Name, City Country</p>
-					<p>youremail@address.com</p>
-					<p>+0 12 333 4444</p>
+					<h2>JAYASHREE HOSPITAL</h2>
+					<p>KS RAO ROAD</p>
+					<p>Email-ID: jayashree@gmail.com</p>
+					<p>Contact: 0824-2429729</p>
 				</td>
 				<td class="invoice-logo">
-					<img src="images/logo.png" alt="">
+					<img src="../landerpage/images/fevicon.png" alt="">
 				</td>
 			</tr>
 		</table>
 		<div class="invoice-bdy">
+			<center><h4>OUTPATIENT BILL</h4></center>
 			<div class="row">
 				<div class="col-6">
 					<table class="invoice-info">
@@ -42,8 +45,12 @@
 							<td><input type="text"></td>
 						</tr>
 						<tr>
-							<td class="dark">E-Mail Address</td>
+							<td class="dark">Age</td>
 							<td><input type="text"></td>
+						</tr>
+						<tr>
+						<td class="dark">Sex</td>
+						 <td><input class="text"></td>
 						</tr>
 						<tr>
 							<td class="dark">Mobile Number</td>
@@ -54,7 +61,7 @@
 				<div class="col-6">
 					<table class="pull-right invoice-info">
 						<tr>
-							<td class="dark">Invoice Id</td>
+							<td class="dark">Address</td>
 							<td><input type="text"></td>
 						</tr>
 						<tr>
@@ -76,8 +83,8 @@
 						<th>Unit Cost</th>
 						<th>Quantity</th>
 						<th>Tax( in % )</th>
-						<th>Tax( in $ )</th>
-						<th>Price( in $ )</th>
+						<th>Tax( in &#8377;)</th>
+						<th>Price( in &#8377;)</th>
 					</tr>
 					<tr class="item-row">
 						<td>
@@ -106,42 +113,42 @@
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
-						<td colspan="2" class="text-right">Sub Total( in $ )</td>
+						<td colspan="2" class="text-right">Sub Total( in &#8377; )</td>
 						<td colspan="2">
 							<span id="subtotal"></span>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
-						<td colspan="2" class="text-right">Tax( in $ )</td>
+						<td colspan="2" class="text-right">Tax( in &#8377; )</td>
 						<td colspan="2">
 							<span id="tax"></span>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
-						<td colspan="2" class="text-right">Discount( in $ )</td>
+						<td colspan="2" class="text-right">Discount( in &#8377;)</td>
 						<td colspan="2">
 							<input type="text" id="discount" placeholder="">
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
-						<td colspan="2" class="text-right">Total Amount( in $ )</td>
+						<td colspan="2" class="text-right">Total Amount( in &#8377; )</td>
 						<td colspan="2">
 							<span id="total"></span>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
-						<td colspan="2" class="text-right">Amount Paid( in $ )</td>
+						<td colspan="2" class="text-right">Amount Paid( in &#8377; )</td>
 						<td colspan="2">
 							<input type="text" id="paid" placeholder="">
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
-						<td colspan="2" class="text-right">Amount Due( in $ )</td>
+						<td colspan="2" class="text-right">Amount Due( in &#8377; )</td>
 						<td colspan="2">
 							<span id="due"></span>
 						</td>
@@ -149,21 +156,24 @@
 				</table>
 			</div>
 		</div>
+	</div>
+	<footer>
 		<div class="invoice-ftr">
 			<p>Note</p>
-			<textarea placeholder="Enter Comment or Note"></textarea>
+			<textarea placeholder="PLEASE CHECK THE BILL BEFORE LEAVING "></textarea>
+			<center><h6>THANK YOU (AlphaCare Team)</h6></center>
 		</div>
-	</div>
+			</footer>
 
 	<!-- Jquery Library 2.1 JavaScript-->
-	<script src="js/jquery-2.1.4.min.js"></script>
+	<script src="../landerpage/js/jquery-2.1.4.min.js"></script>
     <!-- Popper JavaScript-->
-    <script src="js/popper.min.js"></script>
+    <script src="../landerpage/js/popper.min.js"></script>
 	<!-- Bootstrap Core JavaScript-->
-	<script src="js/bootstrap.min.js"></script>
+	<script src="../landerpage/js/bootstrap.min.js"></script>
 	<!-- Material Design Lite JavaScript-->
-	<script src="js/material.min.js"></script>
+	<script src="../landerpage/js/material.min.js"></script>
 	<!-- main invoice JavaScript-->
-	<script src="js/invoice.js"></script>
+	<script src="../landerpage/js/invoice.js"></script>
 </body>
 </html>
