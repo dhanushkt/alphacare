@@ -45,10 +45,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#wardnoLoading').hide();
-		$('#wardno').keyup(function(){
+		$('#wardno,#wardno1,#wardno2').mousedown(function(){
 		  $('#wardnoLoading').show();
 	      $.post("check-wardnumber.php", {
-	        wardno: $('#wardno').val()
+	        wardno: $('#wardno3').val()
 	      }, function(response){
 	        $('#wardnoResult').fadeOut();
 	        setTimeout("finishAjax('wardnoResult', '"+escape(response)+"')", 500);
@@ -115,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         	 <label class="control-label">Ward Number</label>
 											<div class="col-sm-12 p-l-0">
 												<div class="input-group">
-													<input autocomplete="off" type="text" name="wardno" class="form-control" id="wardno" placeholder="Enter ward number" required>
+													<input autocomplete="off" type="text" name="wardno" class="form-control" id="wardno3"  placeholder="Enter ward number" required>
 												</div>
 												<!-- wardnum check start -->
 												<div>
@@ -148,11 +148,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											<div class="col-sm-12 p-l-0">
 												<select required class="form-control" name="wtype">
 													<option onClick="document.getElementById('bednumber').disabled = true;" hidden disabled selected>Select Type</option>
-													<option onClick="document.getElementById('bednumber').disabled = true;" value="Non-TV">Non-TV</option>
-													<option onClick="document.getElementById('bednumber').disabled = true;" value="TV">TV</option>
-													<option onClick="document.getElementById('bednumber').disabled = true;" value="AC">AC</option>
-													<option onClick="document.getElementById('bednumber').disabled = false;" value="Semi">Semi</option>
-													<option onSelect="document.getElementById('bednumber').disabled = false;" value="General">General</option>
+													<option id="wardno" onClick="document.getElementById('bednumber').disabled = true;" value="Non-TV">Non-TV</option>
+													<option id="wardno1" onClick="document.getElementById('bednumber').disabled = true;" value="TV">TV</option>
+													<option id="wardno2" onClick="document.getElementById('bednumber').disabled = true; " value="AC">AC</option>
+													<option onClick="document.getElementById('bednumber').disabled = false; $('#wardnoResult').hide();" value="Semi">Semi</option>
+													<option onClick="document.getElementById('bednumber').disabled = false; $('#wardnoResult').hide();" value="General">General</option>
 												</select>
 											</div>
                                 		</div>
