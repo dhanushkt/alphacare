@@ -40,7 +40,8 @@
 					<li> <a href="add-patient.php">Add Patient</a> </li>
 				</ul>
 			</li>
-
+			<li> <a href="view-appointments.php" class="waves-effect"><i class="fa fa-calendar-o p-r-10"></i> <span class="hide-menu"> Appointments <span class="fa arrow"></span></span></a>
+			</li>
 			<!---PNB Added Doctors menu --->
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-md p-r-10"></i> <span class="hide-menu"> Doctors <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">                            

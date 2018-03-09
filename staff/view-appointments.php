@@ -1,9 +1,9 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
+if(isset($_SESSION['susername']))
 {
-	$ausername=$_SESSION['dusername'];
+	$ausername=$_SESSION['susername'];
 }
 elseif(isset($_SESSION['ausername']))
 {
@@ -115,7 +115,7 @@ if(isset($_POST['AttendedBtn']))
 											<h2 class="visible-xs">In Process</h2> 
 											<div class="row p-0">
 								<?php
-									$getapointquery = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE (status='In Process') AND (doctors.username='$ausername') ORDER BY doa ASC ";
+									$getapointquery = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE status='In Process' ORDER BY doa ASC ";
 									$getapointresult = mysqli_query($connection, $getapointquery);
 									foreach($getapointresult as $key=>$getapointresult)
 								{ ?>
@@ -157,7 +157,7 @@ if(isset($_POST['AttendedBtn']))
 										
 										<div class="row p-0">
 								<?php
-									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE (status='Scheduled') AND (doctors.username='$ausername') ORDER BY doa ASC ";
+									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE status='Scheduled' ORDER BY doa ASC ";
 									$getapointresult = mysqli_query($connection, $getapointquery2);
 									foreach($getapointresult as $key=>$getapointresult)
 								{ ?>
@@ -205,7 +205,7 @@ if(isset($_POST['AttendedBtn']))
 										
 										<div class="row p-0">
 								<?php
-									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE (status='Attended') AND (doctors.username='$ausername') ORDER BY doa ASC ";
+									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE status='Attended' ORDER BY doa ASC ";
 									$getapointresult = mysqli_query($connection, $getapointquery2);
 									foreach($getapointresult as $key=>$getapointresult)
 								{ ?>
@@ -246,7 +246,7 @@ if(isset($_POST['AttendedBtn']))
 										
 										<div class="row p-0">
 								<?php
-									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE (status IN ('Cancelled','Cancelled, Doctor unavailable','Cancelled by patient')) AND (doctors.username='$ausername') ORDER BY doa ASC ";
+									$getapointquery2 = "SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE status IN ('Cancelled','Cancelled, Doctor unavailable','Cancelled by patient') ORDER BY doa ASC ";
 									$getapointresult = mysqli_query($connection, $getapointquery2);
 									foreach($getapointresult as $key=>$getapointresult)
 								{ ?>
