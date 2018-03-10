@@ -153,19 +153,27 @@
 							<span id="due"></span>
 						</td>
 					</tr>
+					<!--<tr><td colspan="3"><button onClick="myFunction()">Print</button></td></tr>-->
+					<tr class="item-hide">
+						<td colspan="7">
+						<center><a class="item-add" HREF="javascript:window.print()" >PRINT THE BILL</a></center>
+						</td>
+					</tr>
 				</table>
 			</div>
 		</div>
-	</div>
-	<footer>
 		<div class="invoice-ftr">
 			<p>Note</p>
 			<textarea placeholder="PLEASE CHECK THE BILL BEFORE LEAVING "></textarea>
 			<center><h6>THANK YOU (AlphaCare Team)</h6></center>
 		</div>
-			</footer>
-
+</div>
 	<!-- Jquery Library 2.1 JavaScript-->
+	<SCRIPT LANGUAGE="JavaScript"> 
+if (window.print) {
+document.write('<form><input type=button name=print value="Print" onClick="window.print()"></form>');
+}
+</script>
 	<script src="../landerpage/js/jquery-2.1.4.min.js"></script>
     <!-- Popper JavaScript-->
     <script src="../landerpage/js/popper.min.js"></script>
