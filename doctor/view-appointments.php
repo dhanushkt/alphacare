@@ -13,7 +13,7 @@ elseif(isset($_SESSION['ausername']))
 if(isset($_POST['CancelApt']))
 {
 	$gettokenno=$_POST['CancelAptVal'];
-	$updateoncalcel="UPDATE appointments SET status='Canceled' WHERE ap_token='$gettokenno' ";
+	$updateoncalcel="UPDATE appointments SET status='Cancelled' WHERE ap_token='$gettokenno' ";
 	$updateoncalcelresult=mysqli_query($connection,$updateoncalcel);
 	if($updateoncalcelresult)
 	{
