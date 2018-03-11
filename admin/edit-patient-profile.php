@@ -97,6 +97,35 @@ if(isset($_POST['updatemedic']))
 	}
 }
 
+//add medicines info
+if(isset($_POST['addmedinfo']))
+{
+	$getdocidquery="SELECT doc_id FROM doctors WHERE username='$ausername'";
+	$getdocidresult=mysqli_query($connection,$getdocidquery);
+	$getdocidfetch=mysqli_fetch_assoc($getdocidresult);
+	$medipid=$id;
+	$medidocid=$getdocidfetch['doc_id'];
+	$mediname=mysqli_real_escape_string($connection,$_POST['medname']);
+	$medibrand=mysqli_real_escape_string($connection,$_POST['medbrand']);
+	$medidesc=mysqli_real_escape_string($connection,$_POST['meddesc']);
+	$medidose=mysqli_real_escape_string($connection,$_POST['meddose']);
+	$medistatus=mysqli_real_escape_string($connection,$_POST['medstatus']);
+	//planned add prescribed from date and to date 
+	
+	$mediinfoinsertquery="INSERT INTO `medicines`(p_id, doc_id, name, brand, description, dose, status) VALUES ('$medipid','$medidocid','$mediname','$medibrand','$medidesc','$medidose','$medistatus')";
+	$mediinforesult=mysqli_query($connection,$mediinfoinsertquery);
+	if($mediinforesult)
+	{
+		$smsg="Medicine Prescribed!";
+	}
+	else
+	{
+		$fmsg="error".mysqli_error($connection);
+	}
+	
+	
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -121,6 +150,8 @@ if(isset($_POST['updatemedic']))
 
 	<!-- Date picker plugins css -->
     <link href="../plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+	<!-- Popup CSS -->
+    <link href="../plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
 
       <!-- username check js start -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
@@ -147,7 +178,23 @@ if(isset($_POST['updatemedic']))
 </script>
 <!-- username check js end -->
 
-
+<!--JavaScript to add a class based on screen size-->
+<script>
+$(window).load(function() {
+    
+    var viewportWidth = $(window).width();
+    if (viewportWidth < 750) {
+            $(".addmidclass").removeClass("addmidclass").addClass("m-t-10");
+    }
+    
+    $(window).resize(function () {
+    
+        if (viewportWidth < 750) {
+            $(".addmidclass").removeClass("addmidclass").addClass("m-t-10");
+        }
+    });
+});
+</script>
 
 </head>
 
@@ -302,6 +349,121 @@ if(isset($_POST['updatemedic']))
 
                                     </div>
 										<hr>
+									<!--imported medicines module from doc cpanel start-->
+									<div class="panel panel-info">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body p-t-0 text-center ">
+                                    <a class="btn btn-custom collapseble ">View Medicines Information</a>
+									<a class="popup-with-form btn btn-success text-white addmidclass"  href="#test-form" >Prescribe new medicine</a>
+                                    <div class="m-t-15 collapseblebox dn">
+                                       <div class="well">
+											To update medicine info click on that particular row
+										<div class="row">
+							<div class="table-responsive">
+								<div class="panel1 panel panel-info">
+									<div class="panel-heading p-t-10">Medicines
+                           			 </div>
+									<div class="panel-body">
+										<table class="table table-striped color-bordered-table info-bordered-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th nowrap>Name</th>
+                                            <th nowrap>Brand</th>
+                                            <th nowrap>Description</th>
+											<th class="text-nowrap">Dose<br>(M-A-N)</th>
+											<th nowrap>Status</th>
+											<th nowrap>Prescribed by</th>
+											<!--<th>Actions</th>-->
+                                        </tr>
+                                    </thead>
+									<tbody>
+                              <?php
+								 $mediceneinfo="SELECT med_id,name,brand,description,dose,status,doctors.fname,doctors.lname FROM medicines INNER JOIN doctors ON medicines.doc_id = doctors.doc_id WHERE p_id='$id' ORDER BY med_id DESC";
+								 $mediceneresult = mysqli_query($connection, $mediceneinfo);
+								 //$getdocinfoarray=mysqli_fetch_array($mediceneresult);
+								//$medinforow = mysqli_fetch_assoc($mediceneresult);
+								foreach($mediceneresult as $key=>$mediceneresult)
+								{
+									
+									$getmedid=$mediceneresult['med_id'];
+                              ?>
+										
+										<tr onclick="window.location='edit-medicine.php?id=<?php echo $getmedid; ?>'">
+                                            <th scope="row"><?php echo $key+1; ?></th>
+                                            <td id="name_row<?php echo $key; ?>"><?php echo $mediceneresult["name"]; ?></td>
+                                            <td><?php echo $mediceneresult["brand"]; ?></td>
+                                            <td><?php echo $mediceneresult["description"]; ?></td>
+											<td nowrap><?php echo $mediceneresult["dose"]; ?></td>
+											<td><?php if($mediceneresult["status"]=='ongoing') { ?><div class="label label-table label-success"><?php echo $mediceneresult["status"]; ?></div><?php } else { ?><div class="label label-table label-danger"><?php echo $mediceneresult["status"]; ?></div><?php } ?></td>
+											<td><?php echo 'Dr. '.$mediceneresult['fname'].' '.$mediceneresult['lname']; ?></td>
+											<!--<td><a data-original-title="Edit" id="edit_button<?php // echo $key ?>" onClick="edit_row('<?php // echo $key ?>')"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+											</td>-->
+                                        </tr>
+										
+
+									<?php } ?>
+											</tbody>
+										</table>
+									</div>
+
+								 </div>
+								</div>
+										</div>	
+										
+										</div>
+                                    </div>
+									
+                                </div>
+                                
+                            </div>
+                        </div>
+						
+							<form id="test-form" method="post" class="mfp-hide white-popup-block">
+                                <h3>Enter Medicine Details</h3>
+                                <fieldset style="border:0;">
+                                    <div class="form-group">
+                                        <label class="control-label" for="inputName">Name</label>
+                                        <input type="text" class="form-control" id="inputName" name="medname" placeholder="Name of the medicine" required="">
+                                    </div>
+									
+                                    <div class="form-group">
+                                        <label class="control-label" for="inputbname">Brand</label>
+                                        <input type="text" class="form-control" id="inputbname" name="medbrand" placeholder="Medicine brand name">
+                                    </div>
+									<div class="form-group">
+                                        <label class="control-label" for="textarea">Description</label>
+                                        <br>
+                                        <textarea class="form-control" id="textarea" name="meddesc" placeholder="Additional details on medicine prescribed"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="inputdose">Dose</label>
+                                        <input type="text" class="form-control" id="inputdose" name="meddose" placeholder="Dose Format: Morning-Afternoon-Night" data-mask="9-9-9" required="">
+                                    </div>
+									<div class="form-group">
+										<label class="control-label">Status</label>
+										<div class="radio-list">
+											<label class="radio-inline p-0">
+												<div class="radio radio-info">
+													<input type="radio" name="medstatus" id="radio1" value="ongoing">
+													<label for="radio1">Ongoing</label>
+												</div>
+											</label>
+											<label class="radio-inline">
+												<div class="radio radio-info">
+													<input type="radio" name="medstatus" id="radio2" value="stopped">
+													<label for="radio2">Stopped</label>
+												</div>
+											</label>
+										</div>
+                                     </div>
+                                    
+									<div class="form-action">
+										<button type="submit" name="addmedinfo" class="btn btn-success"> <i class="fa fa-check"></i> Add</button> 
+									</div>
+                                </fieldset>
+                            </form>
+									<!--imported medicines module from doc cpanel end-->
 										<h4 class="m-t-30">General Report</h4>
 										<hr>
 										<h5>Blood Pressure<span class="pull-right"><?php echo $fetchrow["bp"]; ?></span></h5>
@@ -730,6 +892,10 @@ $(document).ready(function() {
 });
 
 </script>
+	
+	<!-- Magnific popup JavaScript -->
+    <script src="../plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+    <script src="../plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
 
 	<!-- Flot Charts JavaScript -->
     <script src="../plugins/bower_components/flot/jquery.flot.js"></script>
