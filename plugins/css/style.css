@@ -12095,7 +12095,7 @@ ul.list-icons li i {
  transition:background-color .2s,color .2s
 }
 .tabs-style-bar nav ul li a:focus,.tabs-style-bar nav ul li a:hover {
- color:#fb9678
+ color:#00AAD5
 }
 .tabs-style-bar nav ul li a span {
  text-transform:uppercase;
@@ -12104,7 +12104,7 @@ ul.list-icons li i {
  font-family:Poppins,sans-serif
 }
 .tabs-style-bar nav ul li.tab-current a {
- background:#fb9678;
+ background:#00AAD5;
  color:#fff
 }
 .tabs-style-iconbox nav {

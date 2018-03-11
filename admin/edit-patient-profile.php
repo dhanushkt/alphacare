@@ -4,42 +4,44 @@ require('connect.php');
 $ausername=$_SESSION['ausername'];
 $id = $_GET['id'];
 
-$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj FROM patients WHERE p_id='$id'";
+$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, wards.ward_no, wards.bed_no, wards.type FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
 $result = mysqli_query($connection, $query);
 $row = mysqli_fetch_assoc($result);
 
 $fetchmediinfo="SELECT * FROM medical_info WHERE p_id='$id' ORDER BY date DESC";
 $fetchresult=mysqli_query($connection, $fetchmediinfo);
 $fetchrow = mysqli_fetch_assoc($fetchresult);
-
-//calculate temprature percentage min:97F max:105F
-if($fetchrow['temp']<='97')
+$checkcount = mysqli_num_rows($fetchresult);
+if($checkcount>=1)
 {
-	$tempper="10%";
+	//calculate temprature percentage min:97F max:105F
+	if($fetchrow['temp']<='97')
+	{
+		$tempper="10%";
+	}
+	elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='105')
+	{
+		$tempper=(($fetchrow['temp']-97)/(105-97))*100;
+	}
+	elseif($fetchrow['temp']> '105')
+	{
+		$tempper="100%";
+	}
+
+	//calculate sugar percentage min:72 max:140
+	$sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
+
+	//calculate bloodpreasure percentage min:70/40 max: 180/100
+	$bp_value = $fetchrow['bp'];
+	$bp = explode("/",$bp_value);
+
+	$upper_bp = $bp[0];
+	$lower_bp = $bp[1];
+
+	$bpper_upper=(($upper_bp-70)/(180-70))*100;
+	$bpper_lower=(($lower_bp-40)/(100-40))*100;
+	$avgbpval=($bpper_upper+$bpper_lower)/2;
 }
-elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='105')
-{
-	$tempper=(($fetchrow['temp']-97)/(105-97))*100;
-}
-elseif($fetchrow['temp']> '105')
-{
-	$tempper="100%";
-}
-
-//calculate sugar percentage min:72 max:140
-$sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
-
-//calculate bloodpreasure percentage min:70/40 max: 180/100
-$bp_value = $fetchrow['bp'];
-$bp = explode("/",$bp_value);
-
-$upper_bp = $bp[0];
-$lower_bp = $bp[1];
-
-$bpper_upper=(($upper_bp-70)/(180-70))*100;
-$bpper_lower=(($lower_bp-40)/(100-40))*100;
-$avgbpval=($bpper_upper+$bpper_lower)/2;
-
 //update patient profile
 if(isset($_POST['updateprofile']))
 {
@@ -215,7 +217,7 @@ if(isset($_POST['updatemedic']))
                             <div class="user-bg"> <img width="100%" height="100%" alt="user" src="../plugins/images/profile-menu.png">
                                 <div class="overlay-box">
                                     <div class="user-content">
-                                        <a href="javascript:void(0)"><?php if($row["gender"]=='male') { ?> <img src="../plugins/images/users/doctor-male.jpg" class="thumb-lg img-circle" ><?php } else { ?> <img src="../plugins/images/users/doctor-female.jpg" class="thumb-lg img-circle" > <?php } ?> </a>
+                                        <a href="javascript:void(0)"><?php if($row["gender"]=='male') { ?> <img src="../plugins/images/users/male-patient.png" class="thumb-lg img-circle" ><?php } else { ?> <img src="../plugins/images/users/female-patient.png" class="thumb-lg img-circle" > <?php } ?> </a>
                                         <!--<h4 class="text-white"><?php //echo $row["username"]; ?></h4>
                                         <h5 class="text-white"><?php //echo $row["email"]; ?></h5>-->
                                     </div>
@@ -224,7 +226,7 @@ if(isset($_POST['updatemedic']))
 							<div class="user-btm-box">
                                 <!-- .row -->
                                 <div class="row text-center m-t-10">
-                                    <div class="col-md-6 b-r"><strong>Name</strong>
+                                    <div class="col-md-6 b-r"><strong>Full Name</strong>
                                         <p><?php echo $row["fname"]." ".$row["lname"]; ?></p>
                                     </div>
                                     <div class="col-md-6"><strong>Age</strong>
@@ -279,9 +281,9 @@ if(isset($_POST['updatemedic']))
                             <div class="tab-content">
                                 <div class="tab-pane active" id="profile">
                                     <div class="row">
-                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Full Name</strong>
+                                        <div class="col-md-3 col-xs-6 b-r"> <strong>Ward</strong>
 										<br>
-										<p class="text-muted"><?php echo $row["fname"]." ".$row["lname"]; ?></p>
+										<p class="text-muted"><?php if(($row['type']=='General') || ($row['type']=='Semi')) { echo $row['ward_no'].' ( '.$row['bed_no'].' ) '.' , '.$row['type']; } else { echo $row['ward_no'].' , '.$row['type']; } ?></p>
 									</div>
 									<div class="col-md-3 col-xs-6 b-r"> <strong>Disease</strong>
 										<br>
