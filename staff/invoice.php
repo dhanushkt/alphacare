@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Site Title -->
-	<title>Klinik - Invoice page</title>
+	<title>AlphaCare - Invoice page</title>
 	<!-- Favicon Icon -->
 	<link rel="icon" type="image/x-icon" href="../landerpage/images/fevicon1.png" />
 	<!-- Font Awesoeme Stylesheet CSS -->
@@ -21,17 +21,16 @@
 </head>
 <body>
 	<div class="container">
-		
 		<table class="invoice-hdr">	
-			
+			<tr>
 				<td>
-					<h2>JAYASHREE HOSPITAL</h2>
+					<h4>JAYASHREE HOSPITAL</h4>
 					<p>KS RAO ROAD</p>
 					<p>Email-ID: jayashree@gmail.com</p>
 					<p>Contact: 0824-2429729</p>
 				</td>
 				<td class="invoice-logo">
-					<img src="../landerpage/images/fevicon.png" alt="">
+					<img src="../plugins/images/invoice-logo.png" alt="">
 				</td>
 			</tr>
 		</table>
@@ -41,7 +40,7 @@
 				<div class="col-6">
 					<table class="invoice-info">
 						<tr>
-							<td class="dark">Client Name</td>
+							<td class="dark">Patient Name</td>
 							<td><input type="text"></td>
 						</tr>
 						<tr>
@@ -156,7 +155,7 @@
 					<!--<tr><td colspan="3"><button onClick="myFunction()">Print</button></td></tr>-->
 					<tr class="item-hide">
 						<td colspan="7">
-						<center><a class="item-add" HREF="javascript:window.print()" >PRINT THE BILL</a></center>
+							<center><button onClick="window.print()" class="mdl-button mdl-js-button">Print</button></center>
 						</td>
 					</tr>
 				</table>
@@ -169,7 +168,7 @@
 		</div>
 </div>
 	<!-- Jquery Library 2.1 JavaScript-->
-	<SCRIPT LANGUAGE="JavaScript"> 
+<script language="JavaScript"> 
 if (window.print) {
 document.write('<form><input type=button name=print value="Print" onClick="window.print()"></form>');
 }
