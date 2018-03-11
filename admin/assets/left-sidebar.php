@@ -59,6 +59,12 @@
 					<li> <a href="view-wards.php">View Wards</a> </li>
 				</ul>
 			</li>
+			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text p-r-10"></i> <span class="hide-menu"> Bills <span class="fa arrow"></span></span></a>
+				<ul class="nav nav-second-level">
+					<li> <a href="#">Inpatient Bill</a> </li>
+					<li> <a target="_blank" href="op-invoice.php">Outpatient Bill</a></li>
+				</ul>
+			</li>
 		  <!--DNS Added Admin menu-->
 		   <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user p-r-10"></i> <span class="hide-menu"> Admin <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
