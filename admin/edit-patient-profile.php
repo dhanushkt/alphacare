@@ -4,7 +4,7 @@ require('connect.php');
 $ausername=$_SESSION['ausername'];
 $id = $_GET['id'];
 
-$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, wards.ward_no, wards.bed_no, wards.type FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
+$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
 $result = mysqli_query($connection, $query);
 $row = mysqli_fetch_assoc($result);
 
@@ -63,7 +63,7 @@ if(isset($_POST['updateprofile']))
 		$updatequeryresult=mysqli_query($connection, $updatequery);
 		if($updatequeryresult)
 		{
-			$queryupdate="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj FROM patients WHERE p_id='$id'";
+			$queryupdate="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, dod FROM patients WHERE p_id='$id'";
 			$resultupdate = mysqli_query($connection, $queryupdate);
 			$row = mysqli_fetch_assoc($resultupdate);
 			$smsg="PATIENT INFORMATION UPDATED";
@@ -124,6 +124,37 @@ if(isset($_POST['addmedinfo']))
 	}
 	
 	
+}
+
+if(isset($_POST['discharge']))
+{
+	$datedod=mysqli_real_escape_string($connection,$_POST['dod']);
+	$myDateTime3 = DateTime::createFromFormat('d-m-Y', $datedod);
+	$dod = $myDateTime3->format('Y-m-d');
+	$dischargequery="UPDATE patients SET dod='$dod' WHERE p_id='$id'";
+	$dischargeresult=mysqli_query($connection,$dischargequery);
+	if($dischargeresult)
+	{
+		$dateofjoin=$row['doj'];
+		$dayscount=strtotime($dod) - strtotime($dateofjoin);
+		$days=round($dayscount / (60* 60 * 24));
+		$wardrent= $row['rent'] * $days;
+		$insertbill="INSERT INTO `ip_bills` (p_id, ward_rent) VALUES ('$id','$wardrent')";
+		$insertbillresult=mysqli_query($connection,$insertbill);
+		if($insertbillresult)
+		{
+			$wardid=$row['ward_id'];
+			$updatewardstatus=mysqli_query($connection,"UPDATE wards SET status='0' WHERE ward_id='$wardid'");
+			if($updatewardstatus)
+			{
+				//echo "<script> window.location.replace(window.location.pathname + window.location.search + window.location.hash); </script>";
+				$smsg="Patient Discharge Successfull";
+				$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
+				$result = mysqli_query($connection, $query);
+				$row = mysqli_fetch_assoc($result);
+			}
+		}
+	}
 }
 
 
@@ -191,6 +222,22 @@ $(window).load(function() {
     
         if (viewportWidth < 750) {
             $(".addmidclass").removeClass("addmidclass").addClass("m-t-10");
+        }
+    });
+});
+</script>
+<script>
+$(window).load(function() {
+    
+    var viewportWidth = $(window).width();
+    if (viewportWidth < 750) {
+            $(".mobileview").removeClass("mobileview").addClass("p-2");
+    }
+    
+    $(window).resize(function () {
+    
+        if (viewportWidth < 750) {
+            $(".mobileview").removeClass("mobileview").addClass("p-2");
         }
     });
 });
@@ -316,15 +363,17 @@ $(window).load(function() {
                         </div>
                     </div>
                     <div class="col-md-8 col-xs-12">
-                        <div class="white-box">
-                            <ul class="nav customtab nav-tabs" role="tablist">
+                        <div class="white-box mobileview">
+                          <font size="2"><ul class="nav customtab nav-tabs" role="tablist">
                                 <!--<li role="presentation" class="nav-item"><a href="#home" class="nav-link " aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-home"></i></span><span class="hidden-xs"> Activity</span></a></li>-->
-                                <li role="presentation" class="nav-item"><a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-wheelchair"></i></span> <span class="hidden-xs">Info</span></a></li>
+                                
+								<li role="presentation" class="nav-item"><a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"><i class="fa fa-wheelchair"></i></span> <span class="hidden-xs">Info</span></a></li>
                                 <li role="presentation" class="nav-item"><a href="#medrep" class="nav-link" aria-controls="medrep" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-stethoscope"></i></span> <span class="hidden-xs">Medical Report</span></a></li>
                                 <li role="presentation" class="nav-item"><a href="#updatemedicinfo" class="nav-link" aria-controls="updatemedicinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-refresh"></i></span> <span class="hidden-xs">Update Medical Info</span></a></li>
 								<li role="presentation" class="nav-item"><a href="#editpatientinfo" class="nav-link" aria-controls="editpatientinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-pencil"></i></span> <span class="hidden-xs">Edit Patient Info</span></a></li>
-								<li role="presentation" class="nav-item"><a href="#removepatient" class="nav-link" aria-controls="removepatient" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-trash"></i></span> <span class="hidden-xs">Remove</span></a></li>
-                            </ul>
+								<li role="presentation" class="nav-item"><a href="#visitors" class="nav-link" aria-controls="visitors" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-users"></i></span> <span class="hidden-xs">Visitors</span></a></li>
+								<li role="presentation" class="nav-item"><a href="#removepatient" class="nav-link" aria-controls="removepatient" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-trash"></i></span> <span class="hidden-xs">Discharge</span></a></li>
+							  </ul></font>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="profile">
                                     <div class="row">
@@ -795,10 +844,132 @@ $(window).load(function() {
 
 			</div> <!--edit patient profile tab ends-->
 			<div class="tab-pane" id="removepatient"> <!--edit patient profile tab ends-->
-				<div class="text-center">
-				<a href="#" class="fcbtn btn btn-danger model_img deleteAdmin" data-id="<?php echo $id ?>" id="deleteDoc">Remove Patient Record</a>
+				<div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Discharge Details</div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+									<form method="post" data-toggle="validator">
+										<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">Date of Discharge</label>
+												<div class="input-group">
+													<div class="input-group-addon"><i class="icon-calender"></i></div>
+													<input <?php if(isset($row['dod'])){ $datedis=$row['dod'];
+														$myDateTimedis = DateTime::createFromFormat('Y-m-d', $datedis);
+														$dodisc = $myDateTimedis->format('d-m-Y'); echo "disabled value='$dodisc'"; } ?> data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose1" name="dod" placeholder="dd-mm-yyyy" required>
+												</div>
+												<!--<span class="font-13 text-muted">dd-mm-yyyy</span>-->
+											</div>
+										</div>
+										<div class="col-md-6">
+												<div class="form-group">
+													<label class="control-label">&nbsp;</label><br>
+													<button <?php if(isset($row['dod'])){ echo 'disabled'; }?> class="btn btn-info" type="submit" name="discharge">Discharge Patient</button>
+												  </div>
+											</div>
+										
+										</div>
+										<?php
+										if(isset($row['dod']))
+										{
+											$getdischargeinfo="SELECT * FROM ip_bills WHERE p_id='$id'";
+											$getdischargeinfores=mysqli_query($connection,$getdischargeinfo);
+											$dischargeinfo=mysqli_fetch_assoc($getdischargeinfores);
+											
+											$dateofjoin=$row['doj'];
+											$dateofdis=$row['dod'];
+											$dayscount=strtotime($dateofdis) - strtotime($dateofjoin);
+											$days=round($dayscount / (60* 60 * 24));
+										?>
+										<div class="form-body">
+                                            <h3 class="box-title">Discharge Info</h3>
+                                            <hr class="m-t-0 m-b-10">
+                                            <div class="row ">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Date of Joining</label>
+                                                        <input disabled type="text" id="firstName" name="fname" class="form-control" placeholder="Enter first name" value="<?php $datej=$row['doj'];
+														$myDateTimej = DateTime::createFromFormat('Y-m-d', $datej);
+														$dojc = $myDateTime->format('d-m-Y');  echo $dojc; ?>">
+                                                         </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Ward Rent / Day (in &#8377;)</label>
+                                                        <input disabled type="text" id="lastName" name="lname" class="form-control" placeholder="Enter last name" value="<?php echo $row['rent']; ?>">
+                                                         </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+											<div class="row ">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Number of days admitted</label>
+                                                        <input disabled type="text" id="firstName" name="fname" class="form-control" placeholder="Enter first name"  value="<?php echo $days ?>">
+                                                         </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Total Ward Rent (in &#8377;)</label>
+                                                        <input disabled type="text" id="lastName" name="lname" class="form-control" value="<?php echo $dischargeinfo['ward_rent']; ?>">
+                                                         </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+											<div class="row">
+												<div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Total Amount in bill</label>
+                                                        <input disabled type="text" id="lastName" name="lname" class="form-control" value="<?php if($dischargeinfo['total_amt']=='0') { echo "Generate Bill to add total amount"; } else { echo $dischargeinfo['total_amt']; } ?>">
+                                                     </div>
+                                                </div>
+											</div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <a href="ip-invoice.php?id=<?php echo $dischargeinfo['bill_id']; ?>" class="btn btn-info text-white" > <i class="fa fa-pencil"></i> Generate Bill </a>
+                                                            <!--<button type="button" class="btn btn-default">Cancel</button>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6"> </div>
+                                            </div>
+                                        </div>
+									<?php } ?>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-
+				
+				
+				
+				
+					 
+				
+				
+				
+				
+				
+				
+				
+				
+				<a href="#" class="fcbtn btn btn-danger model_img deleteAdmin addmidclass" data-id="<?php echo $id ?>" id="deleteDoc">Remove Patient Record</a>
+				
+								
+				
+				<div>
+				
+				</div>
 
 			</div>
                             </div>
@@ -854,6 +1025,13 @@ $(window).load(function() {
     <script>
 		jQuery('.mydatepicker, #datepicker').datepicker();
     jQuery('#datepicker-autoclose').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+	</script>
+	<script>
+		jQuery('.mydatepicker, #datepicker').datepicker();
+    jQuery('#datepicker-autoclose1').datepicker({
         autoclose: true,
         todayHighlight: true
     });
