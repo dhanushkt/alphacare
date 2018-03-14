@@ -404,7 +404,7 @@ if(isset($_POST['apointsubmit']))
                     <div class="contact-info-inner">
                         <i class="fa fa-plus-square-o"></i>
                         <span>APPOINTMENT</span>
-                        <p class="paragraph-medium paragraph-black">+ 01 1122 333 333</p>
+                        <p class="paragraph-medium paragraph-black">0824-2429729</p>
                         <p>appointment@yourdomain.com </p>
                     </div>
                 </div>
@@ -412,24 +412,24 @@ if(isset($_POST['apointsubmit']))
                     <div class="contact-info-inner">
                         <i class="fa fa-phone"></i>
                         <span>Call Us</span>
-                        <p class="paragraph-medium paragraph-black">+ 01 1122 333 333</p>
-                        <p>+ 01 1122 333 333 </p>
+                        <p class="paragraph-medium paragraph-black">0824-2429729</p>
+                        <p>0824-4535625</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 contact-info-block">
                     <div class="contact-info-inner">
                         <i class="fa fa-envelope"></i>
                         <span>Email Us</span>
-                        <p class="paragraph-medium paragraph-black">sales@yourdomain.com</p>
-                        <p>support@yourdomain.com </p>
+                        <p class="paragraph-medium paragraph-black">alphacare.ohms@gmail.com</p>
+                        <p>jayashree@gmail.com</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 contact-info-block">
                     <div class="contact-info-inner">
                         <i class="fa fa-map-marker"></i>
                         <span>Location</span>
-                        <p class="paragraph-medium paragraph-black">K S Rao Road, Hampankatta</p>
-                        <p class="paragraph-medium paragraph-black">Karnataka, INDIA, 575003.</p>
+                        <p class="paragraph-medium paragraph-black" style="font-size: 15.2px;">K S Rao Road, Hampankatta, Karnataka,575003.</p>
+                        <p class="paragraph-medium paragraph-black"></p>
                     </div>
                 </div>
             </div>

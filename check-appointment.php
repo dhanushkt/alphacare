@@ -88,6 +88,9 @@ if(isset($_POST['CancelAp']))
 							<li><a href="#"  id="hdr-google" ></a></li>
                             <li><a href="#"  id="hdr-instagram" ></a></li>
                             <li><a href="#"  id="hdr-youtube" ></a></li>
+							<li><a href="#"  id="hdr-twitter" ></a></li>
+							<li><a href="#"  id="hdr-google" ></a></li>
+                            <li><a href="#"  id="hdr-instagram" ></a></li>
                             <li><a href="#"  id="hdr-rss" ></a></li>
                         </ul>
                     </div>
@@ -101,7 +104,7 @@ if(isset($_POST['CancelAp']))
                 <div class="hdr-top-line"></div>
                 <div class="hdr-top-block">
                     <div class="theme-dropdown">
-                        <a id="profile-menu" class="mdl-button mdl-js-button mdl-js-ripple-effect font-13"><i class="fa fa-sign-in"></i>LOGIN</a>
+                        
                        
                     </div>
                 </div>
