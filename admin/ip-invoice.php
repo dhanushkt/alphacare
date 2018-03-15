@@ -4,7 +4,7 @@ require('connect.php');
 $ausername=$_SESSION['ausername'];
 $id = $_GET['id'];
 
-$getpatientinfo="SELECT *, patients.fname, patients.lname, patients.dob, patients.gender, patients.al1, patients.al2, patients.city, patients.pc, patients.phone, patients.doj, patients.dod, wards.rent, wards.type FROM ip_bills JOIN patients ON ip_bills.p_id = patients.p_id JOIN wards ON patients.ward_id = wards.ward_id  WHERE bill_id='$id'";
+$getpatientinfo="SELECT *, patients.fname, patients.lname, patients.dob, patients.gender, patients.al1, patients.al2, patients.city, patients.pc, patients.phone, patients.doj, patients.dod, wards.rent, wards.type FROM ip_bills JOIN patients ON ip_bills.p_id = patients.p_id JOIN wards ON patients.ward_id = wards.ward_id  WHERE ip_bills.p_id='$id'";
 $getpatientinfores=mysqli_query($connection,$getpatientinfo);
 $getinfo=mysqli_fetch_assoc($getpatientinfores);
 
@@ -40,7 +40,7 @@ $days=round($dayscount / (60* 60 * 24));
 </head>
 <body>
 	<div class="container">
-		<table class="invoice-hdr">	
+		<table class="invoice-hdr">
 			<tr>
 				<td>
 					<h4>JAYASHREE HOSPITAL</h4>
@@ -217,7 +217,7 @@ $days=round($dayscount / (60* 60 * 24));
 		$('.submitbutton').click(function(){
 			var id = $(this).attr('data-id');
 			var totamt = document.getElementById('total').innerText;
-			if (totamt=="") 
+			if (totamt=="")
 				{
 					alert("Total amount is empty!");
 				}
@@ -235,10 +235,10 @@ $days=round($dayscount / (60* 60 * 24));
 				}
 		});
 	});
-	
+
 </script>
-	
-<script language="JavaScript"> 
+
+<script language="JavaScript">
 if (window.print) {
 document.write('<form><input type=button name=print value="Print" onClick="window.print()"></form>');
 }
