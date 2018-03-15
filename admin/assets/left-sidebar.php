@@ -49,8 +49,7 @@
 				<ul class="nav nav-second-level">
 					<li> <a href="view-patients.php">View Patients</a> </li>
 					<li> <a href="add-patient.php">Add Patient</a> </li>
-					<li> <a href="edit-patient.html">Edit Patient</a> </li>
-					<li> <a href="patient-profile.html">Patient Profile</a> </li>
+					<li><a href="edit-patient-profile.php">Patient Profile</a></li>
 				</ul>
 			</li>
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-hospital-o p-r-10"></i> <span class="hide-menu"> Wards <span class="fa arrow"></span></span></a>
