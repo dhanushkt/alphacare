@@ -52,6 +52,12 @@
 					<li><a href="edit-patient-profile.php">Patient Profile</a></li>
 				</ul>
 			</li>
+			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-plus p-r-10"></i> <span class="hide-menu"> Visotors <span class="fa arrow"></span></span></a>
+				<ul class="nav nav-second-level">
+					<li> <a href="view-visitors.php">View Visitors</a> </li>
+					<li> <a href="add-visitor.php">Add Visitor</a> </li>
+				</ul>
+			</li>
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-hospital-o p-r-10"></i> <span class="hide-menu"> Wards <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
 					<li> <a href="add-ward.php">Add Ward</a> </li>
