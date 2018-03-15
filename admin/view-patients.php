@@ -49,9 +49,57 @@ $ausername=$_SESSION['ausername'];
                 </div>
                 <!--DNS added Dashboard content-->
                <!--row -->
-                <div class="row">
+				<section>
+                    <div class="sttabs tabs-style-bar">
+						<nav>
+							<ul>
+								<li><a href="#section-bar-1" class="sticon ti-check"><span>Admitted</span></a></li>
+								<li><a href="#section-bar-2" class="sticon  ti-close"><span>Discharged</span></a></li>
+							</ul>
+						</nav>
+						<div class="content-wrap">
+							<section id="section-bar-1">
+							<div class="row">
                 <?php
-					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id";
+					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE dod is NULL ";
+					$result = mysqli_query($connection, $query);
+					foreach($result as $key=>$result)
+				{ ?>
+                <div class="col-md-4 col-sm-4">
+                        <div class="white-box">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4 text-center">
+                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                    <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>
+                                    <p class="p-0">
+										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><?php echo $result["email"]; ?> </a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
+										<i class="fa fa-phone"></i><?php echo " ".$result["phone"]; ?> <br>
+										<i class="fa fa-hospital-o"></i><?php $date=$result['doj'];
+											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
+											$dojc = $myDateTime->format('d-m-Y');  echo " ".$dojc; ?>
+										<i class="fa fa-bed m-l-5"></i><?php if(($result['type']=='General') || ($result['type']=='Semi')) { echo ' '.$result['ward_no'].' ( '.$result['bed_no'].' ) '; } else { echo ' '.$result['ward_no']; } ?>
+                                    </p>
+									<div class="p-t-5">
+											<a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>" class="fcbtn btn btn-info">More Info</a>
+											<!--<a href="#" class="fcbtn btn btn-danger model_img deleteDoctor" data-id="<?php // echo $result["doc_id"]; ?>" id="deleteDoc">Delete</a>-->
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  <?php
+					}
+				  ?>
+
+				</div>
+							</section>
+
+							<section id="section-bar-2">
+				<div class="row">
+                <?php
+					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE dod IS NOT NULL ";
 					$result = mysqli_query($connection, $query);
 					foreach($result as $key=>$result)
 				{ ?>
@@ -85,18 +133,17 @@ $ausername=$_SESSION['ausername'];
 
 				</div>
 
+							</section>
+						</div>
+					</div>
+				</section>
+				
+                
+
                 <!--/row -->
 
                 <!--DNS End-->
-                <!-- .row -->
-                <!--<div class="row">
-                    <div class="col-md-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Blank Starter page</h3>
-                        </div>
-                    </div>
-                </div>-->
-                <!-- /.row -->
+ 
                 <!-- .right-sidebar -->
                  <!-- Removed Service Panel DNS-->
                 <!-- /.right-sidebar -->
@@ -110,6 +157,17 @@ $ausername=$_SESSION['ausername'];
     <!-- /#wrapper -->
     <!--jslink has all the JQuery links-->
     <?php include'assets/jslink.php'; ?>
+	
+	<script src="../plugins/js/cbpFWTabs.js"></script>
+    <script type="text/javascript">
+    (function() {
+
+        [].slice.call(document.querySelectorAll('.sttabs')).forEach(function(el) {
+            new CBPFWTabs(el);
+        });
+
+    })();
+    </script>
 
     <!--    function(){
             swal("Deleted!", "User has been deleted.", "success");
