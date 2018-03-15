@@ -2,6 +2,10 @@
 include '../login/accesscontroladmin.php';
 require('connect.php');
 $ausername=$_SESSION['ausername'];
+if(!isset($_GET['id']))
+{
+	echo '<script> window.location="view-patients.php"; </script>';
+}
 $id = $_GET['id'];
 
 $query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
@@ -129,6 +133,14 @@ if(isset($_POST['addmedinfo']))
 if(isset($_POST['discharge']))
 {
 	$datedod=mysqli_real_escape_string($connection,$_POST['dod']);
+	$datedodc=new DateTime($datedod);
+	$datedoj=new DateTime($row['doj']);
+	if($datedodc<=$datedoj)
+	{
+		$fmsg="Date of discharge is before date of admit!";
+	}
+	else
+{
 	$myDateTime3 = DateTime::createFromFormat('d-m-Y', $datedod);
 	$dod = $myDateTime3->format('Y-m-d');
 	$dischargequery="UPDATE patients SET dod='$dod' WHERE p_id='$id'";
@@ -154,7 +166,8 @@ if(isset($_POST['discharge']))
 				$row = mysqli_fetch_assoc($result);
 			}
 		}
-	}
+	  }
+}
 }
 
 
@@ -397,6 +410,21 @@ $(window).load(function() {
 									</div>
 
                                     </div>
+										<hr>
+									<div class="row">
+										<div class="col-md-3 col-xs-6 b-r"> <strong>Date of Admit</strong>
+										<br>
+										<p class="text-muted"><?php echo $fetchrow["disease"];?></p>
+									</div>
+										<div class="col-md-3 col-xs-6 b-r"> <strong>Relative Name</strong>
+										<br>
+										<p class="text-muted"><?php echo $fetchrow["disease"];?></p>
+									</div>
+										<div class="col-md-6 col-xs-6"> <strong>Relative Number</strong>
+										<br>
+										<p class="text-muted"><?php echo $fetchrow["disease"];?></p>
+									</div>
+									</div>
 										<hr>
 									<!--imported medicines module from doc cpanel start-->
 									<div class="panel panel-info">
@@ -991,7 +1019,7 @@ $(window).load(function() {
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <div class="col-md-offset-3 col-md-9">
-                                                            <a href="ip-invoice.php?id=<?php echo $dischargeinfo['bill_id']; ?>" class="btn btn-info text-white" > <i class="fa fa-pencil"></i> Generate Bill </a>
+                                                            <a target="_blank" href="ip-invoice.php?id=<?php echo $dischargeinfo['bill_id']; ?>" class="btn btn-info text-white" > <i class="fa fa-pencil"></i> Generate Bill </a>
                                                             <!--<button type="button" class="btn btn-default">Cancel</button>-->
                                                         </div>
                                                     </div>
