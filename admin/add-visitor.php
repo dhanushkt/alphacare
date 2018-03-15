@@ -1,40 +1,42 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontroladmin.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
-{
-	$ausername=$_SESSION['dusername'];
-}
-elseif(isset($_SESSION['ausername']))
-{
-	$ausername=$_SESSION['ausername'];
-}
-$id = $_GET['id'];
-$getmedquery="SELECT * FROM medicines WHERE p_id='$id'";
-$getmedresult = mysqli_query($connection, $getmedquery);
-$medrow = mysqli_fetch_assoc($getmedresult);
+$ausername=$_SESSION['ausername'];
 
-if (isset($_POST['submit']))
+$getpinfoquery="SELECT p_id,fname,lname,wards.ward_no,wards.floor FROM patients INNER JOIN wards ON patients.ward_id=wards.ward_id WHERE dod IS NULL";
+$getpinforesult=mysqli_query($connection,$getpinfoquery);
+
+date_default_timezone_set('Asia/Kolkata');
+
+if(isset($_POST['addvisitor']))
+{
+	$vname=mysqli_real_escape_string($connection,$_POST['vname']);
+	$vsex=mysqli_real_escape_string($connection,$_POST['gender']);
+	$pid=$_POST['patient'];
+	if($_POST['datetime']=='now')
 	{
-		 //real eacape sting is used to prevent sql injection hacking
-		$mname=mysqli_real_escape_string($connection,$_POST['mname']);
-		$mbrand=mysqli_real_escape_string($connection,$_POST['mbrand']);
-		$mdescrip=mysqli_real_escape_string($connection,$_POST['mdescrip']);
-		$mdose=mysqli_real_escape_string($connection,$_POST['mdose']);
-		$medstatus=mysqli_real_escape_string($connection,$_POST['medstatus']);
-	
-		$updatequery="UPDATE medicines SET name='$mname', brand='$mbrand', description='$mdescrip', dose='$mdose', status='$medstatus' WHERE med_id='$id'";
-        $updateresult=mysqli_query($connection,$updatequery);
-		
-		if($updateresult)
-		{
-				$smsg="MEDICAL INFORMATION UPDATED";
-			echo'<script>window.history.go(-2);</script>';
-		}
-	else{
-		$fmsg=mysqli_error($connection);
-		}
+		$vdate=date('Y-m-d');
+		$vtime=date('H:i', time());
 	}
+	elseif($_POST['datetime']=='custom')
+	{
+		$date=$_POST['dov'];
+		$myDateTime = DateTime::createFromFormat('d-m-Y', $date);
+		$vdate = $myDateTime->format('Y-m-d');
+		$vtime = $_POST['time'];
+	}
+	$insertvquery="INSERT INTO `visitors` (vname,vsex,p_id,vdate,vtime) VALUES ('$vname','$vsex','$pid','$vdate','$vtime')";
+	$insertvresult=mysqli_query($connection,$insertvquery);
+	if($insertvresult)
+	{
+		$smsg="Visitor Added";
+	}
+	else
+	{
+		$fmsg="Error";	
+	}
+	
+}
 
 ?>
 <!DOCTYPE html>
@@ -107,11 +109,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<!--.row-->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">Visitors Details</div>
-                            <div class="panel-wrapper collapse in" aria-expanded="true">
-                                <div class="panel-body">
-                                   <?php if(isset($fmsg)) { ?>
+						<?php if(isset($fmsg)) { ?>
 									<div class="alert alert-danger alert-dismissable">
 										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 										 <?php echo $fmsg; ?>
@@ -123,22 +121,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											 <?php echo $smsg; ?>
 										</div> 
 								<?php }?>
-                                   <?php if(isset($smsg1)) { ?>
-										<div class="alert alert-success alert-dismissable">
-											<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-											 <?php echo $smsg1; ?>
-										</div> 
-								<?php }?>
-                                    <?php if(isset($fmsg1)) { ?>
-									<div class="alert alert-danger alert-dismissable">
-										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-										 <?php echo $fmsg1; ?>
-									</div> 
-					            <?php }?> 
+                        <div class="panel panel-info">
+                            <div class="panel-heading">Visitors Details</div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
                                     <form method="post" data-toggle="validator">
                                         <div class="form-body">
-                                            <h3 class="box-title">Visitor Info</h3>
-                                            <hr>
+                                            
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
@@ -179,11 +168,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <label class="col-sm-12 p-l-0">Patient</label>
                                     <div class="col-sm-12 p-l-0">
                                         <select class="form-control" name="patient">
-                                            <option>Select patient</option>
-                                            <option value=""></option>
-                                            <option value=""></option>
-                                            <option value=""></option>
-                                            <option value=""></option>
+                                            <option disabled hidden selected>Select Patient</option>
+											<?php while ($getpinfo=mysqli_fetch_assoc($getpinforesult)) {  ?>
+                                            <option value="<?php echo $getpinfo['p_id']; ?>"><?php echo $getpinfo['fname'].' '.$getpinfo['lname'].' , '.$getpinfo['ward_no']; ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -197,13 +185,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <div class="radio-list">
                                                             <label class="radio-inline p-0">
                                                                 <div class="radio radio-info">
-                                                                    <input type="radio" name="datetime" id="radio3" value="now">
+                                                                    <input checked onClick="document.getElementById('datepicker-autoclose1').disabled = true; document.getElementById('inputtime').disabled = true;" type="radio" name="datetime" id="radio3" value="now">
                                                                     <label for="radio3">Now</label>
                                                                 </div>
                                                             </label>
                                                             <label class="radio-inline">
                                                                 <div class="radio radio-info">
-                                                                    <input type="radio" name="datetime" id="radio4" value="custom">
+                                                                    <input onClick="document.getElementById('datepicker-autoclose1').disabled = false; document.getElementById('inputtime').disabled = false;" type="radio" name="datetime" id="radio4" value="custom">
                                                                     <label for="radio4">Custom</label>
                                                                 </div>
                                                             </label>
@@ -217,7 +205,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <label class="control-label">Date of Visiting</label>
                                                         <div class="input-group">
 															<div class="input-group-addon"><i class="icon-calender"></i></div>
-															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose1" name="dov" placeholder="dd-mm-yyyy" required>
+															<input disabled data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose1" name="dov" placeholder="dd-mm-yyyy" required>
 														</div>
                                                    		<!--<span class="font-13 text-muted">dd-mm-yyyy</span>-->
                                                     </div>
@@ -225,14 +213,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 												<div class="col-md-6">
 													<div class="form-group">
                                         <label class="control-label" for="inputdose">Time</label>
-                                        <input type="datetime" class="form-control" id="inputdose" name="time" placeholder="" required>
+                                        <input disabled type="time" class="form-control" id="inputtime" name="time" placeholder="" required>
                                              </div>
 												</div>
 											</div>
                                             <!--/row-->
                                         </div>
                                         <div class="form-actions">
-                                            <button type="submit" name="medupdate" class="btn btn-success"> <i class="fa fa-check"></i>Submit</button>
+                                            <button type="submit" name="addvisitor" class="btn btn-success"> <i class="fa fa-check"></i>Submit</button>
                                         </div>
                                     </form>
                                 </div>

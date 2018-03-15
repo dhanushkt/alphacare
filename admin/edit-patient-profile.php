@@ -372,7 +372,7 @@ $(window).load(function() {
                                 <li role="presentation" class="nav-item"><a href="#updatemedicinfo" class="nav-link" aria-controls="updatemedicinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-refresh"></i></span> <span class="hidden-xs">Update Medical Info</span></a></li>
 								<li role="presentation" class="nav-item"><a href="#editpatientinfo" class="nav-link" aria-controls="editpatientinfo" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-pencil"></i></span> <span class="hidden-xs">Edit Patient Info</span></a></li>
 								<li role="presentation" class="nav-item"><a href="#visitors" class="nav-link" aria-controls="visitors" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-users"></i></span> <span class="hidden-xs">Visitors</span></a></li>
-								<li role="presentation" class="nav-item"><a href="#removepatient" class="nav-link" aria-controls="removepatient" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-trash"></i></span> <span class="hidden-xs">Discharge</span></a></li>
+								<li role="presentation" class="nav-item"><a href="#removepatient" class="nav-link" aria-controls="removepatient" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"><i class="fa fa-user-times"></i></span> <span class="hidden-xs">Discharge</span></a></li>
 							  </ul></font>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="profile">
@@ -843,7 +843,63 @@ $(window).load(function() {
                 </div>
 
 			</div> <!--edit patient profile tab ends-->
-			<div class="tab-pane" id="removepatient"> <!--edit patient profile tab ends-->
+								
+			<div class="tab-pane" id="visitors">
+			<?php 
+			$getvinfoquery="SELECT * FROM visitors WHERE p_id='$id' ORDER BY v_id DESC";
+			$getvinforesult=mysqli_query($connection,$getvinfoquery);
+
+			date_default_timezone_set('Asia/Kolkata');	
+			
+			?>
+			<div class="row">
+                <div class="col-md-12">
+					<div class="panel panel-info">
+                            <div class="panel-heading">Visitors Log</div>
+                            <div class="panel-wrapper collapse in" aria-expanded="true">
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                <table id="myTable" class="table table-striped">
+                                    <thead>
+                                        <tr>
+											<!--<th>id</th>-->
+                                            <th>Name</th>
+                                            <!--<th>Patient Name</th>-->
+                                            <!--<th>Ward No</th>-->
+                                            <th>Gender</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+										<?php if($getvinforesult) while($getvrow=mysqli_fetch_assoc($getvinforesult)) { ?>
+                                        <tr>
+											<!--<td><?php // echo $getvrow['v_id']; ?> </td>-->
+                                            <td><?php echo $getvrow['vname']; ?> </td>
+											<!--<td><a href="edit-patient-profile.php?id=<?php // echo $getvrow['p_id']; ?>"><?php //echo $getvrow['fname'].' '.$getvrow['lname']; ?></a></td>-->
+                                            <!--<td><?php //echo $getvrow['ward_no']; ?></td>-->
+                                            <td><?php echo $getvrow['vsex']; ?></td>
+                                            <td><?php $datev=$getvrow['vdate'];
+											$myDateTime = DateTime::createFromFormat('Y-m-d', $datev);
+											$dovc = $myDateTime->format('d-m-Y');  echo $dovc; ?></td>
+                                            <td><?php $gettime=$getvrow['vtime']; echo date('h:i a', strtotime($gettime)); ?></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+									
+									
+                                </div>
+                            </div>
+                        </div>
+				</div>
+			</div>
+			
+			</div>
+								
+								
+			<div class="tab-pane" id="removepatient">
 				<div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
@@ -951,20 +1007,10 @@ $(window).load(function() {
 					</div>
 				</div>
 				
-				
-				
-				
-					 
-				
-				
-				
-				
-				
-				
-				
-				
+
+				<center>
 				<a href="#" class="fcbtn btn btn-danger model_img deleteAdmin addmidclass" data-id="<?php echo $id ?>" id="deleteDoc">Remove Patient Record</a>
-				
+				</center>
 								
 				
 				<div>
