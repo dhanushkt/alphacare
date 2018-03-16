@@ -4,7 +4,7 @@ require('connect.php');
 $ausername=$_SESSION['ausername'];
 $id = $_GET['id'];
 
-$getpatientinfo="SELECT *, patients.fname, patients.lname, patients.dob, patients.gender, patients.al1, patients.al2, patients.city, patients.pc, patients.phone, patients.doj, patients.dod, wards.rent, wards.type FROM ip_bills JOIN patients ON ip_bills.p_id = patients.p_id JOIN wards ON patients.ward_id = wards.ward_id  WHERE ip_bills.p_id='$id'";
+$getpatientinfo="SELECT *, patients.fname, patients.lname, patients.dob, patients.gender, patients.al1, patients.al2, patients.city, patients.pc, patients.phone, patients.doj, patients.dod, wards.rent, wards.type FROM ip_bills JOIN patients ON ip_bills.p_id = patients.p_id JOIN wards ON patients.ward_id = wards.ward_id  WHERE bill_id='$id'";
 $getpatientinfores=mysqli_query($connection,$getpatientinfo);
 $getinfo=mysqli_fetch_assoc($getpatientinfores);
 
