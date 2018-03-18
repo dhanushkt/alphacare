@@ -65,7 +65,7 @@
 						</tr>
 						<tr>
 							<td class="dark">Date</td>
-							<td><input type="text"></td>
+							<td><input type="text" value="<?php echo date("d/m/Y");?>"></td>
 						</tr>
 						<tr>
 							<td class="dark">Payment Method</td>
