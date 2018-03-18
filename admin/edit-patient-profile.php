@@ -343,17 +343,21 @@ $(window).load(function() {
                                 </div>
                                 <!-- /.row -->
                                 <hr>
-                                <!-- .row -->
-                                <div class="row text-center m-t-10">
-                                    <div class="col-md-6 b-r"><strong>Email ID</strong>
+								<div class="row text-center m-t-10">
+									<div class="col-md-12"><strong>Email ID</strong>
                                         <p><?php echo $row["email"]; ?> </p>
                                     </div>
-                                    <div class="col-md-6"><strong>Phone</strong>
+								</div>
+								<hr>
+                                <!-- .row -->
+                                <div class="row text-center m-t-10">
+                                    <div class="col-md-12"><strong>Phone</strong>
                                         <p><?php echo $row["phone"]; ?></p>
                                     </div>
                                 </div>
                                 <!-- /.row -->
                                 <hr>
+								
                                 <!-- .row -->
                                 <div class="row text-center m-t-10 ">
                                     <div class="col-md-12"><strong>Address</strong>
@@ -415,7 +419,9 @@ $(window).load(function() {
 									<div class="row">
 										<div class="col-md-3 col-xs-6 b-r"> <strong>Date of Admit</strong>
 										<br>
-										<p class="text-muted"><?php echo $row["doj"];?></p>
+										<p class="text-muted"><?php $datej=$row['doj'];
+											$myDateTime = DateTime::createFromFormat('Y-m-d', $datej);
+											$dojc = $myDateTime->format('d-m-Y');  echo $dojc;?></p>
 									</div>
 										<div class="col-md-3 col-xs-6 b-r"> <strong>Relative Name</strong>
 										<br>
@@ -556,6 +562,25 @@ $(window).load(function() {
 										<div class="progress">
 											<div class="progress-bar progress-bar-danger wow animated progress-animated" role="progressbar" aria-valuenow="102" aria-valuemin="97" aria-valuemax="105" style="width:<?php echo $tempper ?>%;"> <span class="sr-only">50% Complete</span> </div>
 										</div>
+										<hr>
+										<div class="row">
+										<div class="col-md-3 col-xs-6 b-r"> <strong>Height</strong>
+										<br>
+										<p class="text-muted"><?php echo $fetchrow["height"];?></p>
+									</div>
+										<div class="col-md-3 col-xs-6 b-r"> <strong>Weight</strong>
+										<br>
+										<p class="text-muted"><?php echo $fetchrow["weight"];?></p>
+									</div>
+										<div class="col-md-6 col-xs-6"> <strong>Medical info taken on</strong>
+										<br>
+										<p class="text-muted"><?php $datei=$fetchrow['date'];
+											$myDateTime = DateTime::createFromFormat('Y-m-d', $datei);
+											$doic = $myDateTime->format('d-m-Y');  echo $doic;?></p>
+									</div>
+									</div>
+										<hr>
+									
 										<h4 class="m-t-30">ECG Report</h4>
 										<hr>
 										<div class="stats-row">
