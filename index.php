@@ -179,15 +179,36 @@ if(isset($_POST['apointsubmit']))
     position:absolute;
 }</style>
 	
-	
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#usernameLoading').hide();
+		$('#appointment-date').change(function(){
+		  $('#usernameLoading').show();
+	      $.post("check-apointdate.php", {
+	        username: $('#appointment-date').val()
+	      }, function(response){
+	        $('#usernameResult').fadeOut();
+	        setTimeout("finishAjax('usernameResult', '"+escape(response)+"')", 200);
+	      });
+	    	return false;
+		});
+	});
+
+	function finishAjax(id, response) {
+	  $('#usernameLoading').hide();
+	  $('#'+id).html(unescape(response));
+	  $('#'+id).fadeIn();
+	} //finishAjax
+</script>	
 </head>
 <body>
     <!-- Start Header Section -->
     <header id="header-3">
 		<?php if(isset($smsg)) { ?>
-		<div class="theme-quote theme-quote-colored theme-quote-success alert" role="alert"><strong> <?php echo $smsg; ?> </strong> <button type="button" calss="close" data-dismiss="alert" style="float: right" >X</button> </div>  <?php } ?>
+		<div class="theme-quote theme-quote-colored theme-quote-success alert" role="alert"><strong> <?php echo $smsg; ?> </strong> <button onClick="window.location='index.php';" type="button" calss="close" data-dismiss="alert" style="float: right" >X</button> </div>  <?php } ?>
 		<?php if(isset($fmsg)) { ?>
-		<div class="theme-quote theme-quote-colored theme-quote-danger alert" role="alert"><strong> <?php echo $fmsg; ?> </strong> <button type="button" calss="close" data-dismiss="alert" style="float: right" >X</button> </div> <?php } ?>
+		<div class="theme-quote theme-quote-colored theme-quote-danger alert" role="alert"><strong> <?php echo $fmsg; ?> </strong> <button onClick="window.location='index.php';" type="button" calss="close" data-dismiss="alert" style="float: right" >X</button> </div> <?php } ?>
 						
         <div class="layer-stretch hdr-center">
             <div class="row align-items-center">
@@ -574,8 +595,10 @@ if(isset($_POST['apointsubmit']))
                                 <i class="fa fa-calendar-o"></i>
                                 <input name="apointdoa" class="mdl-textfield__input" type="text" id="appointment-date" onfocus="(this.type='date')" onblur="(this.type='text')">
                                 <label class="mdl-textfield__label" for="appointment-date">Date of appointment</label>
-                                <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
+								<span id="usernameLoading"><img src="plugins/images/busy.gif" alt="Ajax Indicator" height="15" width="15" /></span>
+								<span id="usernameResult" style="color: #E40003"></span>
                             </div>
+							
                         </div>
 						<div class="col-md-12">
                             <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label form-input-icon">
@@ -796,7 +819,7 @@ if(isset($_POST['apointsubmit']))
         <div class="layer-stretch">
             <!-- Start main Footer Section -->
             <div class="row layer-wrapper">
-                <div class="col-md-4 footer-block">
+                <div class="col-md-6 footer-block">
                     <div class="footer-ttl"><p>Basic Info</p></div>
                     <div class="footer-container footer-a">
                         <div class="tbl">
@@ -825,7 +848,7 @@ if(isset($_POST['apointsubmit']))
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 footer-block">
+                <div class="col-md-6 footer-block">
                     <div class="footer-ttl"><p>Quick Links</p></div>
                     <div class="footer-container footer-b">
                         <div class="tbl">
@@ -833,16 +856,13 @@ if(isset($_POST['apointsubmit']))
 
                                 <ul class="tbl-cell">
                                     <li><a href="login/">Login</a></li>
-                                    <li><a href="forgot.html">Forgot Password</a></li>
-                                    <li><a href="myappointment.html">My Appointment</a></li>
-                                    <li><a href="myrequest.html">My Request</a></li>
-                                    <li><a href="myprofile.html">My Profile</a></li>
+                                    <li><a href="check-appointment.php">My Appointment</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 footer-block">
+                <!-- <div class="col-md-4 footer-block">
                     <div class="footer-ttl"><p>Newsletter</p></div>
                     <div class="footer-container footer-c">
                         <div class="footer-subscribe">
@@ -889,7 +909,7 @@ if(isset($_POST['apointsubmit']))
                                 <span class="mdl-tooltip mdl-tooltip--top" data-mdl-for="footer-rss">Rss</span>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div><!-- End main Footer Section -->
