@@ -40,7 +40,7 @@ $days=round($dayscount / (60* 60 * 24));
 </head>
 <body>
 	<div class="container">
-		<table class="invoice-hdr">	
+		<table class="invoice-hdr">
 			<tr>
 				<td>
 					<h4>JAYASHREE HOSPITAL</h4>
@@ -217,7 +217,7 @@ $days=round($dayscount / (60* 60 * 24));
 		$('.submitbutton').click(function(){
 			var id = $(this).attr('data-id');
 			var totamt = document.getElementById('total').innerText;
-			if (totamt=="") 
+			if (totamt=="")
 				{
 					alert("Total amount is empty!");
 				}
@@ -235,10 +235,10 @@ $days=round($dayscount / (60* 60 * 24));
 				}
 		});
 	});
-	
+
 </script>
-	
-<script language="JavaScript"> 
+
+<script language="JavaScript">
 if (window.print) {
 document.write('<form><input type=button name=print value="Print" onClick="window.print()"></form>');
 }
