@@ -117,7 +117,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box bg-success text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/non-tv.png" class="img-circle img-responsive"></a>
+                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
@@ -152,7 +152,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box bg-danger text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/non-tv.png" class="img-circle img-responsive"></a>
+                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
@@ -190,7 +190,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box <?php if($getwardresult['status']=='0'){ echo 'bg-success'; } else { echo 'bg-danger'; } ?> text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/non-tv.png" class="img-circle img-responsive"></a>
+                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
@@ -225,7 +225,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box <?php if($getwardresult['status']=='0'){ echo 'bg-success'; } else { echo 'bg-danger'; } ?> text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/non-tv.png" class="img-circle img-responsive"></a>
+                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
