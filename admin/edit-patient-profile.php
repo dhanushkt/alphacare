@@ -8,7 +8,7 @@ if(!isset($_GET['id']))
 }
 $id = $_GET['id'];
 
-$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
+$query="SELECT fname, lname, dob, email, gender, phone, address, city, state, pc, rel_name, rel_phno, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
 $result = mysqli_query($connection, $query);
 $row = mysqli_fetch_assoc($result);
 
@@ -56,18 +56,19 @@ if(isset($_POST['updateprofile']))
 		$dob = $myDateTime->format('Y-m-d');
 		$email=mysqli_real_escape_string($connection,$_POST['email']);
 		$gender=mysqli_real_escape_string($connection,$_POST['gender']);
-		$al1=mysqli_real_escape_string($connection,$_POST['al1']);
-		$al2=mysqli_real_escape_string($connection,$_POST['al2']);
+		$addr=mysqli_real_escape_string($connection,$_POST['addr']);
 		$state=mysqli_real_escape_string($connection,$_POST['state']);
 		$city=mysqli_real_escape_string($connection,$_POST['city']);
 		$pc=mysqli_real_escape_string($connection,$_POST['pc']);
+		$relname=mysqli_real_escape_string($connection,$_POST['relname']);
+		$relphno=mysqli_real_escape_string($connection,$_POST['relphno']);
 		$phone=mysqli_real_escape_string($connection,$_POST['phone']);
 
-		$updatequery="UPDATE patients SET fname='$fname', lname='$lname', dob='$dob', gender='$gender', phone='$phone', email='$email', al1='$al1', al2='$al2', state='$state', city='$city', pc='$pc' WHERE p_id='$id'";
+		$updatequery="UPDATE patients SET fname='$fname', lname='$lname', dob='$dob', gender='$gender', phone='$phone', email='$email', address='$addr', state='$state', city='$city', pc='$pc', rel_name='$relname', rel_phno='$relphno' WHERE p_id='$id'";
 		$updatequeryresult=mysqli_query($connection, $updatequery);
 		if($updatequeryresult)
 		{
-			$queryupdate="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, dod FROM patients WHERE p_id='$id'";
+			$queryupdate="SELECT fname, lname, dob, email, gender, phone, address, city, state, pc, rel_name, rel_phno, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
 			$resultupdate = mysqli_query($connection, $queryupdate);
 			$row = mysqli_fetch_assoc($resultupdate);
 			$smsg="PATIENT INFORMATION UPDATED";
@@ -161,7 +162,7 @@ if(isset($_POST['discharge']))
 			{
 				//echo "<script> window.location.replace(window.location.pathname + window.location.search + window.location.hash); </script>";
 				$smsg="Patient Discharge Successfull";
-				$query="SELECT fname, lname, dob, email, gender, phone, al1, al2, city, state, pc, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
+				$query="SELECT fname, lname, dob, email, gender, phone, address, city, state, pc, rel_name, rel_phno, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
 				$result = mysqli_query($connection, $query);
 				$row = mysqli_fetch_assoc($result);
 			}
@@ -356,7 +357,7 @@ $(window).load(function() {
                                 <!-- .row -->
                                 <div class="row text-center m-t-10 ">
                                     <div class="col-md-12"><strong>Address</strong>
-                                        <p><?php echo $row["al1"]." ".$row["al2"];  ?>
+                                        <p><?php echo $row["address"];  ?>
                                             <br/> <?php echo $row["city"]." , ".$row["state"];  ?></p>
                                     </div>
                                 </div>
@@ -414,15 +415,15 @@ $(window).load(function() {
 									<div class="row">
 										<div class="col-md-3 col-xs-6 b-r"> <strong>Date of Admit</strong>
 										<br>
-										<p class="text-muted"><?php echo $fetchrow["disease"];?></p>
+										<p class="text-muted"><?php echo $row["doj"];?></p>
 									</div>
 										<div class="col-md-3 col-xs-6 b-r"> <strong>Relative Name</strong>
 										<br>
-										<p class="text-muted"><?php echo $fetchrow["disease"];?></p>
+										<p class="text-muted"><?php echo $row["rel_name"];?></p>
 									</div>
 										<div class="col-md-6 col-xs-6"> <strong>Relative Number</strong>
 										<br>
-										<p class="text-muted"><?php echo $fetchrow["disease"];?></p>
+										<p class="text-muted"><?php echo $row["rel_phno"];?></p>
 									</div>
 									</div>
 										<hr>
@@ -808,21 +809,34 @@ $(window).load(function() {
                                                 <!--/span-->
                                             </div>
                                             <!--/row-->
-                                            <h3 class="box-title m-t-40">Address</h3>
+											<h3 class="box-title m-t-10">Relative Info</h3>
+                                            <hr>
+											<div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Relative Name</label>
+                                                        <input value="<?php echo $row['rel_name']; ?>" type="text" id="Relname" name="relname" class="form-control" placeholder="Enter name" required>
+                                                         </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Phone No</label>
+                                                        <input value="<?php echo $row['rel_phno']; ?>" required type="tel" pattern="[0-9]*" maxlength="11" id="Relphno" name="relphno" class="form-control" placeholder="Enter phone number" data-error="Invalid pone number">
+														<div class="help-block with-errors"></div>
+                                                         </div><div class="help-block with-errors"></div><div class="help-block with-errors"></div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+											
+                                            <h3 class="box-title m-t-10">Address</h3>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-md-12 ">
                                                     <div class="form-group">
-                                                        <label>Address line 1</label>
-                                                        <input name="al1" type="text" class="form-control" required value="<?php echo $row['al1']; ?>">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 ">
-                                                    <div class="form-group">
-                                                        <label>Address line 2</label>
-                                                        <input type="text" name="al2" class="form-control" value="<?php echo $row['al2']; ?>">
+                                                        <label>Address </label>
+														<textarea rows="3" required class="form-control" name="addr" style=" resize:none "><?php echo $row['address']; ?></textarea>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -833,7 +847,7 @@ $(window).load(function() {
                                                     <div class="form-group">
                                                         <label>State</label>
                                                         <select class="form-control" name="state">
-														<option value="" selected disabled hidden><?php echo $row['state']; ?></option>
+														<option value="<?php echo $row['state']; ?>" selected><?php echo $row['state']; ?></option>
                                                         <?php include 'assets/states.php'; ?>
 														</select>
                                                     </div>

@@ -12,11 +12,13 @@ if (isset($_POST['psubmit']))
 		$dob = $myDateTime->format('Y-m-d');
 		$email=mysqli_real_escape_string($connection,$_POST['email']);
 		$gender=mysqli_real_escape_string($connection,$_POST['gender']);
-		$al1=mysqli_real_escape_string($connection,$_POST['al1']);
-		$al2=mysqli_real_escape_string($connection,$_POST['al2']);
+		$addr=mysqli_real_escape_string($connection,$_POST['al1']);
+		$addr.= ', '.mysqli_real_escape_string($connection,$_POST['al2']);
 		$state=mysqli_real_escape_string($connection,$_POST['state']);
 		$city=mysqli_real_escape_string($connection,$_POST['city']);
 		$pc=mysqli_real_escape_string($connection,$_POST['pc']);
+		$relname=mysqli_real_escape_string($connection,$_POST['relname']);
+		$relphno=mysqli_real_escape_string($connection,$_POST['relphno']);
 		$phone=mysqli_real_escape_string($connection,$_POST['phone']);
 		$doj= mysqli_real_escape_string($connection,$_POST['doj']);
 		$myDateTime1 = DateTime::createFromFormat('d-m-Y', $doj);
@@ -35,7 +37,7 @@ if (isset($_POST['psubmit']))
 			else
 			{
 			
-				$query="INSERT INTO `patients`(fname, lname, dob, gender, phone, email, al1, al2, state, city, pc, ward_id, doj) VALUES ('$fname','$lname','$dob','$gender','$phone','$email','$al1','$al2','$state','$city','$pc','$wardno','$dojc')";
+				$query="INSERT INTO `patients`(fname, lname, dob, gender, phone, email, address, state, city, pc, rel_name, rel_phno, ward_id, doj) VALUES ('$fname','$lname','$dob','$gender','$phone','$email','$addr','$state','$city','$pc','$relname','$relphno','$wardno','$dojc')";
 				$result = mysqli_query($connection, $query); 
 				$updatewardstatus="UPDATE wards SET status='1' WHERE ward_id='$wardno'";
 				$updatewardstatusresult=mysqli_query($connection,$updatewardstatus);
@@ -248,7 +250,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label">Phone</label>
-                                                        <input type="tel" id="firstName" name="phone" class="form-control" placeholder="Enter phone no.">
+                                                        <input type="tel" pattern="[0-9]*" maxlength="11" id="firstName" name="phone" class="form-control" placeholder="Enter phone no." data-error="Invalid phone number">
+														<div class="help-block with-errors"></div>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -314,6 +317,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 
                                                 <!--/span-->
                                             </div>
+											<h3 class="box-title m-t-40">Relative Info</h3>
+                                            <hr>
+											<div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Relative Name</label>
+                                                        <input type="text" id="Relname" name="relname" class="form-control" placeholder="Enter name" required>
+                                                         </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Phone No</label>
+                                                        <input required type="tel" pattern="[0-9]*" maxlength="11" id="Relphno" name="relphno" class="form-control" placeholder="Enter phone number" data-error="Invalid pone number">
+														<div class="help-block with-errors"></div>
+                                                         </div><div class="help-block with-errors"></div><div class="help-block with-errors"></div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+											
 											<?php
 											$getwardquery="SELECT * FROM wards WHERE (status='0') AND (type IN ('Non-TV','TV','AC'))";
 											$getwardresult=mysqli_query($connection,$getwardquery);
@@ -446,7 +469,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <label>Date of entry</label>
                                                         <div class="input-group">
 															<div class="input-group-addon"><i class="icon-calender"></i></div>
-															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" onFocus="(this.type='date')" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy">
+															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy">
 														</div>
                                                     </div>
                                                 </div>

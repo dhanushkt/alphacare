@@ -4,7 +4,7 @@ require('connect.php');
 $ausername=$_SESSION['ausername'];
 $id = $_GET['id'];
 
-$getpatientinfo="SELECT *, patients.fname, patients.lname, patients.dob, patients.gender, patients.al1, patients.al2, patients.city, patients.pc, patients.phone, patients.doj, patients.dod, wards.rent, wards.type FROM ip_bills JOIN patients ON ip_bills.p_id = patients.p_id JOIN wards ON patients.ward_id = wards.ward_id  WHERE bill_id='$id'";
+$getpatientinfo="SELECT *, patients.fname, patients.lname, patients.dob, patients.gender, patients.address, patients.city, patients.pc, patients.phone, patients.doj, patients.dod, wards.rent, wards.type FROM ip_bills JOIN patients ON ip_bills.p_id = patients.p_id JOIN wards ON patients.ward_id = wards.ward_id  WHERE bill_id='$id'";
 $getpatientinfores=mysqli_query($connection,$getpatientinfo);
 $getinfo=mysqli_fetch_assoc($getpatientinfores);
 
@@ -80,7 +80,7 @@ $days=round($dayscount / (60* 60 * 24));
 					<table class="pull-right invoice-info">
 						<tr>
 							<td class="dark">Address</td>
-							<td><textbox disabled><?php echo $getinfo['al1'].' , '.$getinfo['al2'].'<br>'.$getinfo['city'].'-'.$getinfo['pc']; ?></textbox></td>
+							<td><textbox disabled><?php echo $getinfo['address'].'<br>'.$getinfo['city'].'-'.$getinfo['pc']; ?></textbox></td>
 						</tr>
 						<tr>
 							<td class="dark">Date</td>
