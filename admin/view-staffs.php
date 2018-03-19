@@ -84,14 +84,15 @@ $ausername=$_SESSION['ausername'];
                                 </div>
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["username"]; ?></h3> <small>Floor: <?php echo $result["floor"]; ?></small>
-                                    <p>
-										<a href="mailto:<?php echo $result["email"]; ?>"> <?php echo $result["email"]; ?> </a> <br>
+                                    <p calss="p-0">
+										<a href="mailto:<?php echo $result["email"]; ?>"> <font size="-1"> <?php echo $result["email"]; ?> </font> </a> <br>
 										<i class="fa fa-phone"></i><?php echo $result["phone"]; ?>
-										<div class="p-t-5">
+										
+                                    </p>
+									<div class="p-t-5">
 											<a href="edit-staff-profile.php?id=<?php echo $result["s_id"]; ?>" class="fcbtn btn btn-info">Edit</a>
 											<a href="#" class="fcbtn btn btn-danger model_img deleteStaff" data-id="<?php echo $result["s_id"]; ?>" id="deleteStf">Delete</a>
-									    </div>
-                                    </p>
+									 </div>
                                 </div>
                             </div>
                         </div>

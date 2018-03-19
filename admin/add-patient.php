@@ -330,9 +330,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label">Phone No</label>
-                                                        <input required type="tel" pattern="[0-9]*" maxlength="11" id="Relphno" name="relphno" class="form-control" placeholder="Enter phone number" data-error="Invalid pone number">
+                                                        <input required type="tel" pattern="[0-9]*" maxlength="11" id="Relphno" name="relphno" class="form-control" placeholder="Enter phone number" data-error="Invalid phone number">
 														<div class="help-block with-errors"></div>
-                                                         </div><div class="help-block with-errors"></div><div class="help-block with-errors"></div>
+                                                     </div>
                                                 </div>
                                                 <!--/span-->
                                             </div>

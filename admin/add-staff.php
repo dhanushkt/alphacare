@@ -107,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Add Doctor</h4>
+                        <h4 class="page-title">Add Staff</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <a href="../index.php" target="_blank" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Home</a>
@@ -186,7 +186,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <label class="col-sm-12 p-l-0">Gender</label>
                                     <div class="col-sm-12 p-l-0">
                                         <select class="form-control" name="gender" required>
-                                            <option>Select Gender</option>
+                                            <option selected hidden disabled>Select Gender</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                         </select>
@@ -197,7 +197,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <label class="col-sm-12 p-l-0">Floor</label>
                                     <div class="col-sm-12 p-l-0">
                                         <select class="form-control" name="floor">
-                                            <option>Select Floor</option>
+                                            <option selected hidden disabled>Select Floor</option>
                                             <option value="G">Ground floor</option>
                                             <option value="1">1st floor</option>
                                             <option value="2">2nd floor</option>
@@ -207,11 +207,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="example-phone">Phone</span>
-                                    </label>
-
-                                        <input type="text" required id="example-phone" name="phone" class="form-control" placeholder="enter your phone number">
-
+                                    <label for="example-phone">Phone</label>
+                                        <input type="text" required id="example-phone" name="phone" class="form-control" placeholder="enter your phone number" pattern="[0-9]*" maxlength="11" data-error="Invalid phone number">
+										<div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPassword" class="control-label">Password</label>
