@@ -115,8 +115,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         	 <label class="control-label">Ward Number</label>
 											<div class="col-sm-12 p-l-0">
 												<div class="input-group">
-													<input autocomplete="off" type="text" name="wardno" class="form-control" id="wardno3"  placeholder="Enter ward number" required>
+													<input autocomplete="off" pattern="[0-9]*" type="text" maxlength="3" name="wardno" class="form-control" id="wardno3"  placeholder="Enter ward number" required data-error="Enter numbers only">
+													
 												</div>
+												<div class="help-block with-errors"></div>
 												<!-- wardnum check start -->
 												<div>
 												<span id="wardnoLoading"><img src="../plugins/images/busy.gif" alt="Ajax Indicator" height="15" width="15" /></span>
@@ -161,7 +163,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<div class="col-md-6">
 										<div class="form-group">
 											   <label class="control-label">Bed Number</label>
-											   <input disabled="true" type="text" name="bedno" id="bednumber" class="form-control" placeholder="Enter bed number">
+											   <input disabled="true" pattern="[0-9]*" maxlength="2" type="text" name="bedno" id="bednumber" class="form-control" placeholder="Enter bed number" data-error="Enter numbers only" >
+												<div class="help-block with-errors"></div>
 										</div>
 										
 									</div>
@@ -172,7 +175,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<label for="inputEmail" class="control-label">Rent per Day (in ₹)</label>
 									<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                                    <input type="number" name="wrent" class="form-control" id="wrent" placeholder="Rent" required>
+                                    <input max="9999" type="number" name="wrent" class="form-control" id="wrent" placeholder="Rent" required>
 									</div>
                                 </div>
                                 <div class="form-group">
