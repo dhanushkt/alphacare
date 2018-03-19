@@ -54,7 +54,7 @@ $days=round($dayscount / (60* 60 * 24));
 			</tr>
 		</table>
 		<div class="invoice-bdy">
-			<center><h4>OUTPATIENT BILL</h4></center>
+			<center><h4>INPATIENT BILL</h4></center>
 			<div class="row">
 				<div class="col-6">
 					<table class="invoice-info">
