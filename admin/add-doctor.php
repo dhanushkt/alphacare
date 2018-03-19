@@ -129,7 +129,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<div class="row">
 				<div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title m-b-0">Doctors Information</h3>
+                            <h3 class="box-title m-b-0">Doctor's Information</h3>
                             <form data-toggle="validator" method="post">
                               <?php if(isset($fmsg)) { ?>
 									<div class="alert alert-danger alert-dismissable">
@@ -187,7 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <label class="col-sm-12 p-l-0">Gender</label>
                                     <div class="col-sm-12 p-l-0">
                                         <select class="form-control" name="gender" required>
-                                            <option>Select Gender</option>
+                                            <option selected hidden disabled>Select Gender</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                         </select>
@@ -208,11 +208,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     
                                 </div>
                                 <div class="form-group">
-                                    <label for="example-phone">Phone</span>
-                                    </label>
-                                    
-                                        <input type="text" required id="example-phone" name="phone" class="form-control" placeholder="enter your phone number">
-                                    
+                                    <label for="example-phone">Phone</label>
+                                        <input type="tel" pattern="[0-9]*" maxlength="11" required id="example-phone" name="phone" class="form-control" placeholder="enter your phone number" data-error="Invalid phone number">
+                                    <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPassword" class="control-label">Password</label>
