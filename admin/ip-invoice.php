@@ -15,10 +15,30 @@ $dayscount=strtotime($dateofdis) - strtotime($dateofjoin);
 $days=round($dayscount / (60* 60 * 24));
 //, wards.wards_id, wards.rent, wards.type
 //JOIN wards ON patients.ward_id = wards.ward_id
+
+if (isset($_POST['submitNewItem']))
+{
+	$itemname=mysqli_real_escape_string($connection,$_POST['itemname']);
+	$itemdes=mysqli_real_escape_string($connection,$_POST['itemdesc']);
+	$unitcost=mysqli_real_escape_string($connection,$_POST['unitcost']);
+	$qty=mysqli_real_escape_string($connection,$_POST['itemqty']);
+	$taxper=mysqli_real_escape_string($connection,$_POST['tax']);
+
+	if (!empty($itemname)) {
+		$insertquery="INSERT INTO `bill_items` (ibill_id,item_name,item_desc,iunit_cost,iquantity,itax) VALUES ('$id','$itemname','$itemdes','$unitcost','$qty','$taxper')";
+		$insertresult=mysqli_query($connection,$insertquery);
+		header('Location: ip-invoice.php?id='.$id);
+	}else {
+		echo "<script>alert('Itemname cannot be empty')</script>";
+		header('Location: ip-invoice.php?id='.$id);
+	}
+
+	//done waht next try now waite  try nnow now it will work... ww   mom is calling for dinner ill havwe and come in 5 minutes yeah sure run dhanush run
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>''
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +74,7 @@ $days=round($dayscount / (60* 60 * 24));
 			</tr>
 		</table>
 		<div class="invoice-bdy">
-			<center><h4>INPATIENT BILL</h4></center>
+			<center><h4>OUTPATIENT BILL</h4></center>
 			<div class="row">
 				<div class="col-6">
 					<table class="invoice-info">
@@ -110,61 +130,77 @@ $days=round($dayscount / (60* 60 * 24));
 					</tr>
 					<tr class="item-row">
 						<td>
-							<textarea class="font-14" placeholder="Item Name">Bed Rent</textarea>
-							<a class="item-delete">x</a>
+							Bed Rent
 						</td>
 						<td>
-							<textarea class="item-description" rows="3" placeholder="Item Description"><?php echo 'Type: '.$getinfo['type']; ?></textarea>
+							<?php echo 'Type: '.$getinfo['type']; ?>
 						</td>
 						<td class="item-width">
-							<textarea class="item-cost"><?php echo $getinfo['rent'].' / day'; ?></textarea>
+							<?php echo $getinfo['rent'].' / day'; ?>
 						</td>
 						<td class="item-width">
-							<textarea class="item-quantity"><?php echo $days.' days' ?></textarea>
+							<?php echo $days.' days' ?>
 						</td>
 						<td class="item-width">
-							<textarea class="item-tax">-</textarea>
+							-
 						</td>
 						<td class="item-width item-tax-price">-</td>
 						<td class="item-width item-total-price"><?php echo $getinfo['ward_rent']; ?></td>
 					</tr>
-					<tr class="item-row">
-						<td>
-							<textarea class="font-14" placeholder="Item Name"></textarea>
-							<a class="item-delete">x</a>
-						</td>
-						<td>
-							<textarea class="item-description" rows="3" placeholder="Item Description"></textarea>
-						</td>
-						<td class="item-width">
-							<textarea class="item-cost"></textarea>
-						</td>
-						<td class="item-width">
-							<textarea class="item-quantity"></textarea>
-						</td>
-						<td class="item-width">
-							<textarea class="item-tax"></textarea>
-						</td>
-						<td class="item-width item-tax-price"></td>
-						<td class="item-width item-total-price"></td>
-					</tr>
-					<tr class="item-hide">
-						<td colspan="7">
-							<a class="item-add">Add Item</a>
-						</td>
-					</tr>
+					<?php
+						$bill_items= mysqli_query($connection,"SELECT * FROM bill_items WHERE ibill_id='$id'");
+					 ?>
+					 <?php foreach ($bill_items as $bill_item): ?>
+						 <tr class="item-row">
+							 <td>
+								 <?php echo $bill_item['item_name'] ?>
+								 <a class="item-delete" data-id="<?php echo $bill_item['item_id']; ?>">x</a>
+							 </td>
+							 <td><?php echo $bill_item['item_desc']; ?></td>
+							 <td><?php echo $bill_item['iunit_cost']; ?></td>
+							 <td><?php echo $bill_item['iquantity']; ?></td>
+							 <td><?php echo $bill_item['itax']; ?></td>
+							 <td><?php $taxinrupees=($bill_item['iunit_cost'] * $bill_item['iquantity']); echo $bill_item['itax']*$taxinrupees*0.01; ?></td>
+							 <td><?php echo $bill_item['iunit_cost'] * $bill_item['iquantity']; ?></td>
+						 </tr>
+						 <?php
+										 $sub_total = $sub_total + $bill_item['iunit_cost'] * $bill_item['iquantity'];
+
+										 $total_tax = $total_tax + ($bill_item['itax']*$taxinrupees*0.01);
+						 ?>
+					 <?php endforeach; ?>
+					<form action="ip-invoice.php?id=<? echo $id;?>" method="post">
+						<tr class="add-item">
+							<td colspan="1">
+								<input type="text" name="itemname" value="" placeholder="Item name">
+							</td>
+							<td colspan="1">
+								<input type="text" name="itemdesc" value="" placeholder="Desc">
+							</td>
+							<td colspan="1">
+								<input type="text" name="unitcost" value="" placeholder="Unit cost">
+							</td>
+							<td colspan="1">
+								<input type="text" name="itemqty" value="" placeholder="Quantity">
+							</td>
+							<td colspan="1">
+								<input type="text" name="tax" value="" placeholder="Tax(in %)">
+							</td>
+							<td colspan="2"><input class="btn btn-primary" type="submit" name="submitNewItem" value="Add"></td>
+						</tr>
+					</form>
 					<tr>
 						<td colspan="3" class="blank"></td>
 						<td colspan="2" class="text-right">Sub Total( in &#8377; )</td>
 						<td colspan="2">
-							<span id="subtotal"></span>
+							<span id="subtotal"><?php echo $sub_total + $getinfo['ward_rent']; ?></span>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
 						<td colspan="2" class="text-right">Tax( in &#8377; )</td>
 						<td colspan="2">
-							<span id="tax"></span>
+							<span id="tax"><?php echo $total_tax; ?></span>
 						</td>
 					</tr>
 					<tr>
@@ -178,7 +214,7 @@ $days=round($dayscount / (60* 60 * 24));
 						<td colspan="3" class="blank"></td>
 						<td colspan="2" class="text-right">Total Amount( in &#8377; )</td>
 						<td colspan="2">
-							<span id="total"></span>
+							<span id="total"> <?php echo $sub_total + $getinfo['ward_rent'] + $total_tax ?></span>
 						</td>
 					</tr>
 					<tr>
@@ -214,6 +250,22 @@ $days=round($dayscount / (60* 60 * 24));
 	<!-- Jquery Library 2.1 JavaScript-->
 <script>
 	$(document).ready(function() {
+		$('.item-delete').click(function(event) {
+			id = $(this).attr('data-id');
+			$.ajax({
+				url: 'ip-invoice.php?',
+				type: 'DELETE',
+				success: function(){
+					alert("Data Saved");
+				}
+			});
+		});
+	var total_amt = document.getElementById('total').innerText;
+		$('#discount').blur(function() {
+			var discount = $(this).val();
+			var total_amt = document.getElementById('total').innerText;
+			$('#total').text(total_amt-discount);
+		} );
 		$('.submitbutton').click(function(){
 			var id = $(this).attr('data-id');
 			var totamt = document.getElementById('total').innerText;
