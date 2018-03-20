@@ -18,6 +18,7 @@ $fetchrow = mysqli_fetch_assoc($fetchresult);
 $checkcount = mysqli_num_rows($fetchresult);
 if($checkcount>=1)
 {
+	
 	//calculate temprature percentage min:97F max:105F
 	if($fetchrow['temp']<='97')
 	{
@@ -45,7 +46,10 @@ if($checkcount>=1)
 	$bpper_upper=(($upper_bp-70)/(180-70))*100;
 	$bpper_lower=(($lower_bp-40)/(100-40))*100;
 	$avgbpval=($bpper_upper+$bpper_lower)/2;
+	
 }
+
+
 //update patient profile
 if(isset($_POST['updateprofile']))
 {
@@ -95,6 +99,41 @@ if(isset($_POST['updatemedic']))
 	if($result2)
 	{
 		$smsg="MEDICAL INFORMATION UPDATED";
+		$fetchmediinfo="SELECT * FROM medical_info WHERE p_id='$id' ORDER BY date DESC";
+		$fetchresult=mysqli_query($connection, $fetchmediinfo);
+		$fetchrow = mysqli_fetch_assoc($fetchresult);
+		$checkcount = mysqli_num_rows($fetchresult);
+		if($checkcount>=1)
+		{
+			//calculate temprature percentage min:97F max:105F
+			if($fetchrow['temp']<='97')
+			{
+				$tempper="10%";
+			}
+			elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='105')
+			{
+				$tempper=(($fetchrow['temp']-97)/(105-97))*100;
+			}
+			elseif($fetchrow['temp']> '105')
+			{
+				$tempper="100%";
+			}
+
+			//calculate sugar percentage min:72 max:140
+			$sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
+
+			//calculate bloodpreasure percentage min:70/40 max: 180/100
+			$bp_value = $fetchrow['bp'];
+			$bp = explode("/",$bp_value);
+
+			$upper_bp = $bp[0];
+			$lower_bp = $bp[1];
+
+			$bpper_upper=(($upper_bp-70)/(180-70))*100;
+			$bpper_lower=(($lower_bp-40)/(100-40))*100;
+			$avgbpval=($bpper_upper+$bpper_lower)/2;
+
+		}
 	}
 	else
 	{
@@ -566,17 +605,17 @@ $(window).load(function() {
 										<div class="row">
 										<div class="col-md-3 col-xs-6 b-r"> <strong>Height</strong>
 										<br>
-										<p class="text-muted"><?php echo $fetchrow["height"];?></p>
+										<p class="text-muted"><?php if(isset($fetchrow["height"])) echo $fetchrow["height"].' cm';?></p>
 									</div>
 										<div class="col-md-3 col-xs-6 b-r"> <strong>Weight</strong>
 										<br>
-										<p class="text-muted"><?php echo $fetchrow["weight"];?></p>
+										<p class="text-muted"><?php if(isset($fetchrow["weight"])) echo $fetchrow["weight"].' kg';?></p>
 									</div>
 										<div class="col-md-6 col-xs-6"> <strong>Medical info taken on</strong>
 										<br>
-										<p class="text-muted"><?php $datei=$fetchrow['date'];
+										<p class="text-muted"><?php if(isset($fetchrow["date"])) {	  $datei=$fetchrow['date'];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $datei);
-											$doic = $myDateTime->format('d-m-Y');  echo $doic;?></p>
+											$doic = $myDateTime->format('d-m-Y');  echo $doic; } ?></p>
 									</div>
 									</div>
 										<hr>
