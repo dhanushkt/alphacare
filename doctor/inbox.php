@@ -9,6 +9,7 @@ else if(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
+date_default_timezone_set('Asia/Kolkata');
 
 $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0')";
 $getunreadresult=mysqli_query($connection,$getunread);
@@ -83,7 +84,8 @@ $countunread=mysqli_num_rows($getunreadresult);
                                 </div>
                                 <div class="col-lg-10 col-md-9 col-sm-12 col-xs-12 mail_listing">
                                     <div class="inbox-center table-responsive">
-                                        <table class="table table-hover">
+										<!--added bottom border because filter menu will be hidden behind -->
+                                        <table class="table table-hover" style="border-bottom: solid #FFFFFF; border-bottom-width: 70px">
                                             <thead>
                                                 <tr>
                                                      <th width="30">
@@ -96,17 +98,17 @@ $countunread=mysqli_num_rows($getunreadresult);
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light m-r-5" data-toggle="dropdown" aria-expanded="false"> Filter <b class="caret"></b> </button>
                                                             <ul class="dropdown-menu" role="menu">
-                                                                <li><a href="#fakelink">Read</a></li>
-                                                                <li><a href="#fakelink">Unread</a></li>
-                                                                <li class="divider"></li>
-                                                                <li><a href="#fakelink">Separated link</a></li>
+																<li><a href="inbox.php">All</a></li>
+																<li class="divider"></li>
+                                                                <li><a href="inbox.php?filter=read">Read</a></li>
+                                                                <li><a href="inbox.php?filter=unread">Unread</a></li>
                                                             </ul>
                                                         </div>
                                                         <div class="btn-group">
                                                             <button type="button" onClick="window.location.reload()" class="btn btn-default waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-refresh"></i> </button>
                                                         </div>
 														<div class="btn-group">
-                                                            <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-trash-o"></i> </button>
+                                                            <!--<button type="button" class="btn btn-default waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-trash-o"></i> </button> -->
                                                         </div>
                                                     </th>
                                                     <th class="hidden-xs" width="100">
@@ -120,7 +122,21 @@ $countunread=mysqli_num_rows($getunreadresult);
 											
                                             <tbody>
 												<?php 
-											$fetchmsg="SELECT * FROM messages WHERE to_name='$ausername' ORDER BY msg_id DESC";
+												$fetchmsg="SELECT * FROM messages WHERE to_name='$ausername' ORDER BY msg_id DESC";
+												
+												if(isset($_GET['filter']))
+												{
+													if($_GET['filter']=='read')
+													{
+														$fetchmsg="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='1') ORDER BY msg_id DESC";
+
+													}
+													elseif($_GET['filter']=='unread')
+													{
+														$fetchmsg="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0') ORDER BY msg_id DESC";
+													}
+												}
+											
 											$fetchresult=mysqli_query($connection, $fetchmsg);
 											while($fetchrow=mysqli_fetch_assoc($fetchresult))
 											{
@@ -135,13 +151,13 @@ $countunread=mysqli_num_rows($getunreadresult);
 												?>
                                                     <td>
                                                         <div class="checkbox m-t-0 m-b-0">
-                                                            <input type="checkbox">
-                                                            <label for="checkbox0"></label>
+                                                            <!--<input type="checkbox">
+                                                            <label for="checkbox0"></label>-->
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
 													<td><a href="#"><?php echo $getstafffullname['fname'].' '.$getstafffullname['lname']; ?></a></td>
-                                                    <td class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
+													<td class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
                                                     <td class="hidden-xs"><i class="fa <?php if($fetchrow['user_read']==0){ echo 'fa-envelope';} else { echo 'fa-envelope-o'; } ?>"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>
                                                 </tr>

@@ -9,6 +9,8 @@ else if(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
+date_default_timezone_set('Asia/Kolkata');
+$now = date('Y-m-d H:i:s');
 
 $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0')";
 $getunreadresult=mysqli_query($connection,$getunread);
@@ -26,7 +28,7 @@ if(isset($_POST['msgsubmit']))
 		$user_read="0";
 		//$timestamp= time();
 		//$timeconverted=date('Y-m-d H:i:s',$timestamp);
-		$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_subject, msg_body, timestamp) VALUES ('$from','$to','$subject','$msg', now())";
+		$inputmsg="INSERT INTO `messages` (from_name, to_name, msg_subject, msg_body, timestamp) VALUES ('$from','$to','$subject','$msg','$now')";
 		$inputresult=mysqli_query($connection,$inputmsg);
 		if($inputresult)
 		{
@@ -144,7 +146,7 @@ if(isset($_POST['msgsubmit']))
                                         <!--<input class="form-control" placeholder="To:">-->
                                     </div>
                                      <div class="form-group">
-                                        <input name="subject" class="form-control" required placeholder="Subject:">
+                                        <input maxlength="45" name="subject" class="form-control" required placeholder="Subject:">
                                     </div> 
                                     <div class="form-group">
                                         <textarea required class="textarea_editor form-control" rows="15" placeholder="Enter text ..." name="msg"></textarea>

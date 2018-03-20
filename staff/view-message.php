@@ -9,6 +9,7 @@ else if(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
+date_default_timezone_set('Asia/Kolkata');
 
 if(isset($_GET['id']))
 {
@@ -104,14 +105,14 @@ $countunread=mysqli_num_rows($getunreadresult);
                                 </div>
                                 <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12 mail_listing">
                                     <div class="media m-b-30 p-t-20">
-                                        <h4 class="font-bold m-t-0"><span class="label label-rouded label-info pull-right">Subject</span><?php echo $fetchmsg['msg_subject'] ?></h4>
+                                        <h4 style="word-wrap: break-word" class="font-bold m-t-0"><span class="label label-rouded label-info pull-right">Subject</span><?php echo $fetchmsg['msg_subject'] ?></h4>
                                         <hr>
                                         <a class="pull-left" href="#"> <?php if($fetchstaffinfo["gender"]=='male') { ?> <img class="media-object thumb-sm img-circle" src="../plugins/images/users/doctor-male.jpg" alt=""><?php } else { ?> <img class="media-object thumb-sm img-circle" src="../plugins/images/users/doctor-female.jpg" alt="">  <?php } ?></a>
                                         <div class="media-body"> <span class="media-meta pull-right"><?php $date=$fetchmsg['timestamp']; echo date('h:i a M d', strtotime($date)); ?></span>
                                             <h4 class="text-danger m-0">Dr. <?php echo $fetchstaffinfo['fname'].' '.$fetchstaffinfo['lname']; ?></h4>
                                             <small class="text-muted">From: <?php echo $fetchstaffinfo['email']; ?></small> </div>
                                     </div>
-									<p><blockquote> <?php echo $fetchmsg['msg_body']; ?> </blockquote></p>
+									<p><blockquote style="word-wrap: break-word"> <?php echo $fetchmsg['msg_body']; ?> </blockquote></p>
                                     <hr>
                                     <div class="b-all p-20">
                                         <p class="p-b-20">click here to <a href="replay-message.php?name=<?php echo $fetchmsg['from_name'] ?>">Reply</a></p>

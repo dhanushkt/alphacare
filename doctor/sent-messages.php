@@ -9,6 +9,7 @@ else if(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
+date_default_timezone_set('Asia/Kolkata');
 
 $getunread="SELECT * FROM messages WHERE (to_name='$ausername') AND (user_read='0')";
 $getunreadresult=mysqli_query($connection,$getunread);
@@ -92,7 +93,7 @@ $countunread=mysqli_num_rows($getunreadresult);
                                                         </div>
                                                     </th> 
                                                     <th colspan="4">
-                                                        <div class="btn-group">
+                                                        <!-- <div class="btn-group">
                                                             <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light m-r-5" data-toggle="dropdown" aria-expanded="false"> Filter <b class="caret"></b> </button>
                                                             <ul class="dropdown-menu" role="menu">
                                                                 <li><a href="#fakelink">Read</a></li>
@@ -100,13 +101,13 @@ $countunread=mysqli_num_rows($getunreadresult);
                                                                 <li class="divider"></li>
                                                                 <li><a href="#fakelink">Separated link</a></li>
                                                             </ul>
-                                                        </div>
+                                                        </div>-->
                                                         <div class="btn-group">
                                                             <button type="button" onClick="window.location.reload()" class="btn btn-default waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-refresh"></i> </button>
                                                         </div>
-														<div class="btn-group">
+														<!-- <div class="btn-group">
                                                             <button type="button" class="btn btn-default waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-trash-o"></i> </button>
-                                                        </div>
+                                                        </div> -->
                                                     </th>
                                                     <th class="hidden-xs" width="100">
                                                         <div class="btn-group pull-right">
@@ -135,13 +136,13 @@ $countunread=mysqli_num_rows($getunreadresult);
 													
                                                     <td>
                                                         <div class="checkbox m-t-0 m-b-0">
-                                                            <input type="checkbox">
-                                                            <label for="checkbox0"></label>
+                                                            <!--<input type="checkbox">
+                                                            <label for="checkbox0"></label>-->
                                                         </div>
                                                     </td>
 													<td class="hidden-xs"><i class="fa fa-circle-thin"></i></td>
 													<td><a href="#"><span class="label label-info m-r-10">To :</span> <?php echo $getstafffullname['fname'].' '.$getstafffullname['lname']; ?></a></td>
-                                                    <td style="overflow: hidden" class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
+													<td style="overflow: hidden" class="max-texts"><a href="#"><span class="label label-info m-r-10">Subject :</span><?php echo $fetchrow["msg_subject"]; ?></a></td>
                                                     <td class="hidden-xs"><i class="fa fa-paper-plane"></i></td>
                                                     <td class="text-right"> <?php $date=$fetchrow['timestamp']; echo date('h:i a M d', strtotime($date)); ?> </td>
                                                 </tr>
