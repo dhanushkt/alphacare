@@ -3,7 +3,7 @@ include '../login/accesscontroladmin.php';
 require('connect.php');
 $ausername=$_SESSION['ausername'];
 
-$getvinfoquery="SELECT *,patients.p_id,patients.fname,patients.lname,wards.ward_no,wards.floor FROM visitors JOIN patients ON visitors.p_id=patients.p_id JOIN wards ON patients.ward_id=wards.ward_id";
+$getvinfoquery="SELECT *,patients.p_id,patients.fname,patients.lname,patients.dod,patients.doj,wards.ward_no,wards.floor FROM ip_bills JOIN patients ON ip_bills.p_id=patients.p_id JOIN wards ON patients.ward_id=wards.ward_id";
 $getvinforesult=mysqli_query($connection,$getvinfoquery);
 
 date_default_timezone_set('Asia/Kolkata');
@@ -68,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Visitors Details</h4>
+                        <h4 class="page-title">Inpatient Bills</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <a href="../index.html" target="_blank" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Home</a>
@@ -94,34 +94,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										</div> 
 								<?php }?>
                         <div class="panel panel-info">
-                            <div class="panel-heading">Visitors Log</div>
+                            <div class="panel-heading">IP Bills Log</div>
                             <div class="panel-wrapper collapse in" aria-expanded="true">
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                 <table id="myTable" class="table table-striped">
                                     <thead>
                                         <tr>
-											<th>id</th>
-                                            <th>Name</th>
+											<th>ID</th>
                                             <th>Patient Name</th>
+                                            <th>Discharge date</th>
                                             <th>Ward No</th>
-                                            <th>Gender</th>
-                                            <th>Date</th>
-                                            <th>Time</th>
+                                            <th>Admitted days</th>
+                                            <th>Total amount</th>
+											<th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 										<?php while($getvrow=mysqli_fetch_assoc($getvinforesult)) { ?>
                                         <tr>
-											<td><?php echo $getvrow['v_id']; ?> </td>
-                                            <td><?php echo $getvrow['vname']; ?> </td>
+											<td><?php echo $getvrow['bill_id']; ?> </td>
 											<td><a href="edit-patient-profile.php?id=<?php echo $getvrow['p_id']; ?>"><?php echo $getvrow['fname'].' '.$getvrow['lname']; ?></a></td>
-                                            <td><?php echo $getvrow['ward_no']; ?></td>
-                                            <td><?php echo $getvrow['vsex']; ?></td>
-                                            <td><?php $datev=$getvrow['vdate'];
+											<td><?php $datev=$getvrow['dod'];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $datev);
-											$dovc = $myDateTime->format('d-m-Y');  echo $dovc; ?></td>
-                                            <td><?php $gettime=$getvrow['vtime']; echo date('h:i a', strtotime($gettime)); ?></td>
+											$dovc = $myDateTime->format('d-m-Y');  echo $dovc; ?> </td>
+                                            <td><?php echo $getvrow['ward_no']; ?></td>
+                                            <td><?php $dateofjoin=$getvrow['doj'];
+											$dateofdis=$getvrow['dod'];
+											$dayscount=strtotime($dateofdis) - strtotime($dateofjoin);
+											$days=round($dayscount / (60* 60 * 24)); echo $days; ?></td>
+                                            <td><?php  echo '&#8377; '.$getvrow['total_amt']; ?></td>
+											<td><a class="btn btn-info text-white" href="ip-invoice.php?id=<?php echo $getvrow['bill_id']; ?>" target="_blank">Show Bill</a></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -168,13 +171,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     });
 	</script>
 	<script src="../plugins/bower_components/datatables/jquery.dataTables.min.js"></script>
+	
 	<script>
     $(document).ready(function() {
        var table = $('#myTable').DataTable({
-		   "columnDefs": [{
-                    "visible": false,
-                    "targets": 0
-                }],
+		  // "columnDefs": [{
+                   // "visible": false,
+                  //  "targets": 0
+              //  }],
 		   "order": [
                     [0, 'desc']
                 ], });
