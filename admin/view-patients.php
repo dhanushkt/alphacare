@@ -74,14 +74,14 @@ $ausername=$_SESSION['ausername'];
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>
                                     <p class="p-0">
-										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><?php echo $result["email"]; ?> </a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
+										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><font size="-1"><?php echo $result["email"]; ?> </font></a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
 										<i class="fa fa-phone"></i><?php echo " ".$result["phone"]; ?> <br>
 										<i class="fa fa-hospital-o"></i><?php $date=$result['doj'];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
 											$dojc = $myDateTime->format('d-m-Y');  echo " ".$dojc; ?>
 										<i class="fa fa-bed m-l-5"></i><?php if(($result['type']=='General') || ($result['type']=='Semi')) { echo ' '.$result['ward_no'].' ( '.$result['bed_no'].' ) '; } else { echo ' '.$result['ward_no']; } ?>
                                     </p>
-									<div class="p-t-5">
+									<div class="m-t-5">
 											<a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>" class="fcbtn btn btn-info">More Info</a>
 											<!--<a href="#" class="fcbtn btn btn-danger model_img deleteDoctor" data-id="<?php // echo $result["doc_id"]; ?>" id="deleteDoc">Delete</a>-->
 									</div>
@@ -112,14 +112,14 @@ $ausername=$_SESSION['ausername'];
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>
                                     <p class="p-0">
-										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><?php echo $result["email"]; ?> </a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
+										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><font size="-1"><?php echo $result["email"]; ?> </font></a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
 										<i class="fa fa-phone"></i><?php echo " ".$result["phone"]; ?> <br>
 										<i class="fa fa-hospital-o"></i><?php $date=$result['doj'];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
 											$dojc = $myDateTime->format('d-m-Y');  echo " ".$dojc; ?>
 										<i class="fa fa-bed m-l-5"></i><?php if(($result['type']=='General') || ($result['type']=='Semi')) { echo ' '.$result['ward_no'].' ( '.$result['bed_no'].' ) '; } else { echo ' '.$result['ward_no']; } ?>
                                     </p>
-									<div class="p-t-5">
+									<div class="m-t-5">
 											<a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>" class="fcbtn btn btn-info">More Info</a>
 											<!--<a href="#" class="fcbtn btn btn-danger model_img deleteDoctor" data-id="<?php // echo $result["doc_id"]; ?>" id="deleteDoc">Delete</a>-->
 									</div>
