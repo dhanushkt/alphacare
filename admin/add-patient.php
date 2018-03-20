@@ -309,7 +309,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Zip Code</label>
-                                                        <input name="pc" required data-minlength="6" data-error="Invalid zip code" type="number" class="form-control">
+                                                        <input name="pc" required data-minlength="6" data-error="Invalid zip code" maxlength="6" type="text" pattern="[0-9]*" class="form-control">
                                                         <div class="help-block with-errors"></div> 
                                                     </div>
                                                 </div>
@@ -430,7 +430,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Sugar</label>
-                                                        <input type="text" name="sugar" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="sugar" class="form-control">
                                                         <span class="font-13 text-muted">in mg/dl</span>
                                                     </div>
                                                 </div>
@@ -440,7 +440,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Height</label>
-                                                        <input type="text" name="height" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="height" class="form-control">
                                                          <span class="font-13 text-muted">in cm</span>
                                                     </div>
                                                 </div>
@@ -448,7 +448,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Weight</label>
-                                                        <input type="number" name="weight" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="weight" class="form-control">
                                                         <span class="font-13 text-muted">in kg</span>
                                                     </div>
                                                 </div>
@@ -458,7 +458,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Temperature</label>
-                                                        <input type="text" name="temp" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="temp" class="form-control">
                                                         <span class="font-13 text-muted">in °F</span>
                                                     </div>
                                                 </div>

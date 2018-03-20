@@ -728,7 +728,7 @@ $(window).load(function() {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Sugar</label>
-                                                        <input type="text" name="sugar" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="sugar" class="form-control">
                                                         <span class="font-13 text-muted">in mg/dl</span>
                                                     </div>
                                                 </div>
@@ -738,7 +738,7 @@ $(window).load(function() {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Height</label>
-                                                        <input type="text" name="height" class="form-control" value="<?php echo $fetchrow['height']; ?>">
+                                                        <input type="text" pattern="[0-9]*" name="height" class="form-control" value="<?php echo $fetchrow['height']; ?>">
                                                          <span class="font-13 text-muted">in cm</span>
                                                     </div>
                                                 </div>
@@ -746,7 +746,7 @@ $(window).load(function() {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Weight</label>
-                                                        <input type="number" name="weight" class="form-control" value="<?php echo $fetchrow['weight']; ?>">
+                                                        <input type="text" pattern="[0-9]*" name="weight" class="form-control" value="<?php echo $fetchrow['weight']; ?>">
                                                         <span class="font-13 text-muted">in kg</span>
                                                     </div>
                                                 </div>
@@ -756,7 +756,7 @@ $(window).load(function() {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Temperature</label>
-                                                        <input type="text" name="temp" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="temp" class="form-control">
                                                         <span class="font-13 text-muted">in °F</span>
                                                     </div>
                                                 </div>
@@ -929,7 +929,7 @@ $(window).load(function() {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Zip Code</label>
-                                                        <input name="pc" required data-minlength="6" data-error="Invalid zip code" type="number" class="form-control" value="<?php echo $row['pc']; ?>">
+                                                        <input name="pc" required data-minlength="6" data-error="Invalid zip code" type="text" pattern="[0-9]*" maxlength="6" class="form-control" value="<?php echo $row['pc']; ?>">
                                                         <div class="help-block with-errors"></div>
                                                     </div>
                                                 </div>

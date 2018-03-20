@@ -175,7 +175,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<label for="inputEmail" class="control-label">Rent per Day (in ₹)</label>
 									<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                                    <input max="9999" type="number" name="wrent" class="form-control" id="wrent" placeholder="Rent" required>
+                                    <input maxlength="5" type="text" pattern="[0-9]*" name="wrent" class="form-control" id="wrent" placeholder="Rent" required>
 									</div>
                                 </div>
                                 <div class="form-group">
