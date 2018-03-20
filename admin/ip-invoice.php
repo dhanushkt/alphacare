@@ -28,7 +28,7 @@ if (isset($_POST['submitNewItem']))
 		$insertquery="INSERT INTO `bill_items` (ibill_id,item_name,item_desc,iunit_cost,iquantity,itax) VALUES ('$id','$itemname','$itemdes','$unitcost','$qty','$taxper')";
 		$insertresult=mysqli_query($connection,$insertquery);
 		header('Location: ip-invoice.php?id='.$id);
-	}else {
+	} else {
 		echo "<script>alert('Itemname cannot be empty')</script>";
 		header('Location: ip-invoice.php?id='.$id);
 	}
@@ -74,7 +74,7 @@ if (isset($_POST['submitNewItem']))
 			</tr>
 		</table>
 		<div class="invoice-bdy">
-			<center><h4>OUTPATIENT BILL</h4></center>
+			<center><h4>INPATIENT BILL</h4></center>
 			<div class="row">
 				<div class="col-6">
 					<table class="invoice-info">
@@ -117,7 +117,7 @@ if (isset($_POST['submitNewItem']))
 					</table>
 				</div>
 			</div>
-			<div class="items">
+			<div class="items" style="padding-top: 0px;">
 				<table>
 					<tr>
 						<th>Item Name</th>
@@ -149,12 +149,15 @@ if (isset($_POST['submitNewItem']))
 					</tr>
 					<?php
 						$bill_items= mysqli_query($connection,"SELECT * FROM bill_items WHERE ibill_id='$id'");
+						
 					 ?>
 					 <?php foreach ($bill_items as $bill_item): ?>
 						 <tr class="item-row">
 							 <td>
 								 <?php echo $bill_item['item_name'] ?>
+								 <?php if($getinfo['total_amt']=='0.00') { ?>
 								 <a class="item-delete" data-id="<?php echo $bill_item['item_id']; ?>">x</a>
+								 <?php } ?>
 							 </td>
 							 <td><?php echo $bill_item['item_desc']; ?></td>
 							 <td><?php echo $bill_item['iunit_cost']; ?></td>
@@ -169,7 +172,8 @@ if (isset($_POST['submitNewItem']))
 										 $total_tax = $total_tax + ($bill_item['itax']*$taxinrupees*0.01);
 						 ?>
 					 <?php endforeach; ?>
-					<form action="ip-invoice.php?id=<? echo $id;?>" method="post">
+					<?php if($getinfo['total_amt']=='0.00') { ?>
+					<form action="ip-invoice.php?id=<?php echo $id; ?>" method="post">
 						<tr class="add-item">
 							<td colspan="1">
 								<input type="text" name="itemname" value="" placeholder="Item name">
@@ -189,18 +193,19 @@ if (isset($_POST['submitNewItem']))
 							<td colspan="2"><input class="btn btn-primary" type="submit" name="submitNewItem" value="Add"></td>
 						</tr>
 					</form>
+					<?php } ?>
 					<tr>
 						<td colspan="3" class="blank"></td>
 						<td colspan="2" class="text-right">Sub Total( in &#8377; )</td>
 						<td colspan="2">
-							<span id="subtotal"><?php echo $sub_total + $getinfo['ward_rent']; ?></span>
+							<span id="subtotal"><?php if(isset($sub_total)){ echo $sub_total + $getinfo['ward_rent']; } ?></span>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3" class="blank"></td>
 						<td colspan="2" class="text-right">Tax( in &#8377; )</td>
 						<td colspan="2">
-							<span id="tax"><?php echo $total_tax; ?></span>
+							<span id="tax"><?php if(isset($total_tax)) echo $total_tax; ?></span>
 						</td>
 					</tr>
 					<tr>
@@ -214,7 +219,7 @@ if (isset($_POST['submitNewItem']))
 						<td colspan="3" class="blank"></td>
 						<td colspan="2" class="text-right">Total Amount( in &#8377; )</td>
 						<td colspan="2">
-							<span id="total"> <?php echo $sub_total + $getinfo['ward_rent'] + $total_tax ?></span>
+							<span id="total"> <?php if(isset($sub_total)) { echo $sub_total + $getinfo['ward_rent'] + $total_tax; } ?></span>
 						</td>
 					</tr>
 					<tr>
@@ -234,8 +239,11 @@ if (isset($_POST['submitNewItem']))
 					<!--<tr><td colspan="3"><button onClick="myFunction()">Print</button></td></tr>-->
 					<tr class="item-hide">
 						<td colspan="7">
-							<center><a data-id="<?php echo $id; ?>" class="mdl-button mdl-js-button submitbutton">Save</a>
-							<button onClick="window.print()" class="mdl-button mdl-js-button">Print</button></center>
+							<center>
+							<?php if($getinfo['total_amt']=='0.00') { ?>
+							<a data-id="<?php echo $id; ?>" class="mdl-button mdl-js-button submitbutton">Save</a>
+							<?php } ?>
+							<a onClick="window.print()" class="mdl-button mdl-js-button">Print</a></center>
 						</td>
 					</tr>
 				</table>
@@ -251,15 +259,17 @@ if (isset($_POST['submitNewItem']))
 <script>
 	$(document).ready(function() {
 		$('.item-delete').click(function(event) {
-			id = $(this).attr('data-id');
+			var id = $(this).attr('data-id');
 			$.ajax({
-				url: 'ip-invoice.php?',
-				type: 'DELETE',
+				url: 'delete-bill-item.php',
+				type: 'POST',
+				data: {billid: id },
 				success: function(){
-					alert("Data Saved");
+					alert("Item Removed");
 				}
 			});
 		});
+		
 	var total_amt = document.getElementById('total').innerText;
 		$('#discount').blur(function() {
 			var discount = $(this).val();
@@ -267,6 +277,9 @@ if (isset($_POST['submitNewItem']))
 			$('#total').text(total_amt-discount);
 		} );
 		$('.submitbutton').click(function(){
+		
+			$('.add-item').closest('tr').remove();
+			
 			var id = $(this).attr('data-id');
 			var totamt = document.getElementById('total').innerText;
 			if (totamt=="")
@@ -276,12 +289,14 @@ if (isset($_POST['submitNewItem']))
 			else
 				{
 					$.ajax({
-						url: 'insertbillinfo.php',
+						url: 'insert-bill-info.php',
 						type: 'POST',
 						data: { id: id,
 								totalamt: totamt },
 						success: function(){
 							alert("Data Saved");
+							$('.submitbutton').remove();
+							$('.item-delete').remove();
 						}
 					});
 				}

@@ -1087,7 +1087,7 @@ $(window).load(function() {
 												<div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Total Amount in bill</label>
-                                                        <input disabled type="text" id="lastName" name="lname" class="form-control" value="<?php if($dischargeinfo['total_amt']=='0') { echo "Generate Bill to add total amount"; } else { echo $dischargeinfo['total_amt']; } ?>">
+                                                        <input disabled type="text" id="lastName" name="lname" class="form-control" value="<?php if($dischargeinfo['total_amt']=='0') { echo "Generate Bill to show total amount"; } else { echo $dischargeinfo['total_amt']; } ?>">
                                                      </div>
                                                 </div>
 											</div>
@@ -1097,7 +1097,11 @@ $(window).load(function() {
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <div class="col-md-offset-3 col-md-9">
+															<?php if($dischargeinfo['total_amt']=='0.00') { ?>
                                                             <a target="_blank" href="ip-invoice.php?id=<?php echo $dischargeinfo['bill_id']; ?>" class="btn btn-info text-white" > <i class="fa fa-pencil"></i> Generate Bill </a>
+															<?php } else { ?>
+															<a target="_blank" href="ip-invoice.php?id=<?php echo $dischargeinfo['bill_id']; ?>" class="btn btn-info text-white" > <i class="fa fa-file-text-o"></i> Show Bill </a>
+															<?php } ?>
                                                             <!--<button type="button" class="btn btn-default">Cancel</button>-->
                                                         </div>
                                                     </div>

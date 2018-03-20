@@ -61,7 +61,7 @@
 					<table class="pull-right invoice-info">
 						<tr>
 							<td class="dark">Address</td>
-							<td><input type="text"></td>
+							<td><textarea rows="3"></textarea></td>
 						</tr>
 						<tr>
 							<td class="dark">Date</td>
