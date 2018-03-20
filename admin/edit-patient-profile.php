@@ -1052,10 +1052,8 @@ $(window).load(function() {
                                             <div class="row ">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label class="control-label">Date of Joining</label>
-                                                        <input disabled type="text" id="firstName" name="fname" class="form-control" placeholder="Enter first name" value="<?php $datej=$row['doj'];
-														$myDateTimej = DateTime::createFromFormat('Y-m-d', $datej);
-														$dojc = $myDateTime->format('d-m-Y');  echo $dojc; ?>">
+                                                        <label class="control-label">Date of Admit</label>
+                                                        <input disabled type="text" id="firstName" name="fname" class="form-control" placeholder="Enter first name" value="<?php echo $dojc; ?>">
                                                          </div>
                                                 </div>
                                                 <!--/span-->
