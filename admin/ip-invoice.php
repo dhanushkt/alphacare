@@ -4,6 +4,9 @@ require('connect.php');
 $ausername=$_SESSION['ausername'];
 $id = $_GET['id'];
 
+$sub_total=0;
+$total_tax=0;
+
 $getpatientinfo="SELECT *, patients.fname, patients.lname, patients.dob, patients.gender, patients.address, patients.city, patients.pc, patients.phone, patients.doj, patients.dod, wards.rent, wards.type FROM ip_bills JOIN patients ON ip_bills.p_id = patients.p_id JOIN wards ON patients.ward_id = wards.ward_id  WHERE bill_id='$id'";
 $getpatientinfores=mysqli_query($connection,$getpatientinfo);
 $getinfo=mysqli_fetch_assoc($getpatientinfores);
@@ -117,7 +120,7 @@ if (isset($_POST['submitNewItem']))
 					</table>
 				</div>
 			</div>
-			<div class="items" style="padding-top: 0px;">
+			<div class="items">
 				<table>
 					<tr>
 						<th>Item Name</th>
@@ -167,9 +170,9 @@ if (isset($_POST['submitNewItem']))
 							 <td><?php echo $bill_item['iunit_cost'] * $bill_item['iquantity']; ?></td>
 						 </tr>
 						 <?php
-										 $sub_total = $sub_total + $bill_item['iunit_cost'] * $bill_item['iquantity'];
+								 $sub_total = $sub_total + $bill_item['iunit_cost'] * $bill_item['iquantity'];
 
-										 $total_tax = $total_tax + ($bill_item['itax']*$taxinrupees*0.01);
+									$total_tax = $total_tax + ($bill_item['itax']*$taxinrupees*0.01);
 						 ?>
 					 <?php endforeach; ?>
 					<?php if($getinfo['total_amt']=='0.00') { ?>
