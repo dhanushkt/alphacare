@@ -1327,6 +1327,16 @@ $(document).ready(function() {
 
     update();
     </script>
+	<!--script to show patient profile in left-sidebar start-->
+	<script>
+	$(document).ready(function() {
+    
+    //if (window.location.href='http://localhost/ohms/admin/edit-patient-profile.php?id=8') {
+            $("#hidden-item").css('display','list-item');
+   // }
+    
+});
+</script>
 
 </body>
 

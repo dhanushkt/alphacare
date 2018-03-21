@@ -48,8 +48,8 @@
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-wheelchair p-r-10"></i> <span class="hide-menu"> Patients <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
 					<li> <a href="view-patients.php">View Patients</a> </li>
+					<li id="hidden-item" style="display: none"><a href="edit-patient-profile.php">Patient Profile</a></li>
 					<li> <a href="add-patient.php">Add Patient</a> </li>
-					<li><a href="edit-patient-profile.php">Patient Profile</a></li>
 				</ul>
 			</li>
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-user-plus p-r-10"></i> <span class="hide-menu"> Visitors <span class="fa arrow"></span></span></a>
