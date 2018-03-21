@@ -701,7 +701,7 @@ $(window).load(function() {
                                                     <div class="form-group">
                                                         <label>Blood Group</label>
                                                         <select class="form-control" name="bg">
-
+															<option disabled selected hidden>Select Blood group</option>
 															<option <?php if($fetchrow["bgroup"]=="A +'ve"){echo 'selected';}?> value="A +'ve">A +'ve</option>
 															<option <?php if($fetchrow["bgroup"]=="A -'ve"){echo 'selected';}?> value="A -'ve">A -'ve</option>
 															<option <?php if($fetchrow["bgroup"]=="B +'ve"){echo 'selected';}?> value="B +'ve">B +'ve</option>
@@ -1330,11 +1330,7 @@ $(document).ready(function() {
 	<!--script to show patient profile in left-sidebar start-->
 	<script>
 	$(document).ready(function() {
-    
-    //if (window.location.href='http://localhost/ohms/admin/edit-patient-profile.php?id=8') {
             $("#hidden-item").css('display','list-item');
-   // }
-    
 });
 </script>
 
