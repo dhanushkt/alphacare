@@ -180,7 +180,7 @@ if(isset($_POST['msgsubmit']))
                                         <input maxlength="45" required name="subject" class="form-control" placeholder="Subject:">
                                     </div> 
                                     <div class="form-group">
-                                        <textarea required class="textarea_editor form-control" rows="15" placeholder="Enter text ..." name="msg"></textarea>
+                                        <textarea style="font-weight: normal" required class="textarea_editor form-control" rows="15" placeholder="Enter text ..." name="msg"></textarea>
                                     </div>
 									
                                     <!--<h4><i class="ti-link"></i> Attachment</h4>

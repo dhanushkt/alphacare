@@ -43,7 +43,7 @@
         "link": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
-              "<div class='bootstrap-wysihtml5-insert-link-modal modal fade bs-example-modal-lg'>" +
+              "<div class='bootstrap-wysihtml5-insert-link-modal modal fade bs-example-modal-lg p-t-20'>" +
                 "<div class='modal-dialog modal-lg'>" +
 					"<div class='modal-content'>" +
 				"<div class='modal-header'>" +
@@ -57,7 +57,7 @@
 				"</div>" +
                 "<div class='modal-footer'>" +
                   "<a href='#' class='btn btn-inverse' data-dismiss='modal'>" + locale.link.cancel + "</a>" +
-                  "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.link.insert + "</a>" +
+                  "<a href='#' class='btn btn-info' data-dismiss='modal'>" + locale.link.insert + "</a>" +
                 "</div>" +
               "</div>" +
 			  "</div>" +
@@ -69,7 +69,7 @@
         "image": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
-              "<div class='bootstrap-wysihtml5-insert-image-modal modal fade bs-example-modal-lg'>" +
+              "<div class='bootstrap-wysihtml5-insert-image-modal modal fade bs-example-modal-lg p-t-20'>" +
                 "<div class='modal-dialog modal-lg'>" +
 					"<div class='modal-content'>" +
 				"<div class='modal-header'>" +
@@ -82,8 +82,8 @@
                 "</div>" +
 				"</div>" +
                 "<div class='modal-footer'>" +
-                  "<a href='#' class='btn' data-dismiss='modal'>" + locale.image.cancel + "</a>" +
-                  "<a href='#' class='btn  green btn-primary' data-dismiss='modal'>" + locale.image.insert + "</a>" +
+                  "<a href='#' class='btn btn-inverse' data-dismiss='modal'>" + locale.image.cancel + "</a>" +
+                  "<a href='#' class='btn btn-info' data-dismiss='modal'>" + locale.image.insert + "</a>" +
                 "</div>" +
               "</div>" +
 			  "</div>" +
