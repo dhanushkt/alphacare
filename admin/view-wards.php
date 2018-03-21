@@ -117,7 +117,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box bg-success text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
+                                    <a href="#"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
@@ -140,7 +140,7 @@ if(isset($_POST['AttendedBtn']))
                                         </section>
 										
                                         <section id="section-bar-2">
-                                            <h2 class="visible-xs">Scheduled</h2> 
+                                            <h2 class="visible-xs">Occupied</h2> 
 										
 										<div class="row p-0">
 								<?php
@@ -148,11 +148,13 @@ if(isset($_POST['AttendedBtn']))
 									$getwardresult = mysqli_query($connection, $getwardquery);
 									foreach($getwardresult as $key=>$getwardresult)
 								{ ?>
-                <div class="col-md-3 col-sm-3 ">
+											<?php $wardid=$getwardresult['ward_id'];
+										$getpid=mysqli_query($connection,"SELECT p_id from patients WHERE (ward_id='$wardid') AND (dod is NULL)"); $fetchpid=mysqli_fetch_assoc($getpid); ?>
+                <div class="col-md-3 col-sm-3 " >
                         <div class="white-box bg-danger text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
+                                    <a data-toggle="tooltip" data-original-title="View Patient Info" href="edit-patient-profile.php?id=<?php echo $fetchpid['p_id']; ?>"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
@@ -165,7 +167,7 @@ if(isset($_POST['AttendedBtn']))
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                   <?php
 					}
 				  ?>
@@ -178,7 +180,7 @@ if(isset($_POST['AttendedBtn']))
 										
                                         <section id="section-bar-3">
                                             
-									<h2 class="visible-xs">Attended</h2> 
+									<h2 class="visible-xs">2nd floor <small>[ALL]</small></h2> 
 										
 										<div class="row p-0">
 								<?php
@@ -186,11 +188,13 @@ if(isset($_POST['AttendedBtn']))
 									$getwardresult = mysqli_query($connection, $getwardquery);
 									foreach($getwardresult as $key=>$getwardresult)
 								{ ?>
+											<?php $wardid2=$getwardresult['ward_id'];
+										$getpid2=mysqli_query($connection,"SELECT p_id from patients WHERE (ward_id='$wardid2') AND (dod is NULL)"); $fetchpid2=mysqli_fetch_assoc($getpid2); ?>
                 <div class="col-md-3 col-sm-3 ">
                         <div class="white-box <?php if($getwardresult['status']=='0'){ echo 'bg-success'; } else { echo 'bg-danger'; } ?> text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
+                                    <a <?php if($getwardresult['status']=='1'){ echo' data-toggle="tooltip" data-original-title="View Patient Info" '; } ?> href="<?php if($getwardresult['status']=='1'){ echo "edit-patient-profile.php?id=".$fetchpid2['p_id']; } else { echo "#"; } ?>"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
@@ -213,7 +217,7 @@ if(isset($_POST['AttendedBtn']))
 									</section>
 										
                                         <section id="section-bar-4">
-                                            <h2 class="visible-xs">Cancelled</h2> 
+                                            <h2 class="visible-xs">3rd floor <small>[ALL]</small></h2> 
 										
 										<div class="row p-0">
 								<?php
@@ -221,11 +225,13 @@ if(isset($_POST['AttendedBtn']))
 									$getwardresult = mysqli_query($connection, $getwardquery);
 									foreach($getwardresult as $key=>$getwardresult)
 								{ ?>
+											<?php $wardid3=$getwardresult['ward_id'];
+										$getpid3=mysqli_query($connection,"SELECT p_id from patients WHERE (ward_id='$wardid3') AND (dod is NULL)"); $fetchpid3=mysqli_fetch_assoc($getpid3); ?>
                 <div class="col-md-3 col-sm-3 ">
                         <div class="white-box <?php if($getwardresult['status']=='0'){ echo 'bg-success'; } else { echo 'bg-danger'; } ?> text-white">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
+                                    <a <?php if($getwardresult['status']=='1'){ echo' data-toggle="tooltip" data-original-title="View Patient Info" '; } ?> href="<?php if($getwardresult['status']=='1'){ echo "edit-patient-profile.php?id=".$fetchpid3['p_id']; } else { echo "#"; } ?>"><img src="../plugins/images/users/bed-icon.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h4 class="box-title m-b-0 text-white"><?php echo $getwardresult["ward_no"]; ?> </h4>
