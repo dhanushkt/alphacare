@@ -64,6 +64,8 @@
 					<li> <a href="view-wards.php">View Wards</a> </li>
 				</ul>
 			</li>
+			<li> <a href="view-appointments.php" class="waves-effect"><i class="fa fa-calendar-o p-r-10"></i> <span class="hide-menu"> Appointments <span class="fa arrow"></span></span></a>
+			</li>
 			<li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-text p-r-10"></i> <span class="hide-menu"> Bills <span class="fa arrow"></span></span></a>
 				<ul class="nav nav-second-level">
 					<li> <a href="view-ip-bills.php">Inpatient Bill</a> </li>
