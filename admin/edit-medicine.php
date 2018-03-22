@@ -169,10 +169,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 </div>
                                                 <!--/span-->
                                             </div>
+                                            <div class="row">
+												<div class="col-md-6">
                                             <div class="form-group">
                                         <label class="control-label" for="inputdose">Dose</label>
                                         <input type="text" class="form-control" id="inputdose" name="mdose" placeholder="" data-mask="9-9-9" required="" value="<?php echo $medrow["dose"]; ?>">
                                              </div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+													<label class="control-label">Prescribed By</label>
+                                                        <input disabled type="text" id="brand" name="mbrand" class="form-control" placeholder="" value="<?php echo 'Dr. '.$medrow["fname"].' '.$medrow["lname"]; ?>">
+                                                      </div>
+												</div>
+											</div>
                                        <div class="form-group">
 										<label class="control-label">Status</label>
 										<div class="radio-list">
