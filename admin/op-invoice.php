@@ -1,3 +1,8 @@
+<?php
+include '../login/accesscontroladmin.php';
+require('connect.php');
+$ausername=$_SESSION['ausername'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

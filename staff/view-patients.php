@@ -66,7 +66,8 @@ elseif(isset($_SESSION['ausername']))
 						</nav>
 						<div class="content-wrap">
 							<section id="section-bar-1">
-							<div class="row">
+								<h2 class="visible-xs">Admitted</h2>
+							<div class="row p-0">
                 <?php
 					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE dod is NULL ";
 					$result = mysqli_query($connection, $query);
@@ -76,7 +77,7 @@ elseif(isset($_SESSION['ausername']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
+                                    <a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>
@@ -104,7 +105,8 @@ elseif(isset($_SESSION['ausername']))
 							</section>
 
 							<section id="section-bar-2">
-				<div class="row">
+								<h2 class="visible-xs">Discharged</h2>
+				<div class="row p-0">
                 <?php
 					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE dod IS NOT NULL ";
 					$result = mysqli_query($connection, $query);
@@ -114,7 +116,7 @@ elseif(isset($_SESSION['ausername']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
+                                    <a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>

@@ -87,7 +87,7 @@ elseif(isset($_SESSION['ausername']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/staff-male.png" class="img-square img-responsive"><?php } else { ?><img src="../plugins/images/users/staff-female.png" class="img-square img-responsive"> <?php } ?>  </a>
+                                    <a href="#"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/staff-male.png" class="img-square img-responsive"><?php } else { ?><img src="../plugins/images/users/staff-female.png" class="img-square img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["fname"].' '.$result["lname"]; ?></h3> <small>Floor: <?php echo $result["floor"]; ?></small>
