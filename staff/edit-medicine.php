@@ -1,9 +1,9 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
+if(isset($_SESSION['susername']))
 {
-	$ausername=$_SESSION['dusername'];
+	$ausername=$_SESSION['susername'];
 }
 elseif(isset($_SESSION['ausername']))
 {

@@ -115,7 +115,7 @@ $countunread=mysqli_num_rows($getunreadresult);
 									<p><blockquote style="word-wrap: break-word"> <?php echo $fetchmsg['msg_body']; ?> </blockquote></p>
                                     <hr>
                                     <div class="b-all p-20">
-                                        <p class="p-b-20">click here to <a href="replay-message.php?id=<?php echo $fetchstaffinfo['s_id'] ?>">Reply</a></p>
+                                        <p class="p-b-20">click here to <a href="reply-message.php?id=<?php echo $fetchstaffinfo['s_id'] ?>">Reply</a></p>
                                     </div>
                                 </div>
                             </div>

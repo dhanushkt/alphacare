@@ -145,11 +145,11 @@ if(isset($_POST['updatemedic']))
 //add medicines info
 if(isset($_POST['addmedinfo']))
 {
-	$getdocidquery="SELECT doc_id FROM doctors WHERE username='$ausername'";
-	$getdocidresult=mysqli_query($connection,$getdocidquery);
-	$getdocidfetch=mysqli_fetch_assoc($getdocidresult);
+	//$getdocidquery="SELECT doc_id FROM doctors WHERE username='$ausername'";
+	//$getdocidresult=mysqli_query($connection,$getdocidquery);
+	//$getdocidfetch=mysqli_fetch_assoc($getdocidresult);
 	$medipid=$id;
-	$medidocid=$getdocidfetch['doc_id'];
+	$medidocid=mysqli_real_escape_string($connection,$_POST['presc']);
 	$mediname=mysqli_real_escape_string($connection,$_POST['medname']);
 	$medibrand=mysqli_real_escape_string($connection,$_POST['medbrand']);
 	$medidesc=mysqli_real_escape_string($connection,$_POST['meddesc']);
@@ -563,6 +563,19 @@ $(window).load(function() {
                                     <div class="form-group">
                                         <label class="control-label" for="inputdose">Dose</label>
                                         <input type="text" class="form-control" id="inputdose" name="meddose" placeholder="Dose Format: Morning-Afternoon-Night" data-mask="9-9-9" required="">
+                                    </div>
+									<div class="form-group">
+                                        <label class="control-label" for="prescribedby">Prescribed By</label>
+										<?php
+											$selectdocs="SELECT doc_id,username,fname,lname,specialist FROM doctors";
+											$resultdocs = mysqli_query($connection, $selectdocs);	
+										?>
+                                        <select class="form-control" required name="presc">
+											<option selected hidden disabled>Select Doctor</option>
+											<?php while($rowdocs = mysqli_fetch_assoc($resultdocs)) { ?>
+												<option value="<?php echo $rowdocs["doc_id"] ?>"> <?php echo $rowdocs["fname"].' '.$rowdocs["lname"].' , '.$rowdocs["specialist"]; ?></option>
+												<?php } ?>
+										</select>
                                     </div>
 									<div class="form-group">
 										<label class="control-label">Status</label>

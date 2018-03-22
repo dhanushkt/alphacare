@@ -9,7 +9,6 @@ elseif(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
-
 if (isset($_POST['psubmit']))
 	{
 		 //real eacape sting is used to prevent sql injection hacking
@@ -20,15 +19,18 @@ if (isset($_POST['psubmit']))
 		$dob = $myDateTime->format('Y-m-d');
 		$email=mysqli_real_escape_string($connection,$_POST['email']);
 		$gender=mysqli_real_escape_string($connection,$_POST['gender']);
-		$al1=mysqli_real_escape_string($connection,$_POST['al1']);
-		$al2=mysqli_real_escape_string($connection,$_POST['al2']);
+		$addr=mysqli_real_escape_string($connection,$_POST['al1']);
+		$addr.= ', '.mysqli_real_escape_string($connection,$_POST['al2']);
 		$state=mysqli_real_escape_string($connection,$_POST['state']);
 		$city=mysqli_real_escape_string($connection,$_POST['city']);
 		$pc=mysqli_real_escape_string($connection,$_POST['pc']);
+		$relname=mysqli_real_escape_string($connection,$_POST['relname']);
+		$relphno=mysqli_real_escape_string($connection,$_POST['relphno']);
 		$phone=mysqli_real_escape_string($connection,$_POST['phone']);
 		$doj= mysqli_real_escape_string($connection,$_POST['doj']);
 		$myDateTime1 = DateTime::createFromFormat('d-m-Y', $doj);
 		$dojc = $myDateTime1->format('Y-m-d');
+		$wardno=mysqli_real_escape_string($connection,$_POST['wardnum']);
 		//sqll query
 		//double quotes outside so we can use single quotes inside
 			
@@ -42,8 +44,10 @@ if (isset($_POST['psubmit']))
 			else
 			{
 			
-				$query="INSERT INTO `patients`(fname, lname, dob, gender, phone, email, al1, al2, state, city, pc, doj) VALUES ('$fname','$lname','$dob','$gender','$phone','$email','$al1','$al2','$state','$city','$pc','$dojc')";
+				$query="INSERT INTO `patients`(fname, lname, dob, gender, phone, email, address, state, city, pc, rel_name, rel_phno, ward_id, doj) VALUES ('$fname','$lname','$dob','$gender','$phone','$email','$addr','$state','$city','$pc','$relname','$relphno','$wardno','$dojc')";
 				$result = mysqli_query($connection, $query); 
+				$updatewardstatus="UPDATE wards SET status='1' WHERE ward_id='$wardno'";
+				$updatewardstatusresult=mysqli_query($connection,$updatewardstatus);
 				//takes two arguments 
 				if($result)
 				{
@@ -110,6 +114,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <?php include 'assets/csslink.php'; ?>
     <!-- Date picker plugins css -->
     <link href="../plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+	
+	<link href="../plugins/bower_components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
 <!-- username check js start -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
 <script type="text/javascript">
@@ -251,7 +257,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label">Phone</label>
-                                                        <input type="tel" id="firstName" name="phone" class="form-control" placeholder="Enter phone no.">
+                                                        <input type="tel" pattern="[0-9]*" maxlength="11" id="firstName" name="phone" class="form-control" placeholder="Enter phone no." data-error="Invalid phone number">
+														<div class="help-block with-errors"></div>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -309,7 +316,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Zip Code</label>
-                                                        <input name="pc" required data-minlength="6" data-error="Invalid zip code" type="number" class="form-control">
+                                                        <input name="pc" required data-minlength="6" data-error="Invalid zip code" maxlength="6" type="text" pattern="[0-9]*" class="form-control">
                                                         <div class="help-block with-errors"></div> 
                                                     </div>
                                                 </div>
@@ -317,9 +324,66 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 
                                                 <!--/span-->
                                             </div>
+											<h3 class="box-title m-t-40">Relative Info</h3>
+                                            <hr>
+											<div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Relative Name</label>
+                                                        <input type="text" id="Relname" name="relname" class="form-control" placeholder="Enter name" required>
+                                                         </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Phone No</label>
+                                                        <input required type="tel" pattern="[0-9]*" maxlength="11" id="Relphno" name="relphno" class="form-control" placeholder="Enter phone number" data-error="Invalid phone number">
+														<div class="help-block with-errors"></div>
+                                                     </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+											
+											<?php
+											$getwardquery="SELECT * FROM wards WHERE (status='0') AND (type IN ('Non-TV','TV','AC'))";
+											$getwardresult=mysqli_query($connection,$getwardquery);
+											
+											$getwardquery1="SELECT * FROM wards WHERE (status='0') AND (type='Semi')";
+											$getwardresult1=mysqli_query($connection,$getwardquery1);
+											
+											$getwardquery2="SELECT * FROM wards WHERE (status='0') AND (type='General')";
+											$getwardresult2=mysqli_query($connection,$getwardquery2);
+											
+											?>
                                             <h3 class="box-title m-t-40">Admit Info</h3>
                                             <hr>
                                             <div class="row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label class="col-sm-12 p-l-2">Select Ward</label>
+													<select required class="form-control selectpicker" data-style="form-control" name="wardnum">
+														<option disabled hidden selected>ward-no, type/bed-no, rent </option>
+														<?php 
+														while ($getwardrow=mysqli_fetch_assoc($getwardresult))
+														{ ?>
+														<option value="<?php echo $getwardrow['ward_id']; ?>"> <?php echo $getwardrow['ward_no'].' , '.$getwardrow['type'].' , Rs.'.$getwardrow['rent']; ?> </option> <?php } ?>
+														
+														<optgroup label="Semi Wards"> 
+														<?php while ($getwardrow1=mysqli_fetch_assoc($getwardresult1))
+														{ ?>
+														 <option value="<?php echo $getwardrow1["ward_id"] ?>"> <?php echo $getwardrow1['ward_no'].' , '.$getwardrow1['bed_no'].' , Rs.'.$getwardrow1['rent']; ?> </option>
+														<?php } ?>
+														</optgroup>
+														<optgroup label="General Wards"> 
+															<?php while ($getwardrow2=mysqli_fetch_assoc($getwardresult2))
+														{ ?>
+														 <option value="<?php echo $getwardrow2["ward_id"] ?>"> <?php echo $getwardrow2['ward_no'].' , '.$getwardrow2['bed_no'].' , Rs.'.$getwardrow2['rent']; ?> </option>
+														<?php } ?>
+
+														</optgroup>
+													</select>
+												</div>
+											</div>
                                             <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label">Date of Joining</label>
@@ -373,7 +437,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Sugar</label>
-                                                        <input type="text" name="sugar" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="sugar" class="form-control">
                                                         <span class="font-13 text-muted">in mg/dl</span>
                                                     </div>
                                                 </div>
@@ -383,7 +447,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Height</label>
-                                                        <input type="text" name="height" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="height" class="form-control">
                                                          <span class="font-13 text-muted">in cm</span>
                                                     </div>
                                                 </div>
@@ -391,7 +455,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Weight</label>
-                                                        <input type="number" name="weight" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="weight" class="form-control">
                                                         <span class="font-13 text-muted">in kg</span>
                                                     </div>
                                                 </div>
@@ -401,7 +465,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label>Temperature</label>
-                                                        <input type="text" name="temp" class="form-control">
+                                                        <input type="text" pattern="[0-9]*" name="temp" class="form-control">
                                                         <span class="font-13 text-muted">in °F</span>
                                                     </div>
                                                 </div>
@@ -446,6 +510,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /#wrapper -->
     <!--jslink has all the JQuery links-->
     <?php include'assets/jslink.php'; ?>
+	<script src="../plugins/bower_components/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
     <!-- Date Picker Plugin JavaScript -->
     <script src="../plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="../plugins/js/mask.js"></script>

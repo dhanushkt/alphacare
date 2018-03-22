@@ -54,31 +54,10 @@ elseif(isset($_SESSION['ausername']))
                 </div>
                 <!--DNS added Dashboard content-->
 
-                 <!--DNS Added Model-->
-                <div id="responsive-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            <h4 class="modal-title">EDIT Instructions</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                       	 To Edit Admin information or to delete Admin account you need to login to that admin account.
-										</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                            <a href="logout.php" class="btn btn-danger waves-effect waves-light">Proceed for login</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                         <!--DNS model END-->
-
-
                 <!--row -->
                 <div class="row">
                 <?php
-					$query = "SELECT 	doc_id,username, email, qualification, specialist, gender, phone FROM doctors";
+					$query = "SELECT doc_id,username,fname,lname, email, qualification, specialist, gender, phone FROM doctors";
 					$result = mysqli_query($connection, $query);
 					foreach($result as $key=>$result)
 				{ ?>
@@ -86,18 +65,20 @@ elseif(isset($_SESSION['ausername']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" class="img-circle img-responsive"> <?php } ?>  </a>
+                                    <a href="#"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" class="img-circle img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Dr. <?php echo $result["username"]; ?></h3> <small><?php echo $result["specialist"]; ?></small>
-                                    <p>
+                                    <h3 class="box-title m-b-0">Dr. <?php echo $result["fname"].' '.$result["lname"]; ?></h3> <small><?php echo $result["qualification"]; ?></small>
+                                    <p class="p-0">
+										<?php echo $result["specialist"]; ?> <br>
 										<a href="mailto:<?php echo $result["email"]; ?>"> <?php echo $result["email"]; ?> </a> <br>
-										<i class="fa fa-phone"></i><?php echo $result["phone"]; ?>
-										<!--<div class="p-t-5">
-											<a href="edit-docprofile.php?id=<?php // echo $result["doc_id"]; ?>" class="fcbtn btn btn-info">Edit</a>
-											<a href="#" class="fcbtn btn btn-danger model_img deleteDoctor" data-id="<?php // echo $result["doc_id"]; ?>" id="deleteDoc">Delete</a>
-									    </div>-->
+										<i class="fa fa-phone"></i><?php echo ' '.$result["phone"]; ?>
+										
                                     </p>
+									<!-- <div class="p-t-5">
+											<a href="edit-docprofile.php?id=<?php //echo $result["doc_id"]; ?>" class="fcbtn btn btn-info">Edit</a>
+											<a href="#" class="fcbtn btn btn-danger model_img deleteDoctor" data-id="<?php //echo $result["doc_id"]; ?>" id="deleteDoc">Delete</a>
+									    </div>-->
                                 </div>
                             </div>
                         </div>

@@ -25,7 +25,7 @@
 				</ul>
 			</li>
 			<!-- User profile-->
-			<li class="nav-small-cap m-t-10">--- Main Menu</li>
+			<li class="nav-small-cap m-t-0 m-b-0"><!----- Main Menu--></li>
 			<!---DNS Added Dashboard menu --->
 			<li> <a href="index.php" class="waves-effect active"><i class="ti-dashboard p-r-10"></i> <span class="hide-menu">Dashboard</span></a> </li>
 
@@ -78,7 +78,7 @@
 				</ul>
 			</li>
 		   <!---PNB Added logout menu --->
-			<li><a href="logout.php" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
+			<li><a href="logout.php" class="waves-effect"><i class="fa fa-spin fa-cog"></i> <span class="hide-menu p-l-10">BETA v 1.0</span></a></li>
 
 		</ul>
 	</div>

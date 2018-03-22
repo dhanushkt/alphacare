@@ -50,18 +50,18 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
 							<?php
-							$queryimg="SELECT gender FROM doctors WHERE username='$ausername'";
+							$queryimg="SELECT gender,fname,lname FROM doctors WHERE username='$ausername'";
 							$resultimg = mysqli_query($connection, $queryimg);
 							$rowimg = mysqli_fetch_assoc($resultimg);
-							if($rowimg["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" width="36" class="img-circle"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" width="36" class="img-circle"> <?php } ?><b class="hidden-xs"><?php echo $ausername; ?></b> </a>
+							if($rowimg["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" width="36" class="img-circle"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" width="36" class="img-circle"> <?php } ?><b class="hidden-xs"><?php echo 'Dr. '.$rowimg['fname'].' '.$rowimg['lname']; ?></b> </a>
                         <ul class="dropdown-menu dropdown-user scale-up">
                             <li><a href="my-profile.php"><i class="ti-user"></i> My Profile</a></li>
-                            <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                            <!--<li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>-->
+                            <li><a href="inbox.php"><i class="ti-email"></i> Inbox</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="logout.php"><i class="fa fa-power-off"></i> Logout</a></li>
+							<li><a href="logout.php"><i class="fa fa-power-off"></i> Logout</a></li>
+                            <!--<li role="separator" class="divider"></li>-->
+                            <!--<li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>-->
                         </ul>
                         <!-- /.user dropdown-user -->
                     </li>
