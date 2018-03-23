@@ -408,15 +408,15 @@ if(isset($_POST['CancelAp']))
    
     <!-- Fixed Appointment Button at Bottom -->
     <div id="appointment-button" class="animated fadeInUp">
-        <button id="appointment-now" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-button--raised"><i class="fa fa-plus"></i></button>
+        
         <div class="mdl-tooltip mdl-tooltip--top" data-mdl-for="appointment-now">Make An Appointment</div>
     </div><!-- End Fixed Appointment Button at Bottom -->
     <!-- Start Footer Section -->
     <footer id="footer">
-        <div class="layer-stretch">
+       <div class="layer-stretch">
             <!-- Start main Footer Section -->
             <div class="row layer-wrapper">
-                <div class="col-md-4 footer-block">
+                <div class="col-md-6 footer-block">
                     <div class="footer-ttl"><p>Basic Info</p></div>
                     <div class="footer-container footer-a">
                         <div class="tbl">
@@ -424,54 +424,40 @@ if(isset($_POST['CancelAp']))
                                 <div class="tbl-cell"><i class="fa fa-map-marker"></i></div>
                                 <div class="tbl-cell">
                                     <p class="paragraph-medium paragraph-white">
-                                        Your office, Building Name<br />
-                                        Street name, Area<br />
-                                        City, Country Pin Code
+                                        Jayashree Hopital<br />
+                                        KS Rao, Hampankatta<br />
+                                        Mangaluru, INDIA 575-003.
                                     </p>
                                 </div>
                             </div>
                             <div class="tbl-row">
                                 <div class="tbl-cell"><i class="fa fa-phone"></i></div>
                                 <div class="tbl-cell">
-                                    <p class="paragraph-medium paragraph-white">11122333333</p>
+                                    <p class="paragraph-medium paragraph-white">0824-24262523</p>
                                 </div>
                             </div>
                             <div class="tbl-row">
                                 <div class="tbl-cell"><i class="fa fa-envelope"></i></div>
                                 <div class="tbl-cell">
-                                    <p class="paragraph-medium paragraph-white">hello@yourdomain.com</p>
+                                    <p class="paragraph-medium paragraph-white">jayashreehospital.com</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 footer-block">
+                <div class="col-md-6 footer-block">
                     <div class="footer-ttl"><p>Quick Links</p></div>
                     <div class="footer-container footer-b">
-                        <div class="tbl">
-                            <div class="tbl-row">
+                        
+
                                 <ul class="tbl-cell">
-                                    <li><a href="event-1.html">Event Style 1</a></li>
-                                    <li><a href="event-2.html">Event Style 2</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li><a href="gallery.html">Gallery</a></li>
-                                    <li><a href="privacy-policy.html">Privacy policy</a></li>
-                                    <li><a href="terms-conditions.html">Terms condition</a></li>
-                                    <li><a href="faq.html">Faq</a></li>
+                                    <li><a href="login/">Login</a></li>
+                                    <li><a href="check-appointment.php">My Appointment</a></li>
                                 </ul>
-                                <ul class="tbl-cell">
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="register.html">Register</a></li>
-                                    <li><a href="forgot.html">Forgot Password</a></li>
-                                    <li><a href="myappointment.html">My Appointment</a></li>
-                                    <li><a href="myrequest.html">My Request</a></li>
-                                    <li><a href="myprofile.html">My Profile</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                            
                     </div>
                 </div>
-                <div class="col-md-4 footer-block">
+                <!-- <div class="col-md-4 footer-block">
                     <div class="footer-ttl"><p>Newsletter</p></div>
                     <div class="footer-container footer-c">
                         <div class="footer-subscribe">
@@ -518,10 +504,9 @@ if(isset($_POST['CancelAp']))
                                 <span class="mdl-tooltip mdl-tooltip--top" data-mdl-for="footer-rss">Rss</span>
                             </li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
-            </div>
-        </div><!-- End main Footer Section -->
+            </div><!-- End main Footer Section -->
         <!-- Start Copyright Section -->
         <div id="copyright">
             <div class="layer-stretch">

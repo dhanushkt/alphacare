@@ -57,6 +57,7 @@ if(isset($_POST['apointsubmit']))
 			include("login/php/PHPMailerAutoload.php"); //you have to upload class files "class.phpmailer.php" and "class.smtp.php"
 
 			$mail = new PHPMailer();
+		$mail->SMTPOptions=array('ssl'=>array('verify_peer'=>false,'verify_peer_name'=>false,'allow_self_signed'=>true));
 
 			$mail->IsSMTP();
 			$mail->SMTPAuth = true;
@@ -333,23 +334,23 @@ if(isset($_POST['apointsubmit']))
                 <div class="feature-block feature-block-dark">
                     <div class="feature-icon"><i class="fa fa-phone"></i></div>
                     <span>Emergency Departments</span>
-                    <p class="paragraph-small paragraph-white">Mel in hinc veri admodum, copiosae epicurei mea ei. Cum at nisl soleat. Eam insolens referrentur efficiantur an. Nibh deleniti ad vix, quodsi aliquam legendos pri in.</p>
+                    <p class="paragraph-small paragraph-white">Department of emergency and medical at Jayashree Hospital swing into action to provide prompt, swift & best possible care for each and every patient in case of emergency.</p>
                 </div>
                 <div class="feature-block feature-block-dark">
                     <div class="feature-icon"><i class="fa fa-calendar"></i></div>
                     <span>24 hour Service</span>
-                    <p class="paragraph-small paragraph-white">Mel in hinc veri admodum, copiosae epicurei mea ei. Cum at nisl soleat. Eam insolens referrentur efficiantur an. Nibh deleniti ad vix, quodsi aliquam legendos pri in.</p>
-				</div>
+                    <p class="paragraph-small paragraph-white">we are equipped with professional expertise round the clock to handle all type of medical, surgical, trauma and accident emergencies.</p>
+				</div><div class="feature-block feature-block-dark">
+                    <div class="feature-icon"><i class="fa fa-shopping-bag"></i></div>
+                    <span>Pharmacies and drug stores</span>
+                    <p class="paragraph-small paragraph-white">Our in-house pharmacy provides seamless 24hrs care to our patients..</p>
+                </div>
+                
+                <center>
                 <div class="feature-block feature-block-dark">
                     <div class="feature-icon"><i class="fa fa-stethoscope"></i></div>
                     <span>Primary health care</span>
-                    <p class="paragraph-small paragraph-white">Mel in hinc veri admodum, copiosae epicurei mea ei. Cum at nisl soleat. Eam insolens referrentur efficiantur an. Nibh deleniti ad vix, quodsi aliquam legendos pri in.</p>
-                </div>
-                <center>
-                <div class="feature-block feature-block-dark">
-                    <div class="feature-icon"><i class="fa fa-shopping-bag"></i></div>
-                    <span>Pharmacies and drug stores</span>
-                    <p class="paragraph-small paragraph-white">Mel in hinc veri admodum, copiosae epicurei mea ei. Cum at nisl soleat. Eam insolens referrentur efficiantur an. Nibh deleniti ad vix, quodsi aliquam legendos pri in.</p>
+                    <p class="paragraph-small paragraph-white">Our sevices include out patient medical treatment, Medical follow-ups after discharge from hospital, Health screening and education, In house Pharmaceutical services, And 1 st of its kind exclusive <b>pain management services</b></p>
                 </div>
                 </center>
             </div>
@@ -434,7 +435,7 @@ if(isset($_POST['apointsubmit']))
                         <i class="fa fa-phone"></i>
                         <span>Call Us</span>
                         <p class="paragraph-medium paragraph-black">0824-2429729</p>
-                        <p>0824-4535625</p>
+                        <p>0824-2440263</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 contact-info-block">
@@ -442,14 +443,15 @@ if(isset($_POST['apointsubmit']))
                         <i class="fa fa-envelope"></i>
                         <span>Email Us</span>
                         <p class="paragraph-medium paragraph-black">alphacare.ohms@gmail.com</p>
-                        <p>jayashree@gmail.com</p>
+                        <p>jnhjp1964@gmail.com</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3 contact-info-block">
                     <div class="contact-info-inner">
                         <i class="fa fa-map-marker"></i>
                         <span>Location</span>
-                        <p class="paragraph-medium paragraph-black" style="font-size: 15.2px;">K S Rao Road, Hampankatta, Karnataka,575003.</p>
+                        <p class="paragraph-medium paragraph-black" style="font-size: 15.2px;">K S Rao Road, Hampankatta, </p>
+						<p>Mangalore,Karnataka,575003.</p>
                         <p class="paragraph-medium paragraph-black"></p>
                     </div>
                 </div>
@@ -523,9 +525,9 @@ if(isset($_POST['apointsubmit']))
                 </div>
                 <div class="layer-container">
                     <div class="paragraph-medium paragraph-black">
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas.
+                        At Jayashree , emergency physicians are highly educated and are assisted by well trained nurses to meet demanding challenges.
                     </div>
-                    <div class="emergency-number">Call : 0824-2452625215</div>
+                    <div class="emergency-number">Call : 0824-2440263 / 2429729</div>
                 </div>
             </div>
         </div>
