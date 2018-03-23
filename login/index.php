@@ -99,7 +99,7 @@ if(isset($_POST['resetemail']))
 
 			$host           = "smtp.gmail.com"; // Your SMTP server. For example, smtp.mail.yahoo.com
 			$rusername       = "alphacare.ohms@gmail.com"; //For example, your.email@yahoo.com
-			$password       = "dnspnb@78"; // Your password
+			$password       = "dnspnb@12007"; // Your password
 			$SMTPSecure     = "tls"; // For example, ssl
 			$port           = 587; // For example, 465
 
