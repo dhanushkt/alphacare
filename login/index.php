@@ -21,7 +21,7 @@ if (isset($_POST['username']) && isset($_POST['password']))
 			// echo "<script>location.href='target-page.php';</script>";
 			//define('BASEPATH',TRUE);
 			//<script type="text/javascript">location.href = 'newurl';</script>
-			echo'<script> window.location="../admin/";</script>';
+			echo'<script> window.location="../admin/index.php";</script>';
 			//header('Location: index.html');
 			
 		}
@@ -41,7 +41,7 @@ if (isset($_POST['username']) && isset($_POST['password']))
 			// echo "<script>location.href='target-page.php';</script>";
 			//define('BASEPATH',TRUE);
 			//<script type="text/javascript">location.href = 'newurl';</script>
-			echo'<script> window.location="../doctor/";</script>';
+			echo'<script> window.location="../doctor/index.php";</script>';
 			//header('Location: index.html');
 			
 		}
@@ -58,7 +58,7 @@ if (isset($_POST['username']) && isset($_POST['password']))
 			// echo "<script>location.href='target-page.php';</script>";
 			//define('BASEPATH',TRUE);
 			//<script type="text/javascript">location.href = 'newurl';</script>
-			echo'<script> window.location="../staff/";</script>';
+			echo'<script> window.location="../staff/index.php";</script>';
 			//header('Location: index.html');
 			
 		}
@@ -98,8 +98,8 @@ if(isset($_POST['resetemail']))
 			$subject        = 'Password Reset'; //Subject line for emails
 
 			$host           = "smtp.gmail.com"; // Your SMTP server. For example, smtp.mail.yahoo.com
-			$username       = "alphacare.ohms@gmail.com"; //For example, your.email@yahoo.com
-			$password       = "dnspnb@78"; // Your password
+			$rusername       = "alphacare.ohms@gmail.com"; //For example, your.email@yahoo.com
+			$password       = "dnspnb@12007"; // Your password
 			$SMTPSecure     = "tls"; // For example, ssl
 			$port           = 587; // For example, 465
 
@@ -112,13 +112,13 @@ if(isset($_POST['resetemail']))
 	$mail->SMTPAuth = true;
 	
 	$mail->Host = $host;
-	$mail->Username = $username;
+	$mail->Username = $rusername;
 	$mail->Password = $password;
 	$mail->SMTPSecure = $SMTPSecure;
 	$mail->Port = $port;
 	
 	 
-	$mail->setFrom($username);
+	$mail->setFrom($rusername);
 	$mail->addReplyTo($remail);
 	 
 	$mail->AddAddress($to_Email);
@@ -235,12 +235,12 @@ if(isset($_POST['resetemail']))
                         <br/><img src="../plugins/images/eliteadmin-text-dark.png" alt="Home" /></a>
                     <div class="form-group m-t-40">
                         <div class="col-xs-12">
-                            <input class="form-control" type="text" name="username" required placeholder="Username or Email" value="<?php if(isset($username) & !empty($username)){ echo $username; }?>" >
+                            <input autofocus tabindex="1" class="form-control" type="text" name="username" required placeholder="Username or Email" value="<?php if(isset($username) & !empty($username)){ echo $username; }?>" >
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <input class="form-control" type="password" name="password" required="" placeholder="Password" >
+                            <input tabindex="2" class="form-control" type="password" name="password" required="" placeholder="Password" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -259,8 +259,9 @@ if(isset($_POST['resetemail']))
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
                             <div class="social">
-                                <a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
-                                <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>
+                                <!--<a href="javascript:void(0)" class="btn  btn-facebook" data-toggle="tooltip" title="Login with Facebook"> <i aria-hidden="true" class="fa fa-facebook"></i> </a>
+                                <a href="javascript:void(0)" class="btn btn-googleplus" data-toggle="tooltip" title="Login with Google"> <i aria-hidden="true" class="fa fa-google-plus"></i> </a>-->
+								<p class="text-right" style="bottom: 0; position: fixed; ">BETA v 1.0</p>
                             </div>
                         </div>
                     </div>

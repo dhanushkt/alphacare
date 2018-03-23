@@ -1,14 +1,7 @@
 <?php
-include '../login/accesscontrolstaff.php';
+include '../login/accesscontroladmin.php';
 require('connect.php');
-if(isset($_SESSION['susername']))
-{
-	$ausername=$_SESSION['susername'];
-}
-elseif(isset($_SESSION['ausername']))
-{
-	$ausername=$_SESSION['ausername'];
-}
+$ausername=$_SESSION['ausername'];
 
 if(isset($_POST['CancelApt']))
 {

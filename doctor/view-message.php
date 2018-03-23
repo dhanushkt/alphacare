@@ -22,7 +22,7 @@ $resultmsg=mysqli_query($connection,$getmsg);
 $fetchmsg=mysqli_fetch_assoc($resultmsg);
 	
 $staffuname=$fetchmsg['from_name'];
-$getstaffinfo="SELECT fname,lname,email,gender FROM staffs WHERE username='$staffuname'";
+$getstaffinfo="SELECT s_id,fname,lname,email,gender FROM staffs WHERE username='$staffuname'";
 $resultstaffinfo=mysqli_query($connection,$getstaffinfo);
 $fetchstaffinfo=mysqli_fetch_assoc($resultstaffinfo);
 }
@@ -115,7 +115,7 @@ $countunread=mysqli_num_rows($getunreadresult);
 									<p><blockquote style="word-wrap: break-word"> <?php echo $fetchmsg['msg_body']; ?> </blockquote></p>
                                     <hr>
                                     <div class="b-all p-20">
-                                        <p class="p-b-20">click here to <a href="replay-message.php?name=<?php echo $fetchmsg['from_name'] ?>">Reply</a></p>
+                                        <p class="p-b-20">click here to <a href="reply-message.php?id=<?php echo $fetchstaffinfo['s_id'] ?>">Reply</a></p>
                                     </div>
                                 </div>
                             </div>

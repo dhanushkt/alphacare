@@ -1,14 +1,8 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontroladmin.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
-{
-	$ausername=$_SESSION['dusername'];
-}
-elseif(isset($_SESSION['ausername']))
-{
-	$ausername=$_SESSION['ausername'];
-}
+$ausername=$_SESSION['ausername'];
+
 $id = $_GET['id'];
 $getapointquery="SELECT *,doctors.fname,doctors.lname,doctors.specialist FROM appointments INNER JOIN doctors ON appointments.doc_id = doctors.doc_id WHERE ap_token='$id'";
 $getapointresult = mysqli_query($connection, $getapointquery);
@@ -16,7 +10,6 @@ $apointrow = mysqli_fetch_assoc($getapointresult);
 
 if (isset($_POST['apupdate']))
 	{
-		 //real eacape sting is used to prevent sql injection hacking
 		$apointstatus=mysqli_real_escape_string($connection,$_POST['apstatus']);
 		if($apointstatus=='Scheduled')
 		{
@@ -48,7 +41,6 @@ if (isset($_POST['apupdate']))
 			}
 			
 		}
-		
 	}
 
 ?>

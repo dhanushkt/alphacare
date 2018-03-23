@@ -123,7 +123,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center ">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
+                                    <a href="process-appointment.php?id=<?php echo $getapointresult["ap_token"]; ?>"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h5 class="box-title m-b-0"># <?php echo $getapointresult["ap_token"]; ?> </h5>
@@ -165,7 +165,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
+                                    <a href="#"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h5 class="box-title m-b-0"># <?php echo $getapointresult["ap_token"]; ?> </h5>
@@ -213,7 +213,7 @@ if(isset($_POST['AttendedBtn']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
+                                    <a href="#"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
                                 </div> 
                                 <div class="col-md-8 col-sm-8">
 									<h5 class="box-title m-b-0"># <?php echo $getapointresult["ap_token"]; ?> </h5>
@@ -254,7 +254,7 @@ if(isset($_POST['AttendedBtn']))
                        	 <div class="white-box">
                             <div class="row">
                                 <!-- <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
+                                    <a href="#"><img src="../plugins/images/users/token.png" class="img-circle img-responsive"></a>
                                 </div> -->  
                                 <div class="col-md-8 col-sm-8">
 									<h5 class="box-title m-b-0"># <?php echo $getapointresult["ap_token"]; ?> </h5>

@@ -5,7 +5,7 @@ if(isset($_SESSION['susername']))
 {
 	$ausername=$_SESSION['susername'];
 }
-else if(isset($_SESSION['ausername']))
+elseif(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
@@ -79,7 +79,7 @@ else if(isset($_SESSION['ausername']))
                 <!--row -->
                 <div class="row">
                 <?php
-					$query = "SELECT s_id,username, email, floor, gender, phone FROM staffs";
+					$query = "SELECT s_id,username,fname,lname, email, floor, gender, phone FROM staffs";
 					$result = mysqli_query($connection, $query);
 					foreach($result as $key=>$result)
 				{ ?>
@@ -87,18 +87,19 @@ else if(isset($_SESSION['ausername']))
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/staff-male.png" class="img-square img-responsive"><?php } else { ?><img src="../plugins/images/users/staff-female.png" class="img-square img-responsive"> <?php } ?>  </a>
+                                    <a href="#"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/staff-male.png" class="img-square img-responsive"><?php } else { ?><img src="../plugins/images/users/staff-female.png" class="img-square img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0"><?php echo $result["username"]; ?></h3> <small>Floor: <?php echo $result["floor"]; ?></small>
-                                    <p>
-										<a href="mailto:<?php echo $result["email"]; ?>"> <?php echo $result["email"]; ?> </a> <br>
+                                    <h3 class="box-title m-b-0"><?php echo $result["fname"].' '.$result["lname"]; ?></h3> <small>Floor: <?php echo $result["floor"]; ?></small>
+                                    <p calss="p-0">
+										<a href="mailto:<?php echo $result["email"]; ?>"> <font size="-1"> <?php echo $result["email"]; ?> </font> </a> <br>
 										<i class="fa fa-phone"></i><?php echo $result["phone"]; ?>
-										<!-- <div class="p-t-5">
-											<a href="edit-staff-profile.php?id=<?php// echo $result["s_id"]; ?>" class="fcbtn btn btn-info">Edit</a>
-											<a href="#" class="fcbtn btn btn-danger model_img deleteStaff" data-id="<?php // echo $result["s_id"]; ?>" id="deleteStf">Delete</a>
-									    </div> -->
+										
                                     </p>
+									<!-- <div class="p-t-5">
+											<a href="edit-staff-profile.php?id=<?php //echo $result["s_id"]; ?>" class="fcbtn btn btn-info">Edit</a>
+											<a href="#" class="fcbtn btn btn-danger model_img deleteStaff" data-id="<?php //echo $result["s_id"]; ?>" id="deleteStf">Delete</a>
+									 </div>-->
                                 </div>
                             </div>
                         </div>

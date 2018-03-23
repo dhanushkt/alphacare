@@ -36,7 +36,7 @@ $ausername=$_SESSION['ausername'];
                 <div class="row bg-title">
                     <!-- .page title -->
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Doctor's</h4>
+                        <h4 class="page-title">Doctors</h4>
                     </div>
                     <!-- /.page title -->
                     <!-- .breadcrumb -->
@@ -51,7 +51,7 @@ $ausername=$_SESSION['ausername'];
                 <!--row -->
                 <div class="row">
                 <?php
-					$query = "SELECT doc_id,username, email, qualification, specialist, gender, phone FROM doctors";
+					$query = "SELECT doc_id,username,fname,lname, email, qualification, specialist, gender, phone FROM doctors";
 					$result = mysqli_query($connection, $query);
 					foreach($result as $key=>$result)
 				{ ?>
@@ -59,10 +59,10 @@ $ausername=$_SESSION['ausername'];
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" class="img-circle img-responsive"> <?php } ?>  </a>
+                                    <a href="edit-docprofile.php?id=<?php echo $result["doc_id"]; ?>"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/doctor-male.jpg" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/doctor-female.jpg" class="img-circle img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
-                                    <h3 class="box-title m-b-0">Dr. <?php echo $result["username"]; ?></h3> <small><?php echo $result["qualification"]; ?></small>
+                                    <h3 class="box-title m-b-0">Dr. <?php echo $result["fname"].' '.$result["lname"]; ?></h3> <small><?php echo $result["qualification"]; ?></small>
                                     <p class="p-0">
 										<?php echo $result["specialist"]; ?>
 										<a href="mailto:<?php echo $result["email"]; ?>"> <?php echo $result["email"]; ?> </a> <br>

@@ -7,6 +7,7 @@ if(!isset($_GET['id']))
 	echo '<script> window.location="view-patients.php"; </script>';
 }
 $id = $_GET['id'];
+date_default_timezone_set('Asia/Kolkata');
 
 $query="SELECT fname, lname, dob, email, gender, phone, address, city, state, pc, rel_name, rel_phno, doj, dod, wards.ward_no, wards.bed_no, wards.type, wards.rent, wards.ward_id FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE p_id='$id'";
 $result = mysqli_query($connection, $query);
@@ -144,11 +145,11 @@ if(isset($_POST['updatemedic']))
 //add medicines info
 if(isset($_POST['addmedinfo']))
 {
-	$getdocidquery="SELECT doc_id FROM doctors WHERE username='$ausername'";
-	$getdocidresult=mysqli_query($connection,$getdocidquery);
-	$getdocidfetch=mysqli_fetch_assoc($getdocidresult);
+	//$getdocidquery="SELECT doc_id FROM doctors WHERE username='$ausername'";
+	//$getdocidresult=mysqli_query($connection,$getdocidquery);
+	//$getdocidfetch=mysqli_fetch_assoc($getdocidresult);
 	$medipid=$id;
-	$medidocid=$getdocidfetch['doc_id'];
+	$medidocid=mysqli_real_escape_string($connection,$_POST['presc']);
 	$mediname=mysqli_real_escape_string($connection,$_POST['medname']);
 	$medibrand=mysqli_real_escape_string($connection,$_POST['medbrand']);
 	$medidesc=mysqli_real_escape_string($connection,$_POST['meddesc']);
@@ -172,15 +173,15 @@ if(isset($_POST['addmedinfo']))
 
 if(isset($_POST['discharge']))
 {
-	$datedod=mysqli_real_escape_string($connection,$_POST['dod']);
-	$datedodc=new DateTime($datedod);
-	$datedoj=new DateTime($row['doj']);
-	if($datedodc<=$datedoj)
-	{
-		$fmsg="Date of discharge is before date of admit!";
-	}
-	else
-{
+	$datedod=date("d-m-Y");
+	//$datedodc=new DateTime($datedod);
+	//$datedoj=new DateTime($row['doj']);
+	//if($datedodc<=$datedoj)
+	//{
+		//$fmsg="Date of discharge is before date of admit!";
+	//}
+	//else
+//{
 	$myDateTime3 = DateTime::createFromFormat('d-m-Y', $datedod);
 	$dod = $myDateTime3->format('Y-m-d');
 	$dischargequery="UPDATE patients SET dod='$dod' WHERE p_id='$id'";
@@ -207,7 +208,7 @@ if(isset($_POST['discharge']))
 			}
 		}
 	  }
-}
+//}
 }
 
 
@@ -564,6 +565,19 @@ $(window).load(function() {
                                         <input type="text" class="form-control" id="inputdose" name="meddose" placeholder="Dose Format: Morning-Afternoon-Night" data-mask="9-9-9" required="">
                                     </div>
 									<div class="form-group">
+                                        <label class="control-label" for="prescribedby">Prescribed By</label>
+										<?php
+											$selectdocs="SELECT doc_id,username,fname,lname,specialist FROM doctors";
+											$resultdocs = mysqli_query($connection, $selectdocs);	
+										?>
+                                        <select class="form-control" required name="presc">
+											<option selected hidden disabled>Select Doctor</option>
+											<?php while($rowdocs = mysqli_fetch_assoc($resultdocs)) { ?>
+												<option value="<?php echo $rowdocs["doc_id"] ?>"> <?php echo $rowdocs["fname"].' '.$rowdocs["lname"].' , '.$rowdocs["specialist"]; ?></option>
+												<?php } ?>
+										</select>
+                                    </div>
+									<div class="form-group">
 										<label class="control-label">Status</label>
 										<div class="radio-list">
 											<label class="radio-inline p-0">
@@ -701,7 +715,7 @@ $(window).load(function() {
                                                     <div class="form-group">
                                                         <label>Blood Group</label>
                                                         <select class="form-control" name="bg">
-
+															<option disabled selected hidden>Select Blood group</option>
 															<option <?php if($fetchrow["bgroup"]=="A +'ve"){echo 'selected';}?> value="A +'ve">A +'ve</option>
 															<option <?php if($fetchrow["bgroup"]=="A -'ve"){echo 'selected';}?> value="A -'ve">A -'ve</option>
 															<option <?php if($fetchrow["bgroup"]=="B +'ve"){echo 'selected';}?> value="B +'ve">B +'ve</option>
@@ -1020,8 +1034,8 @@ $(window).load(function() {
 												<div class="input-group">
 													<div class="input-group-addon"><i class="icon-calender"></i></div>
 													<input <?php if(isset($row['dod'])){ $datedis=$row['dod'];
-														$myDateTimedis = DateTime::createFromFormat('Y-m-d', $datedis);
-														$dodisc = $myDateTimedis->format('d-m-Y'); echo "disabled value='$dodisc'"; } ?> data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose1" name="dod" placeholder="dd-mm-yyyy" required>
+													$myDateTimedis = DateTime::createFromFormat('Y-m-d', $datedis);
+													$dodisc = $myDateTimedis->format('d-m-Y'); echo "disabled value='$dodisc'"; } else { echo 'disabled value='.date("d-m-Y"); } ?>  data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose1" name="dod" placeholder="dd-mm-yyyy" >
 												</div>
 												<!--<span class="font-13 text-muted">dd-mm-yyyy</span>-->
 											</div>
@@ -1330,11 +1344,7 @@ $(document).ready(function() {
 	<!--script to show patient profile in left-sidebar start-->
 	<script>
 	$(document).ready(function() {
-    
-    //if (window.location.href='http://localhost/ohms/admin/edit-patient-profile.php?id=8') {
             $("#hidden-item").css('display','list-item');
-   // }
-    
 });
 </script>
 

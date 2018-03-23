@@ -34,7 +34,7 @@
                 <h1>403</h1>
                 <h3 class="text-uppercase">Forbidden Error</h3>
                 <p class="text-muted m-t-30 m-b-30 text-uppercase">You don't have permission to access this page.</p>
-                <a href="../login/" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Login to get access</a> </div>
+                <a href="logout.php" class="btn btn-info btn-rounded waves-effect waves-light m-b-40">Login to get access</a> </div>
             <!--footer.php contains footer-->
             <?php include'assets/footer.php'; ?>
         </div>

@@ -1,7 +1,14 @@
 <?php
-include '../login/accesscontroladmin.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-$ausername=$_SESSION['ausername'];
+if(isset($_SESSION['susername']))
+{
+	$ausername=$_SESSION['susername'];
+}
+elseif(isset($_SESSION['ausername']))
+{
+	$ausername=$_SESSION['ausername'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

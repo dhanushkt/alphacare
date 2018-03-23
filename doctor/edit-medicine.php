@@ -10,7 +10,7 @@ elseif(isset($_SESSION['ausername']))
 	$ausername=$_SESSION['ausername'];
 }
 $id = $_GET['id'];
-$getmedquery="SELECT * FROM medicines WHERE med_id='$id'";
+$getmedquery="SELECT *,doctors.fname,doctors.lname FROM medicines JOIN doctors ON medicines.doc_id=doctors.doc_id WHERE med_id='$id'";
 $getmedresult = mysqli_query($connection, $getmedquery);
 $medrow = mysqli_fetch_assoc($getmedresult);
 
@@ -164,15 +164,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Description</label>
-                                                        <input type="tel" id="description" name="mdescrip" class="form-control" placeholder="" value="<?php echo $medrow["description"]; ?>">
+                                                        <input type="text" id="description" name="mdescrip" class="form-control" placeholder="" value="<?php echo $medrow["description"]; ?>">
                                                     </div>
                                                 </div>
                                                 <!--/span-->
                                             </div>
+											<div class="row">
+												<div class="col-md-6">
                                             <div class="form-group">
                                         <label class="control-label" for="inputdose">Dose</label>
                                         <input type="text" class="form-control" id="inputdose" name="mdose" placeholder="" data-mask="9-9-9" required="" value="<?php echo $medrow["dose"]; ?>">
                                              </div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+													<label class="control-label">Prescribed By</label>
+                                                        <input disabled type="text" id="brand" name="mbrand" class="form-control" placeholder="" value="<?php echo 'Dr. '.$medrow["fname"].' '.$medrow["lname"]; ?>">
+                                                      </div>
+												</div>
+											</div>
                                        <div class="form-group">
 										<label class="control-label">Status</label>
 										<div class="radio-list">

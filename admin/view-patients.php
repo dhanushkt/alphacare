@@ -69,7 +69,7 @@ $ausername=$_SESSION['ausername'];
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
+                                    <a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>
@@ -107,7 +107,7 @@ $ausername=$_SESSION['ausername'];
                         <div class="white-box">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4 text-center">
-                                    <a href="contact-detail.html"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
+                                    <a href="edit-patient-profile.php?id=<?php echo $result["p_id"]; ?>"><?php if($result["gender"]=='male'){ ?> <img src="../plugins/images/users/male-patient.png" class="img-circle img-responsive"><?php } else { ?><img src="../plugins/images/users/female-patient.png" class="img-circle img-responsive"> <?php } ?>  </a>
                                 </div>
                                 <div class="col-md-8 col-sm-8">
                                     <h3 class="box-title m-b-0"><?php echo $result["fname"]." ".$result["lname"]; ?></h3> <small>Age: <?php echo date_diff(date_create($result["dob"]), date_create('today'))->y; ?></small>

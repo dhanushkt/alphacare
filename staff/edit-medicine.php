@@ -1,16 +1,16 @@
 <?php
-include '../login/accesscontroldoc.php';
+include '../login/accesscontrolstaff.php';
 require('connect.php');
-if(isset($_SESSION['dusername']))
+if(isset($_SESSION['susername']))
 {
-	$ausername=$_SESSION['dusername'];
+	$ausername=$_SESSION['susername'];
 }
 elseif(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
 $id = $_GET['id'];
-$getmedquery="SELECT * FROM medicines WHERE med_id='$id'";
+$getmedquery="SELECT *,doctors.fname,doctors.lname FROM medicines JOIN doctors ON medicines.doc_id=doctors.doc_id WHERE med_id='$id'";
 $getmedresult = mysqli_query($connection, $getmedquery);
 $medrow = mysqli_fetch_assoc($getmedresult);
 
@@ -164,12 +164,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Description</label>
-                                                        <input type="tel" id="description" name="mdescrip" class="form-control" placeholder="" value="<?php echo $medrow["description"]; ?>">
+                                                        <input type="text" id="description" name="mdescrip" class="form-control" placeholder="" value="<?php echo $medrow["description"]; ?>">
                                                     </div>
                                                 </div>
                                                 <!--/span-->
                                             </div>
-                                            <div class="row">
+											<div class="row">
 												<div class="col-md-6">
                                             <div class="form-group">
                                         <label class="control-label" for="inputdose">Dose</label>

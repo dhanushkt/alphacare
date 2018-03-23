@@ -198,13 +198,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <label  for="special">Speciality</span>
                                     </label>
                                     
-                                        <input type="text" id="special" name="special" class="form-control" placeholder="e.g. Dentist" value="<?php if(isset($specialist) & !empty($specialist)){ echo $specialist; }?>" required>
+                                        <input type="text" id="special" name="special" class="form-control" placeholder="e.g. Dentist" value="<?php // if(isset($specialist) & !empty($specialist)){ echo $specialist; }?>" required>
                           
                                 </div>
                                 <div class="form-group">
                                     <label>Qualification</label>
                                     
-                                        <input type="text" id="qualif" name="qualif" class="form-control" placeholder="e.g. MBBS" value="<?php if(isset($qualification) & !empty($qualification)){ echo $qualification; }?>" >
+                                        <input type="text" id="qualif" name="qualif" class="form-control" placeholder="e.g. MBBS" value="<?php // if(isset($qualification) & !empty($qualification)){ echo $qualification; }?>" >
                                     
                                 </div>
                                 <div class="form-group">
