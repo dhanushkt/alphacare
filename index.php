@@ -35,7 +35,7 @@ if(isset($_POST['apointsubmit']))
 		$apdoc=mysqli_real_escape_string($connection,$_POST['apointdoc']);
 		$apstatus='In Process';
 
-		$apinputquery="INSERT INTO `appointments` (ap_token,name,sex,email,phno,dob,doa,doc_id,status) VALUES ('$aptoken','$apname','$apsex','$apemail','$appno','$getdob','$getdoa','$apdoc','$apstatus')";
+		$apinputquery="INSERT INTO `appointments` (ap_token,name,sex,aemail,phno,dob,doa,doc_id,status) VALUES ('$aptoken','$apname','$apsex','$apemail','$appno','$getdob','$getdoa','$apdoc','$apstatus')";
 		$apinputresult=mysqli_query($connection,$apinputquery);
 		if($apinputresult)
 		{

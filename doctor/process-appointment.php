@@ -186,7 +186,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 												<div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Email</label>
-                                                        <input readonly type="email" id="brand" class="form-control" value="<?php echo $apointrow["email"]; ?>">
+                                                        <input readonly type="email" id="brand" class="form-control" value="<?php echo $apointrow["aemail"]; ?>">
                                                      </div>
                                                 </div>
                                                 
