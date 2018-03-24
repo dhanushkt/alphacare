@@ -12,7 +12,7 @@
                 <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
                 <!-- Logo -->
                 <div class="top-left-part">
-                    <a class="logo" href="index.html">
+                    <a class="logo" href="index.php">
                         <!-- Logo icon image, you can use font-icon also -->
                         <b><img src="../plugins/images/eliteadmin-logo.png" alt="home" /></b>
                         <!-- Logo text image you can use text also -->
