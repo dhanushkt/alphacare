@@ -5,13 +5,26 @@ if(isset($_SESSION['dusername']))
 {
 	$ausername=$_SESSION['dusername'];
 }
-else if(isset($_SESSION['ausername']))
+elseif(isset($_SESSION['ausername']))
 {
 	$ausername=$_SESSION['ausername'];
 }
 
-?>
+$getpatientcount=mysqli_query($connection,"SELECT * FROM patients WHERE dod IS NULL");
+$pcount=mysqli_num_rows($getpatientcount);
 
+$getdoccount=mysqli_query($connection,"SELECT * FROM doctors");
+$dcount=mysqli_num_rows($getdoccount);
+
+$getstaffcount=mysqli_query($connection,"SELECT * FROM staffs");
+$scount=mysqli_num_rows($getstaffcount);
+
+$getwardcount=mysqli_query($connection,"SELECT * FROM wards WHERE status='0'");
+$wcount=mysqli_num_rows($getwardcount);
+
+$countapoint=mysqli_query($connection,"SELECT * FROM appointments JOIN doctors ON appointments.doc_id = doctors.doc_id  WHERE (status='In Process') AND (doctors.username='$ausername')");
+$acount=mysqli_num_rows($countapoint);
+?>
 <!DOCTYPE html>
 <!--
    This is a starter template page. Use this page to start your new project from
@@ -28,8 +41,8 @@ else if(isset($_SESSION['ausername']))
     <meta name="author" content="Dhanush KT, Nishanth Bhat">
     <!--csslink.php includes fevicon and title-->
     <?php include 'assets/csslink.php'; ?>
-    <!-- toast CSS -->
-    <link href="../plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+	<link href="../plugins/css/hover.css" rel="stylesheet" media="all">
 </head>
 
 <body class="fix-sidebar">
@@ -43,11 +56,12 @@ else if(isset($_SESSION['ausername']))
 
         <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid p-b-0">
                 <div class="row bg-title">
+					<!--add this line to include bg image to title: style="background:url(../plugins/images/heading-title-bg.jpg) no-repeat center center /cover;" -->
                     <!-- .page title -->
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Hospital Dashboard</h4>
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12" >
+                        <h4 class="page-title">Doctor Dashboard</h4>
                     </div>
                     <!-- /.page title -->
                     <!-- .breadcrumb -->
@@ -59,47 +73,103 @@ else if(isset($_SESSION['ausername']))
                 </div>
                 <!--DNS added Dashboard content-->
                 <!--row -->
+				
+				<div class="row p-b-10">
+					<div class="col-md-12 col-sm-10 hvr-wobble-horizontal">
+						<div class="card card-inverse">
+							<img class="card-img" src="../plugins/images/cards/7.jpg" height="120" alt="Card image">
+							<div class="card-img-overlay" style="padding-top: 5px">
+								<h4 class="card-title text-uppercase">WELCOME <?php echo 'Dr. '.$rowimg['fname'].' '.$rowimg['lname']; ?></h4>
+								<p class="card-text">You are logged-in to DOCTOR control panel, here are some of the basic information about hospital and some basic functions to perform. </p>
+							<p class="card-text text-warning"><i class="fa fa-info-circle"></i><b> THERE ARE <?php echo mysqli_num_rows($resultcountmsg); ?> UNREAD MESSAGES AND <?php echo $acount; ?> UNSCHEDULED APPOINTMENTS. </b></p>
+								<!--<p class="card-text"><small class="text-white">~AlphaCare</small></p>-->
+							</div>
+						</div>
+					</div>
+				</div>
+	
+				
                 <div class="row">
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 hvr-float-shadow Hoveranimatevp" onClick="window.location='view-patients.php'">
+                        <div class="white-box">
+							<h3 class="box-title"><b>Patients Admitted</b></h3>
+							<ul class="list-inline two-part">
+								<li><i class="fa fa-wheelchair text-info Hoveranimatevpt"></i></li>
+								<li class="text-right"><span class="counter"><?php echo $pcount ?></span></li>
+							</ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 hvr-float-shadow" onClick="window.location='view-doctors.php'">
+                        <div class="white-box">
+							<h3 class="box-title"><b>Doctors</b></h3>
+							<ul class="list-inline two-part">
+								<li><i class="fa fa-user-md text-info"></i></li>
+								<li class="text-right"><span class="counter"><?php echo $dcount ?></span></li>
+							</ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 hvr-float-shadow" onClick="window.location='view-staffs.php'">
+                        <div class="white-box">
+							<h3 class="box-title"><b>Staffs</b></h3>
+							<ul class="list-inline two-part">
+								<li><i class="fa fa-id-badge text-info"></i></li>
+								<li class="text-right"><span class="counter"><?php echo $scount ?></span></li>
+							</ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 hvr-float-shadow" onClick="window.location='view-wards.php'">
+                        <div class="white-box">
+							<h3 class="box-title"><b>Available Wards</b></h3>
+							<ul class="list-inline two-part">
+								<li><i class="fa fa-bed text-info"></i></li>
+								<li class="text-right"><span class="counter"><?php echo $wcount ?></span></li>
+							</ul>
+                        </div>
+                    </div>
+                </div>
+                <!--/row -->
+				<!--row -->
+                <div class="row p-t-10 p-b-0">
+                    <div class="col-md-3 col-sm-6 Hoveranimatep hvr-float" data-toggle="tooltip" data-original-title="Admit new Patient" onClick="window.location='add-patient.php'">
                         <div class="white-box">
                             <div class="r-icon-stats">
-                                <i class="ti-user bg-megna"></i>
-                                <div class="bodystate">
-                                    <h4>370</h4>
-                                    <span class="text-muted">New Patient</span>
+                                <i class="fa fa-wheelchair bg-black Hoveranimatepat"></i>
+                                <div class="bodystate p-t-10">
+									<h4><b>ADD PATIENT</b></h4>
+                                    <!--<span class="text-muted" style="font-size: 80%"></span>-->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 Hoveranimated hvr-float" data-toggle="tooltip" data-original-title="<?php echo $acount.' '; ?>Unscheduled Appointments" onClick="window.location='view-appointments.php'">
                         <div class="white-box">
                             <div class="r-icon-stats">
-                                <i class="ti-shopping-cart bg-info"></i>
-                                <div class="bodystate">
-                                    <h4>342</h4>
-                                    <span class="text-muted">OPD Patient</span>
+                                <i class="fa fa-calendar-alt bg-black Hoveranimatedoc"></i>
+                                <div class="bodystate" style="padding-left: 5px; padding-top: 0px">
+									<h4><b>VIEW <br> APPOINTMENT</b></h4>
+                                    <!--<span class="text-muted" style="font-size: 80%"></span>-->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 Hoveranimates hvr-float" data-toggle="tooltip" data-original-title="<?php  echo mysqli_num_rows($resultcountmsg).' '; ?>Unread Messages" onClick="window.location='inbox.php'">
                         <div class="white-box">
                             <div class="r-icon-stats">
-                                <i class="ti-wallet bg-success"></i>
-                                <div class="bodystate">
-                                    <h4>13</h4>
-                                    <span class="text-muted">Today's Ops.</span>
+                                <i class="far fa-envelope bg-black Hoveranimatestaff"></i>
+                                <div class="bodystate p-t-10" style="padding-left: 6px">
+									<h4><b>VIEW MESSAGE</b></h4>
+                                    <!--<span class="text-muted" style="font-size: 80%"></span>-->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
+                    <div class="col-md-3 col-sm-6 Hoveranimatew hvr-float" data-toggle="tooltip" data-original-title="View IP Bills" onClick="window.location='view-ip-bills.php'">
                         <div class="white-box">
                             <div class="r-icon-stats">
-                                <i class="ti-wallet bg-inverse"></i>
-                                <div class="bodystate">
-                                    <h4>$34650</h4>
-                                    <span class="text-muted">Hospital Earning</span>
+                                <i class="far fa-file-alt bg-black Hoveranimatewrd"></i>
+                                <div class="bodystate p-t-10">
+									<h4><b>VIEW BILLS</b></h4>
+                                    <!--<span class="text-muted" style="font-size: small"></span>-->
                                 </div>
                             </div>
                         </div>
@@ -122,24 +192,78 @@ else if(isset($_SESSION['ausername']))
     <!-- /#wrapper -->
     <!--jslink has all the JQuery links-->
     <?php include'assets/jslink.php'; ?>
-    <!-- Sparkline chart JavaScript -->
-    <script src="../plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
-    <script src="../plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js"></script>
-    <script src="../plugins/bower_components/toast-master/js/jquery.toast.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $.toast({
-            heading: 'Welcome to AlphaCare',
-            text: 'Dr. <?php echo $ausername; ?>',
-            position: 'top-right',
-            loaderBg: '#ff6849',
-            icon: 'info',
-            hideAfter: 6500,
-
-            stack: 6
-        })
-    });
-    </script>
+    <!--Counter js -->
+    <script src="../plugins/bower_components/waypoints/lib/jquery.waypoints.js"></script>
+    <script src="../plugins/bower_components/counterup/jquery.counterup.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="../plugins/js/dashboard3.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){  
+			$('.Hoveranimated').hover(function(){
+				$(".Hoveranimatedoc").removeClass("bg-black").addClass("bg-success");
+				$(".Hoveranimatedoc").removeClass("fa-calendar-alt").addClass("fa-eye");
+			},
+			function(){
+				$(".Hoveranimatedoc").removeClass("bg-success").addClass("bg-black");
+				$(".Hoveranimatedoc").removeClass("fa-eye").addClass("fa-calendar-alt");
+			}
+									
+			)
+			
+			$('.Hoveranimatep').hover(function(){
+				$(".Hoveranimatepat").removeClass("bg-black").addClass("bg-success");
+				$(".Hoveranimatepat").removeClass("fa-wheelchair").addClass("fa-plus");
+			},
+			function(){
+				$(".Hoveranimatepat").removeClass("bg-success").addClass("bg-black");
+				$(".Hoveranimatepat").removeClass("fa-plus").addClass("fa-wheelchair");
+			}
+									
+			)
+				 
+			$('.Hoveranimates').hover(function(){
+				$(".Hoveranimatestaff").removeClass("bg-black").addClass("bg-success");
+				$(".Hoveranimatestaff").removeClass("far fa-envelope").addClass("fa fa-eye");
+			},
+			function(){
+				$(".Hoveranimatestaff").removeClass("bg-success").addClass("bg-black");
+				$(".Hoveranimatestaff").removeClass("fa fa-eye").addClass("far fa-envelope");
+			}
+									
+			)
+					
+			$('.Hoveranimatew').hover(function(){
+				$(".Hoveranimatewrd").removeClass("bg-black").addClass("bg-success");
+				$(".Hoveranimatewrd").removeClass("far fa-file-alt").addClass("fa fa-eye");
+			},
+			function(){
+				$(".Hoveranimatewrd").removeClass("bg-success").addClass("bg-black");
+				$(".Hoveranimatewrd").removeClass("fa fa-eye").addClass("far fa-file-alt");
+			}
+									
+			)
+			
+//          $('.Hoveranimatevp').hover(function(){
+//				$(".Hoveranimatevpt").removeClass("fa-wheelchair").addClass("fa-eye");
+//			},
+//			function(){
+//				$(".Hoveranimatevpt").removeClass("fa-eye").addClass("fa-wheelchair");
+//			}
+//									
+//			)
+			
+		})
+	</script>
+	
+	<script>
+		function openlink(url){
+			
+			var win=window.open(url, '_blank');
+			win.focus();
+			
+		}
+	</script>
+   
 </body>
 
 </html>
