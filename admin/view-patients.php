@@ -59,6 +59,7 @@ $ausername=$_SESSION['ausername'];
 						</nav>
 						<div class="content-wrap">
 							<section id="section-bar-1">
+								<h2 class="visible-xs">Admitted</h2>
 							<div class="row">
                 <?php
 					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE dod is NULL ";
@@ -76,7 +77,7 @@ $ausername=$_SESSION['ausername'];
                                     <p class="p-0">
 										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><font size="-1"><?php echo $result["email"]; ?> </font></a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
 										<i class="fa fa-phone"></i><?php echo " ".$result["phone"]; ?> <br>
-										<i class="fa fa-hospital-o"></i><?php $date=$result['doj'];
+										<i class="far fa-calendar-plus"></i><?php $date=$result['doj'];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
 											$dojc = $myDateTime->format('d-m-Y');  echo " ".$dojc; ?>
 										<i class="fa fa-bed m-l-5"></i><?php if(($result['type']=='General') || ($result['type']=='Semi')) { echo ' '.$result['ward_no'].' ( '.$result['bed_no'].' ) '; } else { echo ' '.$result['ward_no']; } ?>
@@ -97,9 +98,10 @@ $ausername=$_SESSION['ausername'];
 							</section>
 
 							<section id="section-bar-2">
+								<h2 class="visible-xs">Discharged</h2>
 				<div class="row">
                 <?php
-					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE dod IS NOT NULL ";
+					$query = "SELECT p_id, fname, lname, dob, email, gender, phone, doj, dod, wards.ward_no, wards.type, wards.bed_no FROM patients INNER JOIN wards ON patients.ward_id = wards.ward_id WHERE dod IS NOT NULL ";
 					$result = mysqli_query($connection, $query);
 					foreach($result as $key=>$result)
 				{ ?>
@@ -114,7 +116,7 @@ $ausername=$_SESSION['ausername'];
                                     <p class="p-0">
 										<?php if(!$result["email"]=='') { ?><a href="mailto:<?php echo $result["email"]; ?>"><font size="-1"><?php echo $result["email"]; ?> </font></a><?php } else { ?><i class="fa fa-times"></i>no email address<?php } ?> <br>
 										<i class="fa fa-phone"></i><?php echo " ".$result["phone"]; ?> <br>
-										<i class="fa fa-hospital-o"></i><?php $date=$result['doj'];
+										<i class="far fa-calendar-check"></i><?php $date=$result['dod'];
 											$myDateTime = DateTime::createFromFormat('Y-m-d', $date);
 											$dojc = $myDateTime->format('d-m-Y');  echo " ".$dojc; ?>
 										<i class="fa fa-bed m-l-5"></i><?php if(($result['type']=='General') || ($result['type']=='Semi')) { echo ' '.$result['ward_no'].' ( '.$result['bed_no'].' ) '; } else { echo ' '.$result['ward_no']; } ?>
