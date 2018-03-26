@@ -77,7 +77,7 @@ $acount=mysqli_num_rows($countapoint);
 				<div class="row p-b-10">
 					<div class="col-md-12 col-sm-10 hvr-wobble-horizontal">
 						<div class="card card-inverse">
-							<img class="card-img" src="../plugins/images/cards/7.jpg" height="120" alt="Card image">
+							<img class="card-img" src="../plugins/images/cards/bg.png" height="120" alt="Card image">
 							<div class="card-img-overlay" style="padding-top: 5px">
 								<h4 class="card-title text-uppercase">WELCOME <?php echo 'Dr. '.$rowimg['fname'].' '.$rowimg['lname']; ?></h4>
 								<p class="card-text">You are logged-in to DOCTOR control panel, here are some of the basic information about hospital and some basic functions to perform. </p>
