@@ -269,6 +269,7 @@ if (isset($_POST['submitNewItem']))
 				data: {billid: id },
 				success: function(){
 					alert("Item Removed");
+					window.location.reload();
 				}
 			});
 		});
