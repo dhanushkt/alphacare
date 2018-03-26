@@ -63,7 +63,7 @@ elseif(isset($_SESSION['ausername']))
 					foreach($result as $key=>$result)
 				{ ?>
                 <div class="col-md-4 col-sm-4">
-					<div calss="ribon-wrapper">
+					<div>
 						<a href="reply-message.php?id=<?php echo $result['doc_id']; ?>" data-toggle="tooltip" data-original-title="Send Message">
 					  <div class="ribbon ribbon-corner ribbon-right ribbon-info" style="margin-right: 8px">
 						  <i class="fa fa-envelope-o text-white"></i></a>
