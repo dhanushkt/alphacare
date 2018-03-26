@@ -106,16 +106,23 @@ if (isset($_POST['submitNewItem']))
 							<td><textbox disabled><?php echo $getinfo['address'].'<br>'.$getinfo['city'].'-'.$getinfo['pc']; ?></textbox></td>
 						</tr>
 						<tr>
-							<td class="dark">Date</td>
-							<td><input disabled type="text" value="<?php echo date("d/m/Y"); ?>"></td>
+							<td class="dark">Date of admit</td>
+							<td><input type="text" disabled value="<?php $datea=$getinfo['doj'];
+											$myDateTimea = DateTime::createFromFormat('Y-m-d', $datea);
+											$doac = $myDateTimea->format('d-m-Y');  echo $doac; ?>"></td>
 						</tr>
 						<tr>
-							<td class="dark">Payment Method</td>
-							<td><select>
+							<td class="dark">Date of discharge</td>
+							<td><!--<select>
 								<option>Cash</option>
 								<option>Debit</option>
 								<option>Credit</option>
-								</select></td>
+								</select>-->
+								<input disabled type="text" value="<?php $dated=$getinfo['dod'];
+											$myDateTimed = DateTime::createFromFormat('Y-m-d', $dated);
+											$dodc = $myDateTimed->format('d-m-Y');  echo $dodc; ?>">
+								
+							</td>
 						</tr>
 					</table>
 				</div>
