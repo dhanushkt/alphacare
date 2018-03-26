@@ -313,7 +313,7 @@ if(isset($_POST['apointsubmit']))
                     <div class="slider-info">
                         <h1 class="animated fadeInDown">JAYASHREE NURSING HOME</h1>
                     </div>
-                    <div class="slider-backgroung-image" style="background-image: url(landerpage/uploads/bg1.jpg);"></div>
+                    <div class="slider-backgroung-image" style="background-image: url(landerpage/uploads/bg4.jpg);"></div>
                     <!-- Make an Appointment  Button -->
 
                 </li>
@@ -402,7 +402,8 @@ if(isset($_POST['apointsubmit']))
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <img class="img-thumbnail" src="landerpage/uploads/bg2.jpg" alt="">
+                        <img class="img-thumbnail" src="landerpage/uploads/bg3.jpg" alt="">
+						<img class="img-thumbnail" src="landerpage/uploads/bg1.jpg" alt="">
                     </div>
                 </div>
             </div>
