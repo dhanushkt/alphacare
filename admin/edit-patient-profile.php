@@ -478,10 +478,12 @@ $(window).load(function() {
                             <div class="panel-wrapper collapse in">
                                 <div class="panel-body p-t-0 text-center ">
                                     <a class="btn btn-custom collapseble ">View Medicines Information</a>
+									<?php if(!isset($row['dod'])) { ?>
 									<a class="popup-with-form btn btn-success text-white addmidclass"  href="#test-form" >Prescribe new medicine</a>
+									<?php } ?>
                                     <div class="m-t-15 collapseblebox dn">
                                        <div class="well">
-											To update medicine info click on that particular row
+											<?php if(!isset($row['dod'])){ ?>To update medicine info click on that particular row <?php } ?>
 										<div class="row">
 							<div class="table-responsive">
 								<div class="panel1 panel panel-info">
@@ -513,7 +515,7 @@ $(window).load(function() {
 									$getmedid=$mediceneresult['med_id'];
                               ?>
 										
-										<tr onclick="window.location='edit-medicine.php?id=<?php echo $getmedid; ?>'">
+										<tr <?php if(!isset($row['dod'])) {  ?> onclick="window.location='edit-medicine.php?id=<?php echo $getmedid; ?>'" <?php } ?> >
                                             <th scope="row"><?php echo $key+1; ?></th>
                                             <td id="name_row<?php echo $key; ?>"><?php echo $mediceneresult["name"]; ?></td>
                                             <td><?php echo $mediceneresult["brand"]; ?></td>
@@ -701,6 +703,7 @@ $(window).load(function() {
                             <div class="panel-heading">Update Medical Info</div>
                             <div class="panel-wrapper collapse in" aria-expanded="true">
                                 <div class="panel-body">
+									<fieldset <?php if(isset($row['dod'])){ echo 'disabled'; } ?> >
                                     <form method="post" data-toggle="validator">
                                         <div class="form-body">
                                             <div class="row">
@@ -794,6 +797,7 @@ $(window).load(function() {
 
                                         </div>
                                     </form>
+									</fieldset>
                                 </div>
                             </div>
                         </div>
@@ -809,6 +813,7 @@ $(window).load(function() {
                             <div class="panel-heading">Patient Details</div>
                             <div class="panel-wrapper collapse in" aria-expanded="true">
                                 <div class="panel-body">
+									<fieldset <?php if(isset($row['dod'])){ echo 'disabled'; } ?> >
                                     <form method="post" data-toggle="validator">
                                         <div class="form-body">
                                             <h3 class="box-title">Personal Info</h3>
@@ -956,6 +961,7 @@ $(window).load(function() {
                                             <button type="submit" name="updateprofile" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
                                         </div>
                                     </form>
+									</fieldset>
                                 </div>
                             </div>
                         </div>
