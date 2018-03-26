@@ -10,7 +10,7 @@ elseif(isset($_SESSION['ausername']))
 	$ausername=$_SESSION['ausername'];
 }
 $id = $_GET['id'];
-$getmedquery="SELECT * FROM medicines WHERE med_id='$id'";
+$getmedquery="SELECT *,doctors.fname,doctors.lname FROM medicines JOIN doctors ON medicines.doc_id=doctors.doc_id WHERE med_id='$id'";
 $getmedresult = mysqli_query($connection, $getmedquery);
 $medrow = mysqli_fetch_assoc($getmedresult);
 
