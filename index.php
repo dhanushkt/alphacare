@@ -4,6 +4,15 @@ require('login/connect.php');
 $getdocinfo="SELECT doc_id,fname,lname,specialist FROM doctors";
 $getdocinforesult=mysqli_query($connection,$getdocinfo);
 
+$getdcount=mysqli_query($connection,"SELECT * FROM doctors");
+$dcount=mysqli_num_rows($getdcount);
+
+$getscount=mysqli_query($connection,"SELECT * FROM staffs");
+$scount=mysqli_num_rows($getscount);
+
+$getwcount=mysqli_query($connection,"SELECT * FROM wards WHERE status='0'");
+$wcount=mysqli_num_rows($getwcount);
+
 if(isset($_POST['apointsubmit']))
 {
 	$apname=mysqli_real_escape_string($connection,$_POST['apointname']);
@@ -340,19 +349,29 @@ if(isset($_POST['apointsubmit']))
                     <div class="feature-icon"><i class="fa fa-calendar"></i></div>
                     <span>24 hour Service</span>
                     <p class="paragraph-small paragraph-white">we are equipped with professional expertise round the clock to handle all type of medical, surgical, trauma and accident emergencies.</p>
-				</div><div class="feature-block feature-block-dark">
+				</div>
+				<div class="feature-block feature-block-dark">
                     <div class="feature-icon"><i class="fa fa-shopping-bag"></i></div>
                     <span>Pharmacies and drug stores</span>
                     <p class="paragraph-small paragraph-white">Our in-house pharmacy provides seamless 24hrs care to our patients..</p>
                 </div>
+                <div class="feature-block feature-block-dark">
+                    <div class="feature-icon"><i class="fa fa-child"></i></div>
+                    <span>Maternity</span>
+                    <p class="paragraph-small paragraph-white">Our hospitals provide maternity care. Rooms are available that are all-inclusive where mothers can give birth, nurse their babies and spend a day two recovering from the delivery. Other hospitals utilize operating rooms for deliveries and nurseries for the newborns. </p>
+                </div>
                 
-                <center>
                 <div class="feature-block feature-block-dark">
                     <div class="feature-icon"><i class="fa fa-stethoscope"></i></div>
                     <span>Primary health care</span>
-                    <p class="paragraph-small paragraph-white">Our sevices include out patient medical treatment, Medical follow-ups after discharge from hospital, Health screening and education, In house Pharmaceutical services, And 1 st of its kind exclusive <b>pain management services</b></p>
+                    <p class="paragraph-small paragraph-white">Our sevices include out patient medical treatment, Medical follow-ups after discharge from hospital, Health screening and education, In house Pharmaceutical services, And 1 st of its kind exclusive pain management services</p>
                 </div>
-                </center>
+                
+				<div class="feature-block feature-block-dark">
+                    <div class="feature-icon"><i class="fa fa-flask"></i></div>
+                    <span>Laboratory</span>
+                    <p class="paragraph-small paragraph-white">A medical laboratory or clinical laboratory is a laboratory where tests are usually done on clinical specimens in order to obtain information about the health of a patient as pertaining to the diagnosis, treatment, and prevention of disease. Clinical laboratories are thus focused on applied science mainly on a production-like basis, as opposed to research laboratories that focus on basic science on an academic basis.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -370,22 +389,22 @@ if(isset($_POST['apointsubmit']))
                         <div class="hm-about-block">
                             <div class="tbl-cell hm-about-icon"><i class="fa fa-user-md"></i></div>
                             <div class="tbl-cell hm-about-number">
-                                <span class="counter">54</span>
+                                <span class="counter"><?php echo $dcount ?></span>
                                 <p>Doctor(s)</p>
                             </div>
                         </div>
                         <div class="hm-about-block">
-                            <div class="tbl-cell hm-about-icon"><i class="fa fa-ambulance"></i></div>
+                            <div class="tbl-cell hm-about-icon"><i class="fa fa-bed"></i></div>
                             <div class="tbl-cell hm-about-number">
-                                <span class="counter">130</span>
-                                <p>Room(s)</p>
+                                <span class="counter"><?php echo $wcount ?></span>
+                                <p>Wards(s)</p>
                             </div>
                         </div>
                         <div class="hm-about-block">
-                            <div class="tbl-cell hm-about-icon"><i class="fa fa-calendar"></i></div>
+                            <div class="tbl-cell hm-about-icon"><i class="fa fa-id-badge"></i></div>
                             <div class="tbl-cell hm-about-number">
-                                <span class="counter">51</span>
-                                <p>Year of Experience(s)</p>
+                                <span class="counter"><?php echo $scount ?></span>
+                                <p>Staff(s)</p>
                             </div>
                         </div>
                         <div class="hm-about-block">
@@ -397,13 +416,13 @@ if(isset($_POST['apointsubmit']))
                         </div>
                         <div class="hm-about-paragraph">
                             <p class="paragraph-medium paragraph-white">
-                                <span class="theme-dropcap color-white">O</span>ne of the leading gynaecologists of the city, <b>Dr. Mano Rama Rao</b> (Jayashree Nursing Home) in Hampankatta has established the clinic and has gained a loyal clientele over the past few years and is also frequently visited by several celebrities, aspiring models and other honourable clients and international patients as well. They also plan on expanding their business further and providing services to several more patients owing to its success over the past few years. The efficiency, dedication, precision and compassion offered at the clinic ensure that the patient's well-being, comfort and needs are kept of top priority. The clinic is equipped with latest types of equipment and boasts highly advanced surgical instruments that help in undergoing meticulous surgeries or procedures. Locating the healthcare centre is easy as it is <b>K S Rao Road</b>, Hampankatta..
+                                <span class="theme-dropcap color-white">O</span>ne of the leading gynaecologists of the city, <b>Dr. Manorama Rao</b> (Jayashree Nursing Home) in Hampankatta has established the clinic and has gained a loyal clientele over the past few years and is also frequently visited by several celebrities, aspiring models and other honourable clients and international patients as well. They also plan on expanding their business further and providing services to several more patients owing to its success over the past few years. The efficiency, dedication, precision and compassion offered at the clinic ensure that the patient's well-being, comfort and needs are kept of top priority. The clinic is equipped with latest types of equipment and boasts highly advanced surgical instruments that help in undergoing meticulous surgeries or procedures. Locating the healthcare centre is easy as it is <b>K S Rao Road</b>, Hampankatta..
                             </p>
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <img class="img-thumbnail" src="landerpage/uploads/bg3.jpg" alt="">
-						<img class="img-thumbnail" src="landerpage/uploads/bg1.jpg" alt="">
+						<br><br><br><br>
+                        <img class="img-thumbnail" src="landerpage/uploads/bg3.jpg" alt="" style="width:650px;height:auto">
                     </div>
                 </div>
             </div>
