@@ -4549,7 +4549,7 @@ ul.list-icons li i {
 }
 .sidebar #side-menu .user-pro {
  background:url(../../plugins/images/profile-menu.png) center center/cover no-repeat;
- opacity: 0.9;
+ 
 }
 .sidebar #side-menu  .user-pro a {
  padding-left:20px;
@@ -4581,7 +4581,7 @@ ul.list-icons li i {
 }
 .content-wrapper .sidebar #side-menu .user-pro a {
  background:rgba(0,0,0,0);
- color:#54667a
+ color:#ffffff
 }
 .content-wrapper .sidebar #side-menu .user-pro .nav-second-level a:hover {
  background:rgba(0,0,0,0)
