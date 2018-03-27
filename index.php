@@ -425,7 +425,8 @@ if(isset($_POST['apointsubmit']))
             <div class="row text-center">
                 <div class="col-md-6 col-lg-3 contact-info-block">
                     <div class="contact-info-inner">
-                        <i class="fa fa-plus-square-o"></i>
+						<button id="appointment-now"><i class="fa fa-plus-square-o"></i></button>
+						<div class="mdl-tooltip mdl-tooltip--top" data-mdl-for="appointment-now">Make An Appointment</div>
                         <span>APPOINTMENT</span>
                         <p class="paragraph-medium paragraph-black">0824-2429729</p>
                         <p>appointment@yourdomain.com </p>
