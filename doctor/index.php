@@ -77,11 +77,11 @@ $acount=mysqli_num_rows($countapoint);
 				<div class="row p-b-10">
 					<div class="col-md-12 col-sm-10 hvr-wobble-horizontal">
 						<div class="card card-inverse">
-							<img class="card-img" src="../plugins/images/cards/bg.png" height="120" alt="Card image">
+							<img id="theImgId" class="card-img" src="../plugins/images/cards/bg.png" height="120" alt="Card image">
 							<div class="card-img-overlay" style="padding-top: 5px">
 								<h4 class="card-title text-uppercase">WELCOME <?php echo 'Dr. '.$rowimg['fname'].' '.$rowimg['lname']; ?></h4>
-								<p class="card-text">You are logged-in to DOCTOR control panel, here are some of the basic information about hospital and some basic functions to perform. </p>
-							<p class="card-text text-warning"><i class="fa fa-info-circle"></i><b> THERE ARE <?php echo mysqli_num_rows($resultcountmsg); ?> UNREAD MESSAGES AND <?php echo $acount; ?> UNSCHEDULED APPOINTMENTS. </b></p>
+								<p class="card-text" id="cText">You are logged-in to DOCTOR control panel, here are some of the basic information about hospital and some basic functions to perform. </p>
+							<p id="wText" class="card-text text-warning"><i class="fa fa-info-circle"></i><b> THERE ARE <?php echo mysqli_num_rows($resultcountmsg); ?> UNREAD MESSAGES AND  <?php echo $acount; ?> UNSCHEDULED APPOINTMENTS. </b></p>
 								<!--<p class="card-text"><small class="text-white">~AlphaCare</small></p>-->
 							</div>
 						</div>
@@ -263,7 +263,28 @@ $acount=mysqli_num_rows($countapoint);
 			
 		}
 	</script>
-   
+    <script>
+		$(window).load(function() {
+
+			var viewportWidth = $(window).width();
+			if (viewportWidth < 750) {
+					var theImg = document.getElementById('theImgId');
+		theImg.height = 180;
+				document.getElementById('cText').style.fontSize = "80%";
+				document.getElementById('wText').style.fontSize = "86%";
+			}
+
+			$(window).resize(function () {
+
+				if (viewportWidth < 750) {
+					var theImg = document.getElementById('theImgId');
+		theImg.height = 180;
+				document.getElementById('cText').style.fontSize = "80%";
+				document.getElementById('wText').style.fontSize = "86%";
+				}
+			});
+		});
+	</script>  
 </body>
 
 </html>

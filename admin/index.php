@@ -67,7 +67,7 @@ $wcount=mysqli_num_rows($getwardcount);
 				<div class="row p-b-10">
 					<div class="col-md-12 col-sm-10">
 						<div class="card card-inverse">
-							<img class="card-img" src="../plugins/images/cards/bg.png" height="120" alt="Card image">
+							<img id="theImgId" class="card-img" src="../plugins/images/cards/bg.png" height="120" alt="Card image">
 							<div class="card-img-overlay" style="padding-top: 5px">
 								<h4 class="card-title text-uppercase">WELCOME <?php echo $ausername; ?></h4>
 								<p class="card-text">You are logged-in to ADMIN control panel, here are some of the basic information about hospital and some basic functions to perform. </p>
@@ -242,7 +242,24 @@ $wcount=mysqli_num_rows($getwardcount);
 			
 		}
 	</script>
-   
+   <script>
+		$(window).load(function() {
+
+			var viewportWidth = $(window).width();
+			if (viewportWidth < 750) {
+					var theImg = document.getElementById('theImgId');
+		theImg.height = 180;
+			}
+
+			$(window).resize(function () {
+
+				if (viewportWidth < 750) {
+					var theImg = document.getElementById('theImgId');
+		theImg.height = 180;
+				}
+			});
+		});
+	</script>
 </body>
 
 </html>

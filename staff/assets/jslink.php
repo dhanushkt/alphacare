@@ -1,3 +1,4 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
 <!-- jQuery -->
 <script src="../plugins/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap Core JavaScript -->
