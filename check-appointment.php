@@ -311,8 +311,10 @@ if(isset($_POST['CancelAp']))
                       </div>
 				</div>
 				<div class="text-center pt-4">
+					<?php if($selectapointfetch['status']=='In Process' || $selectapointfetch['status']=='Scheduled' ) { ?>
 					<input type="hidden" value="<?php echo $selectapointfetch['ap_token']; ?>" name="hiddentokenno">
 					<button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-danger button-md" name="CancelAp">Cancel Appointment</button>
+					<?php } ?>
 				</div>
 				</form>
 			</div>
