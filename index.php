@@ -10,7 +10,7 @@ $dcount=mysqli_num_rows($getdcount);
 $getscount=mysqli_query($connection,"SELECT * FROM staffs");
 $scount=mysqli_num_rows($getscount);
 
-$getwcount=mysqli_query($connection,"SELECT * FROM wards WHERE status='0'");
+$getwcount=mysqli_query($connection,"SELECT * FROM wards");
 $wcount=mysqli_num_rows($getwcount);
 
 if(isset($_POST['apointsubmit']))
