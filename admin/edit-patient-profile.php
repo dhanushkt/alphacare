@@ -20,18 +20,18 @@ $checkcount = mysqli_num_rows($fetchresult);
 if($checkcount>=1)
 {
 	
-	//calculate temprature percentage min:97F max:105F
+	//calculate temprature percentage min:97F max:109F
 	if($fetchrow['temp']<='97')
 	{
-		$tempper="10%";
+		$tempper="10";
 	}
-	elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='105')
+	elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='109')
 	{
-		$tempper=(($fetchrow['temp']-97)/(105-97))*100;
+		$tempper=(($fetchrow['temp']-97)/(109-97))*100;
 	}
-	elseif($fetchrow['temp']> '105')
+	elseif($fetchrow['temp']>'109')
 	{
-		$tempper="100%";
+		$tempper="100";
 	}
 
 	//calculate sugar percentage min:72 max:140
@@ -106,18 +106,18 @@ if(isset($_POST['updatemedic']))
 		$checkcount = mysqli_num_rows($fetchresult);
 		if($checkcount>=1)
 		{
-			//calculate temprature percentage min:97F max:105F
+			//calculate temprature percentage min:97F max:109F
 			if($fetchrow['temp']<='97')
 			{
-				$tempper="10%";
+				$tempper="10";
 			}
-			elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='105')
+			elseif($fetchrow['temp']>'97' && $fetchrow['temp']<='109')
 			{
-				$tempper=(($fetchrow['temp']-97)/(105-97))*100;
+				$tempper=(($fetchrow['temp']-97)/(109-97))*100;
 			}
-			elseif($fetchrow['temp']> '105')
+			elseif($fetchrow['temp']>'109')
 			{
-				$tempper="100%";
+				$tempper="100";
 			}
 
 			//calculate sugar percentage min:72 max:140
@@ -615,7 +615,7 @@ $(window).load(function() {
 										</div>
 										<h5>Temprature<span class="pull-right"><?php echo $fetchrow["temp"]." °F"; ?></span></h5>
 										<div class="progress">
-											<div class="progress-bar progress-bar-danger wow animated progress-animated" role="progressbar" aria-valuenow="102" aria-valuemin="97" aria-valuemax="105" style="width:<?php echo $tempper ?>%;"> <span class="sr-only">50% Complete</span> </div>
+											<div class="progress-bar progress-bar-danger wow animated progress-animated" role="progressbar" aria-valuenow="102" aria-valuemin="97" aria-valuemax="109" style="width:<?php echo $tempper.'%'; ?>;"> <span class="sr-only">50% Complete</span> </div>
 										</div>
 										<hr>
 										<div class="row">
@@ -636,18 +636,18 @@ $(window).load(function() {
 									</div>
 										<hr>
 									
-										<h4 class="m-t-30">ECG Report</h4>
+										<!-- <h4 class="m-t-30">ECG Report</h4>
 										<hr>
 										<div class="stats-row">
 											<div class="stat-item">
 												<h6>Pulse</h6> <b>85</b></div>
 											<div class="stat-item">
-												<h6>BP</h6> <b><?php echo $fetchrow["bp"]; ?></b></div>
-										</div>
+												<h6>BP</h6> <b><?php// echo $fetchrow["bp"]; ?></b></div>
+										</div>-->
 												<!--remove this for mobile-->
-										<div style="height: 280px;">
+										<!-- <div style="height: 280px;">
 											<div id="placeholder" class="demo-placeholder"></div>
-										</div>
+										</div>-->
                             </div>
 
 
