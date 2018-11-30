@@ -140,76 +140,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	} //finishAjax
 </script>
 <!-- username check js end -->
-	<script>
-		function isFutureDate(idate){
-    var today = new Date().getTime(),
-        idate = idate.split("-");
-
-    idate = new Date(idate[2], idate[1] - 1, idate[0]).getTime();
-    return (today - idate) < 0 ? true : false;
-}
-	</script>
-	
-	<script>
-		function checkDate(){
-    var idate = document.getElementById("datepicker"),
-        resultDiv = document.getElementById("datewarn");
-        //dateReg = /(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-]201[4-9]|20[2-9][0-9]/;
-
-   // if(dateReg.test(idate.value)){
-        if(isFutureDate(idate.value)){
-            resultDiv.innerHTML = "Entered date is a future date";
-            resultDiv.style.color = "red";
-       } else {
-            resultDiv.innerHTML = "It's a valid date";
-            resultDiv.style.color = "green";
-        }
-   // } else {
-       // resultDiv.innerHTML = "Invalid date!";
-       // resultDiv.style.color = "red";
-   // }
-}
-	</script>
-	<script>
-		function checkDate1(){
-    var idate = document.getElementById("datepicker-autoclose1"),
-        resultDiv = document.getElementById("datewarn1"),
-        dateReg = /(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-]201[4-9]|20[2-9][0-9]/;
-
-    if(dateReg.test(idate.value)){
-        if(isFutureDate(idate.value)){
-            resultDiv.innerHTML = "Entered date is a future date";
-            resultDiv.style.color = "red";
-        } else {
-            resultDiv.innerHTML = "It's a valid date";
-            resultDiv.style.color = "green";
-        }
-    } else {
-        resultDiv.innerHTML = "Invalid date!";
-        resultDiv.style.color = "red";
-    }
-}
-	</script>
-	<script>
-		function checkDate2(){
-    var idate = document.getElementById("datepicker-autoclose"),
-        resultDiv = document.getElementById("datewarn2"),
-        dateReg = /(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-]201[4-9]|20[2-9][0-9]/;
-
-    if(dateReg.test(idate.value)){
-        if(isFutureDate(idate.value)){
-            resultDiv.innerHTML = "Entered date is a future date";
-            resultDiv.style.color = "red";
-        } else {
-            resultDiv.innerHTML = "It's a valid date";
-            resultDiv.style.color = "green";
-        }
-    } else {
-        resultDiv.innerHTML = "Invalid date!";
-        resultDiv.style.color = "red";
-    }
-}
-	</script>
 </head>
 
 <body class="fix-sidebar">
@@ -315,10 +245,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <label class="control-label">Date of Birth</label>
                                                         <div class="input-group">
 															<div class="input-group-addon"><i class="icon-calender"></i></div>
-															<input onChange="checkDate();" onKeyUp="checkDate();" data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker" name="dob" placeholder="dd-mm-yyyy" required>
-															
+															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker" name="dob" placeholder="dd-mm-yyyy" required>
 														</div>
-														<div id="datewarn"></div>
                                                    		<!--<span class="font-13 text-muted">dd-mm-yyyy</span>-->
                                                     </div>
                                                 </div>
@@ -461,9 +389,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <label class="control-label">Date of Joining</label>
                                                         <div class="input-group">
 															<div class="input-group-addon"><i class="icon-calender"></i></div>
-															<input onChange="checkDate1();" data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose1" name="doj" placeholder="dd-mm-yyyy" required>
+															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose1" name="doj" placeholder="dd-mm-yyyy" required>
 														</div>
-														<div id="datewarn1"></div>
                                                    		<!--<span class="font-13 text-muted">dd-mm-yyyy</span>-->
                                                     </div>
                                                 </div>
@@ -549,9 +476,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <label>Date of entry</label>
                                                         <div class="input-group">
 															<div class="input-group-addon"><i class="icon-calender"></i></div>
-															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy" onChange="checkDate2()" >
+															<input data-date-format="dd-mm-yyyy" data-mask="99-99-9999" type="text" class="form-control" id="datepicker-autoclose" name="doe" placeholder="dd-mm-yyyy">
 														</div>
-														<div id="datewarn2"></div>
                                                     </div>
                                                 </div>
                                                 <!--/span-->

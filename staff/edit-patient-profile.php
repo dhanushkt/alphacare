@@ -42,8 +42,8 @@ if($checkcount>=1)
 		$tempper="100";
 	}
 
-	//calculate sugar percentage min:72 max:140
-	$sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
+	//calculate sugar percentage min:72 max:210
+	$sugarper=(($fetchrow['sugar']-72)/(210-72))*100;
 
 	//calculate bloodpreasure percentage min:70/40 max: 180/100
 	$bp_value = $fetchrow['bp'];
@@ -128,8 +128,8 @@ if(isset($_POST['updatemedic']))
 				$tempper="100";
 			}
 
-			//calculate sugar percentage min:72 max:140
-			$sugarper=(($fetchrow['sugar']-72)/(140-72))*100;
+			//calculate sugar percentage min:72 max:210
+			$sugarper=(($fetchrow['sugar']-72)/(210-72))*100;
 
 			//calculate bloodpreasure percentage min:70/40 max: 180/100
 			$bp_value = $fetchrow['bp'];
@@ -743,7 +743,7 @@ $(window).load(function() {
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Blood Preasure</label>
+                                                        <label>Blood Pressure</label>
                                                         <input name="bp" type="text" class="form-control" data-mask="999/99">
                                                         <span class="font-13 text-muted">in mm Hg</span>
                                                     </div>

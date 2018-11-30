@@ -210,7 +210,37 @@ if(isset($_POST['apointsubmit']))
 	  $('#'+id).html(unescape(response));
 	  $('#'+id).fadeIn();
 	} //finishAjax
-</script>	
+</script>
+	<script>
+		function isFutureDate(idate){
+    var today = new Date().getTime(),
+        idate = idate.split("-");
+
+    idate = new Date(idate[0], idate[1] - 1, idate[2]).getTime();
+    return (today - idate) < 0 ? true : false;
+}
+	</script>
+	
+	<script>
+		function checkDate(){
+    var idate = document.getElementById("appointment-dob"),
+        resultDiv = document.getElementById("datewarn");
+        //dateReg = /(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-]201[4-9]|20[2-9][0-9]/;
+
+   // if(dateReg.test(idate.value)){
+        if(isFutureDate(idate.value)){
+            resultDiv.innerHTML = "Entered date is a future date";
+            resultDiv.style.color = "red";
+       } else {
+            resultDiv.innerHTML = "It's a valid date";
+            resultDiv.style.color = "green";
+        }
+   // } else {
+       // resultDiv.innerHTML = "Invalid date!";
+       // resultDiv.style.color = "red";
+   // }
+}
+	</script>
 </head>
 <body>
     <!-- Start Header Section -->
@@ -480,7 +510,7 @@ if(isset($_POST['apointsubmit']))
         </div>
     </div><!-- End Contact Detail Section -->
     <!-- Start Request Form Section -->
-    <div id="contact-form" class="layer-stretch">
+    <!--<div id="contact-form" class="layer-stretch">
         <div class="layer-wrapper">
             <div class="layer-ttl"><h3>Make a Request</h3></div>
             <div class="contact-form row text-center">
@@ -530,7 +560,7 @@ if(isset($_POST['apointsubmit']))
                 </div>
             </div>
         </div>
-    </div><!-- End Request Form Section -->
+    </div>--><!-- End Request Form Section -->
     <!-- Start Google Map Section -->
     <section id="locate">
 		<div class="map-responsive">
@@ -606,9 +636,10 @@ if(isset($_POST['apointsubmit']))
 						<div class="col-md-6">
                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
                                 <i class="fa fa-calendar-o"></i>
-                                <input name="apointdob" class="mdl-textfield__input" type="text" id="appointment-dob" onfocus="(this.type='date')" onblur="(this.type='text')">
+                                <input name="apointdob" class="mdl-textfield__input" type="text" id="appointment-dob" onfocus="(this.type='date')" onblur="(this.type='text')" onChange="checkDate();" onKeyUp="checkDate();"  >
                                 <label class="mdl-textfield__label" for="appointment-dob">Date of birth</label>
                                 <span class="mdl-textfield__error">Please Enter Valid Date Number!</span>
+								<div id="datewarn"></div>
                             </div>
                         </div>
                         
